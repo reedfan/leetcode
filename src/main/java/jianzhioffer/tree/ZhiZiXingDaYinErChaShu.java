@@ -2,6 +2,7 @@ package jianzhioffer.tree;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.Stack;
 
 /**
  * created by reedfan on 2019/4/23 0023
@@ -32,42 +33,47 @@ public class ZhiZiXingDaYinErChaShu {
 
 
     }
+
     public static ArrayList<ArrayList<Integer>> Print(TreeNode pRoot) {
         ArrayList<ArrayList<Integer>> arrayLists = new ArrayList<ArrayList<Integer>>();
-        LinkedList<TreeNode>list = new LinkedList<TreeNode>();
-        list.add(pRoot);
-        int cur,size;
-        Boolean odd = true;
-        while (!list.isEmpty()){
-            cur = 0;
-            size = list.size();
-            ArrayList<Integer>arrayList = new ArrayList<Integer>();
+        if(pRoot == null){
+            return arrayLists;
+        }
+        Stack<TreeNode> even = new Stack<TreeNode>();   //偶数
+        Stack<TreeNode> odd = new Stack<TreeNode>();   //奇数
+        odd.push(pRoot);
+        while (!(odd.isEmpty()&&even.isEmpty())){
+            ArrayList<Integer> list = new ArrayList<Integer>();
+            if(odd.isEmpty()){
+                while (!even.isEmpty()){
+                    TreeNode head = even.pop();
+                    list.add(head.val);
+                    if(head.right != null){
+                        odd.add(head.right);
+                    }
+                    if(head.left != null){
+                        odd.add(head.left);
+                    }
 
-            while (cur<size){
-                cur++;
-                TreeNode head = list.poll();
-                arrayList.add(head.val);
-                if(odd){
-                    if(head.right!=null){
-                        list.add(head.right);
-                    }
+
+                }
+                arrayLists.add(list);
+
+            }else {
+                while (!odd.isEmpty()){
+                    TreeNode head = odd.pop();
+                    list.add(head.val);
                     if(head.left != null){
-                        list.add(head.left);
+                        even.add(head.left);
                     }
-                }else {
-                    if(head.left != null){
-                        list.add(head.left);
-                    }
-                    if(head.right!=null){
-                        list.add(head.right);
+                    if(head.right != null){
+                        even.add(head.right);
                     }
 
                 }
+                arrayLists.add(list);
 
             }
-            odd = !odd;
-            arrayLists.add(arrayList);
-
 
         }
 
