@@ -1,8 +1,5 @@
 package jianzhioffer.putong;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 
 public class HuanQianDeFangFaShu {
 
@@ -14,6 +11,9 @@ public class HuanQianDeFangFaShu {
 
     }
 
+    /*
+    普通解法
+     */
 
     public int coins1(int[] arr,int aim){
 
@@ -40,6 +40,9 @@ public class HuanQianDeFangFaShu {
 
 
 
+    /*
+    动态规划解法
+     */
     public static int coin3(int[] arr,int aim){
         if(arr == null || arr.length == 0 || aim<0){
             return 0;

@@ -1,6 +1,7 @@
 package jianzhioffer.tree;
 
 import java.util.HashMap;
+import java.util.Stack;
 
 /**
  * Author 范群松.
@@ -13,7 +14,39 @@ public class BinaryTree {
 
     public Node init() {
         // 注意必须逆序建立，先建立子节点，再逆序往上建立，因为非叶子结点会使用到下面的节点，而初始化是按顺序初始化的，不逆序建立会报错
-        Node J = new Node(8, null, null);		Node H = new Node(4, null, null);		Node G = new Node(2, null, null);		Node F = new Node(7, null, J);		Node E = new Node(5, H, null);		Node D = new Node(1, null, G);		Node C = new Node(9, F, null);		Node B = new Node(3, D, E);		Node A = new Node(6, B, C);		return A; // 返回根节点	}
+        Node J = new Node(8, null, null);
+        Node H = new Node(4, null, null);
+        Node G = new Node(2, null, null);		Node F = new Node(7, null, J);		Node E = new Node(5, H, null);		Node D = new Node(1, null, G);		Node C = new Node(9, F, null);		Node B = new Node(3, D, E);		Node A = new Node(6, B, C);		return A; // 返回根节点	}
+    }
+
+    public void xianxu(Node root){
+        if(root == null){
+            return;
+        }
+
+        Stack<Node> stack = new Stack<>();
+        stack.add(root);
+
+        while (!stack.empty()){
+            root = stack.pop();
+            printNode(root);
+            if(root.getRightNode() != null){
+                stack.add(root.getRightNode());
+            }
+            if(root.getLeftNode()!=null){
+                stack.add(root.getLeftNode());
+            }
+
+        }
+
+    }
+
+    public void zhongxu(Node root){
+
+
+
+
+
     }
 
 
@@ -66,6 +99,12 @@ public class BinaryTree {
         System.out.println("");
         System.out.println("后序遍历");
         tree.thePostOrderTraversal(root);
+        System.out.println("");
+
+        System.out.println("先序遍历");
+
+
+        tree.xianxu(root);
         System.out.println("");
     }
 

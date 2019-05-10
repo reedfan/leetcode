@@ -15,8 +15,6 @@ public class ZuiChangDiZengZiXulie {
 
     }
 
-
-
     public static int[] generateLIS(int[] arr,int[] dp){
         int len = arr.length;
         int max = Integer.MIN_VALUE;
@@ -46,6 +44,9 @@ public class ZuiChangDiZengZiXulie {
 
 
 
+    /*
+      获取最长递增子序列长度
+     */
 
     public static int[] getdp1(int[] arr){
         int[] dp = new int[arr.length];
