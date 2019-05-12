@@ -20,7 +20,7 @@ public class Main9 {
         target-=root.val;
         list.add(root.val);
         if(root.left == null && root.right == null  && target==0 ){
-            res.add(new ArrayList<>(list));
+            res.add(new ArrayList<Integer>(list));
         }
         FindPath(root.left,target);
         FindPath(root.right, target);
