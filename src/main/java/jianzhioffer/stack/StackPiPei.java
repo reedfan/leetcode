@@ -25,6 +25,7 @@ public class StackPiPei {
             }
 
         }
+
         return stack.empty();
 
     }
