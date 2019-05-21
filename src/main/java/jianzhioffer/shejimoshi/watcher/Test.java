@@ -1,5 +1,7 @@
 package jianzhioffer.shejimoshi.watcher;
 
+import java.util.UUID;
+
 /**
  * Author 范群松.
  * Date：2018/10/8

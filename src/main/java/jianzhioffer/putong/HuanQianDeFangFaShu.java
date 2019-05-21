@@ -1,11 +1,13 @@
 package jianzhioffer.putong;
 
 
+import java.util.Arrays;
+
 public class HuanQianDeFangFaShu {
 
     public static void main(String[] args) {
         int[] arr = {5,10,25,1};
-        System.out.println(coin3(arr,50));
+        System.out.println(coin3(arr,49));
 
 
 
@@ -91,6 +93,37 @@ public class HuanQianDeFangFaShu {
 
 
     }
+
+
+    /*
+    动态规划解法
+     */
+    public static int coin2(int[] arr,int aim){
+        if(arr == null || arr.length == 0 || aim<0){
+            return 0;
+        }
+        int max = aim+1;
+        int[] dp = new int[max];
+        Arrays.fill(dp,max);
+        dp[0] = 0;
+
+
+        for (int i = 0; i <max ; i++) {
+            for (int j = 0; j <arr.length ; j++) {
+                if(arr[j]<=i){
+                    dp[i] = Math.min(dp[i],dp[i-arr[j]]+1);
+                }
+
+            }
+        }
+        return dp[aim]>aim?-1:dp[aim];
+
+
+    }
+
+
+
+
 
 
 }
