@@ -13,7 +13,7 @@ public class Subsets {
     static List<List<Integer>> result=new ArrayList<List<Integer>>();
 
     public static void main(String[] args) {
-        combine(4,2);
+        combine(4,3);
 
     }
     public static List<List<Integer>> combine(int n, int k) {
