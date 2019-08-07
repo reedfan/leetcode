@@ -1,8 +1,10 @@
 package jianzhioffer.digui;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
+//https://leetcode-cn.com/problems/combinations/submissions/        leetcode 77
 public class Combine {
 
     private ArrayList<List<Integer>> res;
@@ -12,9 +14,10 @@ public class Combine {
             res.add(new ArrayList<>(list));
             return;
         }
-        for (int i = start; i <= n ; i++) {
+        //减枝  i <= n-(k-list.size())+1
+        for (int i = start; i <= n-(k-list.size())+1 ; i++) {
             list.add(i);
-            generateCombinations(n,k,start+1,list);
+            generateCombinations(n,k,i+1,list);
             list.remove(list.size()-1);
 
         }
@@ -30,6 +33,13 @@ public class Combine {
         generateCombinations(n,k,1,list);
 
         return res;
+
+    }
+
+
+    public static void main(String[] args) {
+        List<List<Integer>> lists = (new Combine()).combine(3,2);
+
 
     }
 }
