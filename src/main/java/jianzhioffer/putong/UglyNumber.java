@@ -2,6 +2,10 @@ package jianzhioffer.putong;
 
 public class UglyNumber {
 
+    public static void main(String[] args) {
+        System.out.println(uglyNumber(7));
+    }
+
     private static int uglyNumber(int n){
 
         int[] help = new int[n];

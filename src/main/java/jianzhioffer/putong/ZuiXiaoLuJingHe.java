@@ -10,7 +10,8 @@ public class ZuiXiaoLuJingHe {
                 {5,0,6,1},
                 {8,8,4,0},
         };
-        System.out.println(zuiChangLuJingHe(matrix));
+       // System.out.println(zuiChangLuJingHe(matrix));
+        System.out.println(minPathSum2(matrix));
 
     }
 
@@ -35,6 +36,36 @@ public class ZuiXiaoLuJingHe {
 
         }
         return dp[martix.length-1][martix[0].length-1];
+
+    }
+
+    /**
+     * 空间压缩方法
+     */
+
+    private static int minPathSum2(int[][] m){
+        if(m == null||m.length==0||m[0]==null||m[0].length==0){
+            return 0;
+        }
+        int more = Math.max(m.length,m[0].length);
+        int less = Math.min(m.length,m[0].length);
+        boolean rowmore = more == m.length;  //行数是否大于列数
+        int[] arr = new int[less];
+        arr[0] = m[0][0];
+        for (int i = 1; i < less; i++) {
+            arr[i] = arr[i-1]+(rowmore?m[0][i]:m[i][0]);
+
+        }
+        for (int i = 1; i < more; i++) {
+            arr[0]+=(rowmore?m[i][0]:m[0][i]);
+            for (int j = 1; j < less; j++) {
+                arr[j] = Math.min(arr[j-1],arr[j])+(rowmore?m[i][j]:m[j][i]);
+
+            }
+
+        }
+
+        return arr[less-1];
 
     }
 }
