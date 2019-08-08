@@ -32,4 +32,9 @@ public class SubsetsWithDup90 {
         }
 
     }
+
+    public static void main(String[] args) {
+        int[] nums = {1,2,2};
+        new SubsetsWithDup90().subsetsWithDup(nums);
+    }
 }
