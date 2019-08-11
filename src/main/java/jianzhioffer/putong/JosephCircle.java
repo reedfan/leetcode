@@ -8,7 +8,7 @@ public class JosephCircle {
 
 
     public static void main(String[] args) {
-     //   System.out.println(joseph(5,3));
+        System.out.println(joseph(5,3));
         System.out.println(LastRemaining_Solution(5,3));
     }
 
@@ -40,8 +40,6 @@ public class JosephCircle {
             //与总人数count取余，则可以使index在0~count-1之间 一直循环，达到循环数组的目的
             index = (index+1)%count;
             System.out.println("index="+index);
-
-
         }
 
         if(index == 0){
@@ -86,18 +84,9 @@ public class JosephCircle {
             index = (index+1)%n;
 
         }
-
-
-
         if(index == 0){
             return n-1;
         }
-
         return index-1;
-
-
     }
-
-
-
 }

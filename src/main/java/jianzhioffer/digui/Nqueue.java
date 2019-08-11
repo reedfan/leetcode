@@ -71,5 +71,4 @@ public class Nqueue {
         return board;
     }
 
-
 }

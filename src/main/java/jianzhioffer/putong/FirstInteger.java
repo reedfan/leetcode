@@ -28,8 +28,11 @@ package jianzhioffer.putong;
 public class FirstInteger {
 
     public static void main(String[] args) {
-        int[] nums = {7,8,9,11,12};
+        int[] nums = {7,8,9,1,11,12};
         System.out.println(firstMissingPositive(nums));
+        Object o = new Object();
+
+       // System.out.println(misNum(nums));
 
     }
     public static int firstMissingPositive(int[] nums) {
@@ -62,4 +65,25 @@ public class FirstInteger {
         nums[pos1] = nums[pos2];
         nums[pos2] = tmp;
     }
+
+
+    public static int misNum(int[] arr){
+        int l = 0;   //已找到1-l都存在
+        int r = arr.length;    //理想情况为1-r都存在
+        while (l<r){
+            if(arr[l] == l+1){
+                l++;
+            }else {
+                if(arr[l]<=l||arr[l]>r||arr[arr[l]-1]==arr[l]){
+                    arr[l] = arr[--r];   //arr[l]的值为这些条件的时候，r会--，然后覆盖掉这些值
+                }else {
+                    swap(arr,l,arr[l]-1);
+                }
+            }
+
+
+        }
+        return l+1;
+    }
+
 }

@@ -1,10 +1,16 @@
 package jianzhioffer.putong;
 
+/**
+ * 时间复杂度为O(n)
+ * 复杂度：平均情况下，遍历一次数组找到哨兵是n，下一次就是n/2，最后到1，中间最多需要k次（k=lg2n）
+ * 等比数列求和：n+n/2+n/4+n/8+…+1 = 2n
+ */
+
 public class FindkthInArray {
 
     public static void main(String[] args) {
         int[] array =  {92, 5, 88, 13, 80,7};
-        System.out.println(findKthLargest(array,2));
+        System.out.println(findKthLargest(array,5));
     }
 
     public static int findKthLargest(int[] nums,int k){
