@@ -1,8 +1,6 @@
 package jianzhioffer.putong;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 public class Sum3 {
 
@@ -12,6 +10,7 @@ public class Sum3 {
         System.out.println(threeSum(nums));
 
     }
+
 
     public static List<List<Integer>> threeSum(int[] nums) {
 
@@ -54,7 +53,6 @@ public class Sum3 {
                         // 从右向左找第一个与之前处理的数不同的数的下标
                         while (j<k&&nums[k]==nums[k+1]){
                             k--;
-
                         }
                     }
 
