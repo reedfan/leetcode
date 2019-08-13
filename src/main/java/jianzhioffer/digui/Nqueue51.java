@@ -1,40 +1,35 @@
 package jianzhioffer.digui;
 
-/**
- * created by reedfan on 2019/8/12 0012
- */
-
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
-/**
- * 给定一个整数 n，返回 n 皇后不同的解决方案的数量。
-
- 示例:  leetcode 52
-
- 输入: 4
- 输出: 2
- */
-public class TotalNQueens52 {
-
+public class Nqueue51 {
 
     public static void main(String[] args) {
-        new TotalNQueens52().totalNQueens(4);
+        new Nqueue51().solveNQueens(4);
     }
-    int cnt = 0;
+    List<List<String>> res = new ArrayList<>();
 
-    public int totalNQueens(int n) {
+    public List<List<String>> solveNQueens(int n) {
         if(n < 1){
-            return 0;
+            return res;
         }
-        List<Integer>list = new ArrayList<>();
+        List<Integer> list = new ArrayList<>();
 
-         help(0,n,list);
-         return cnt;
+        help(0,n,list);
+        return res;
     }
     private void help(int row, int n, List<Integer> list){
         if(row == n){
-            cnt++;
+            List<String> strList = new ArrayList<>();
+            for(Integer num:list){
+                char[] t = new char[n];
+                Arrays.fill(t,'.');
+                t[num] = 'Q';
+                strList.add(new String(t));
+            }
+            res.add(strList);
             return;
 
         }
@@ -44,9 +39,9 @@ public class TotalNQueens52 {
             if (!list.contains(col)) {
                 //左斜与右协是否哈法
                 if(!isDiagonalAttack(list,col)){
-                   list.add(col);
-                   help(row+1,n,list);
-                   //回溯
+                    list.add(col);
+                    help(row+1,n,list);
+                    //回溯
                     list.remove(list.size()-1);
                 }
             }
