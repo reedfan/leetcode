@@ -56,7 +56,7 @@ public class PermuteUnique47 {
             }
             swap(nums, start, i);
             //这里是start+1
-            process(nums, i + 1);
+            process(nums, start + 1);
             swap(nums, start, i);
         }
     }
