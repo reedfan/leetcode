@@ -1,4 +1,4 @@
-package jianzhioffer.digui;
+package jianzhioffer.erfen;
 
 /**
  * 实现 int sqrt(int x) 函数。
@@ -27,7 +27,11 @@ package jianzhioffer.digui;
 public class MySqrt69 {
     public int mySqrt(int x) {
 
-        int mid = x;
+        int start = 0;
+        int end = x;
+        while (start <= end){
+
+        }
 
 
 
