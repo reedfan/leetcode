@@ -2,6 +2,7 @@ package jianzhioffer.digui;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -23,7 +24,7 @@ import java.util.List;
  */
 public class PermuteUnique47 {
     public static void main(String[] args) {
-        int[] nums = {1, 1, 2};
+        int[] nums = {1, 1, 1};
         new PermuteUnique47().permuteUnique(nums);
 
     }
@@ -50,10 +51,12 @@ public class PermuteUnique47 {
             return;
         }
 
+        HashSet<Integer>set = new HashSet<>();  //保存当前要交换的位置已经有过哪些数字了
         for (int i = start; i < nums.length; i++) {
-            if (i > start && nums[i] == nums[i - 1]) {
+            if (set.contains(nums[i])) {   //如果存在了就跳过，不去交换
                 continue;
             }
+            set.add(nums[i]);
             swap(nums, start, i);
             //这里是start+1
             process(nums, start + 1);
