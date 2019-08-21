@@ -46,7 +46,6 @@ public class IsPalindrome9 {
             x = x % help / 10;
             help /= 100;
         }
-
         return true;
     }
 
