@@ -30,11 +30,7 @@ public class BuildTree105 {
             return null;
         }
 
-
-
-
-
-        return null;
+        return help(preorder,0,preorder.length-1,inorder,0,inorder.length-1);
     }
 
     private TreeNode help(int[] preorder, int pStart, int pEnd, int[] inorder, int iStart, int iEnd){
@@ -47,11 +43,8 @@ public class BuildTree105 {
         while (inorder[index] != preorder[0]){
             index++;
         }
-
-
-     //   treeNode.left = help(preorder,pStart+1,pStart+index,inorder,iStart,);
-
-
+        treeNode.left = help(preorder,pStart+1,pStart+index,inorder,iStart,iStart+index-1);
+        treeNode.right = help(preorder,pStart+index+1,pStart+index,inorder,iStart,iEnd);
 
         return treeNode;
 
