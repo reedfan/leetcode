@@ -1,4 +1,4 @@
-package jianzhioffer.tanxin;
+package jianzhioffer.gredy;
 
 /**
  * 给定一个非负整数数组，你最初位于数组的第一个位置。

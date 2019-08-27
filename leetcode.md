@@ -1,6 +1,8 @@
 
 ### 1. 数组问题
 >[排序类问题](https://blog.csdn.net/reed1991/article/details/53364594)
+
+>[二分查找类问题](https://blog.csdn.net/reed1991/article/details/53341385)
 ### 2. 字符串问题
 ### 3. 栈、队列、优先队列
 >[栈的应用](https://blog.csdn.net/reed1991/article/details/99059673)

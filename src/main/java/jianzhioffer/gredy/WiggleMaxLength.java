@@ -1,4 +1,4 @@
-package jianzhioffer.tanxin;
+package jianzhioffer.gredy;
 
 import org.junit.Test;
 

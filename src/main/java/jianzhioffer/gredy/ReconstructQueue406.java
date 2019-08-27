@@ -1,4 +1,4 @@
-package jianzhioffer.tanxin;
+package jianzhioffer.gredy;
 
 import java.util.Arrays;
 import java.util.Comparator;
