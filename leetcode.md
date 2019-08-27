@@ -22,5 +22,9 @@
 ### 8. 滑动窗口问题
 >[滑动窗口问题](https://blog.csdn.net/reed1991/article/details/98799744)
 
-### 9. 数学类问题
+### 9. 回文问题
+>[回文问题](https://blog.csdn.net/reed1991/article/details/98885870)
+
+
+### 10. 数学类问题
 >[数学类问题](https://blog.csdn.net/reed1991/article/details/53792326)
