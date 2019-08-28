@@ -1,4 +1,4 @@
-##Select执行顺序
+## Select执行顺序
 
 Where，group by，having，order by
 
@@ -7,7 +7,7 @@ Where，group by，having，order by
 Select  s_name, avg(score) from student
 
 Where score >= 60 group by s_name having (s_score)>=70  order by avg(s_score) desc
-##四种索引
+## 四种索引
 
 主键和唯一索引的区别
 
