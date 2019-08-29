@@ -53,6 +53,7 @@ public class combinationSum39 {
     }
 
     private void process(int start, int[] candidates, int target, List<Integer> list) {
+        //递归的终止条件
         if (target < 0) {
             return;
         }

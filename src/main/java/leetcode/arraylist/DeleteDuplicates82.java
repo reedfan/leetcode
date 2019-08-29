@@ -24,11 +24,29 @@ public class DeleteDuplicates82 {
         listNode1.next = new ListNode(2);
         listNode1.next.next = new ListNode(3);
         listNode1.next.next.next = new ListNode(3);
-    //    listNode1.next.next.next.next = new ListNode(5);
+        listNode1.next.next.next.next = new ListNode(5);
         System.out.println(new DeleteDuplicates82().deleteDuplicates(listNode1));
     }
 
+    //递归写法
     public ListNode deleteDuplicates(ListNode head) {
+        if (head == null) {
+            return head;
+        }
+
+        if (head.next != null && head.val == head.next.val) {
+            while (head != null && head.next != null && head.val == head.next.val) {
+                head = head.next;
+            }
+            //去掉所有重复的数字，然后进行递归
+            return deleteDuplicates(head.next);
+        } else {
+            head.next = deleteDuplicates(head.next);
+        }
+        return head;
+    }
+    //非递归写法
+    public ListNode deleteDuplicates1(ListNode head) {
         if (head == null || head.next == null) {
             return head;
         }
