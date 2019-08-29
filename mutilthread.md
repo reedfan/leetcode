@@ -1,9 +1,11 @@
 
-# 创建线程的三种方式
+## 创建线程的三种方式
 
 1.extends Thread     
 
 2.implements Runnable
+
+3.使用callable
 
 ```
 public class CallableTest {
@@ -36,6 +38,11 @@ public class CallableTest {
 
 }
 ```
+## run()和start()的区别？多次start一个线程会怎么样？
+
+run()方法依旧只有主线程，start（）方法会启动一个线程来执行。
+
+多次start一个线程会报错 java.lang.IllegalThreadStateException [具体原因](https://blog.csdn.net/reed1991/article/details/58597542)
 
 
 
@@ -74,6 +81,7 @@ sleep方法没有释放锁，wait释放锁，进入等待池等待，出让系�
  
 
 join 让主线程等待子线程结束后再运行。
+
 作用1：让线程顺序执行
 
  ```
@@ -127,11 +135,10 @@ join 让主线程等待子线程结束后再运行。
      }
  }
  ```
-
  
-JAVA 线程池
+## JAVA 线程池
 
-Java四种线程池
+#### Java四种线程池
 
 newFixedThreadPool 创建一个定长线程池，超出的线程会放在队列中等待corePoolSize为nThread，maximumPoolSize为nThread适用：执行长期的任务，性能好很多
 
@@ -143,7 +150,7 @@ newSingleThreadExecutor 创建一个单线程化的线程池，它只会用唯�
 
  
 
-相比new Thread，Java提供的四种线程池的好处在于
+#### 相比new Thread，Java提供的四种线程池的好处在于
 
 1.重用存在的线程，减少对象的创建、销毁的开销
 
@@ -152,16 +159,30 @@ newSingleThreadExecutor 创建一个单线程化的线程池，它只会用唯�
 3.提高线程的可管理性，线程是稀缺资源，如果无限的创建，不仅消耗系统资源，还会降低系统的稳定性，使用线程池可以进行统一的分配、调优和监控。
 
  
+##### 线程池任务执行流程：
 
 核心线程----》工作队列---〉》非核心线程----〉》拒绝策略
 
+当线程池小于corePoolSize时，新提交任务将创建一个新线程执行任务，即使此时线程池中存在空闲线程。
+
+当线程池达到corePoolSize时，新提交任务将被放入workQueue中，等待线程池中任务调度执行
+
+当workQueue已满，且maximumPoolSize>corePoolSize时，新提交任务会创建新线程执行任务
+
+当提交任务数超过maximumPoolSize时，新提交任务由RejectedExecutionHandler处理
+
+当线程池中超过corePoolSize线程，空闲时间达到keepAliveTime时，关闭空闲线程
+
+当设置allowCoreThreadTimeOut(true)时，线程池中corePoolSize线程空闲时间达到keepAliveTime也将关闭
  
 
-1.线程池固定数目大小  CPU密集型
+##### 线程池固定数目大小 
 
-最佳线程数目=（线程等待时间/线程运行时间+1）*CPU数目
+如果是CPU密集型任务，就需要尽量压榨CPU，参考值可以设为 NCPU+1
 
-2.线程池的核心参数
+如果是IO密集型任务，参考值可以设置为2*NCPU
+
+##### 线程池的核心参数
 
 corePollsize：核心线程数
 
@@ -182,7 +203,7 @@ AbortPolicy 丢弃任务并抛出异常
 DiscardPolicy 丢弃任务，不抛出异常
 
  
-synchronized 的底层怎么实现
+## synchronized 的底层怎么实现
 
 同步代码块(Synchronization)基于进入和退出管程(Monitor)对象实现。每个对象有一个监视器锁（monitor）。当monitor被占用时就会处于锁定状态，线程执行monitorenter指令时尝试获取monitor的所有权，过程如下：
 
@@ -195,7 +216,7 @@ synchronized 的底层怎么实现
 被 synchronized 修饰的同步方法并没有通过指令monitorenter和monitorexit来完成（理论上其实也可以通过这两条指令来实现），不过相对于普通方法，其常量池中多了ACC_SYNCHRONIZED标示符。JVM就是根据该标示符来实现方法的同步的：当方法调用时，调用指令将会检查方法的 ACC_SYNCHRONIZED 访问标志是否被设置，如果设置了，执行线程将先获取monitor，获取成功之后才能执行方法体，方法执行完后再释放monitor。在方法执行期间，其他任何线程都无法再获得同一个monitor对象。 其实本质上没有区别，只是方法的同步是一种隐式的方式来实现，无需通过字节码来完成
 
  
-AQS AbstractQueuedSynchronized 抽象的队列同步器
+## AQS AbstractQueuedSynchronized 抽象的队列同步器
 
 AQS的实现依赖内部同步队列（FIFO双向队列），如果当前线程获取同步状态失败，AQS会将该线程以及其等待状态信息构造成一个Node，将其加入同步队列器的尾部，同时阻塞当前线程，当同步状态释放时，唤醒队列的头结点。
 
@@ -252,9 +273,7 @@ Java ExecutorService中execute()和submit()方法的区别
 方法execute()在默认情况下异常直接抛出（即打印堆栈信息），不能捕获，但是可以通过自定义ThreadFactory的方式进行捕获（通过setUncaughtExceptionHandler方法设置），而submit()方法在默认的情况下可以捕获异常
 
 方法execute()提交的未执行的任务可以通过remove(Runnable)方法删除，而submit()提交的任务即使还未执行也不能通过remove(Runnable)方法删除
-run()和start()的区别
 
-run()方法依旧只有主线程，start（）方法会启动一个线程来执行
 lock和synchronized
 
 lock                       synchronized
