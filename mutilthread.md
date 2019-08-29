@@ -1,9 +1,9 @@
 
 ## 创建线程的三种方式
 
-1.extends Thread     
+1.extends Thread   (Thread其实也继承了Runnable，并做了一定的封装)    
 
-2.implements Runnable
+2.implements Runnable (更推荐，因为还可以继承其他父类)
 
 3.使用callable
 
@@ -38,6 +38,10 @@ public class CallableTest {
 
 }
 ```
+
+Callable接口中只有一个call()方法，和Runnable相比，该方法有返回值并允许抛出异常。但是Thread的target必须是实现了Runnable接口的类对象，所以Callable对象无法直接作为Thread对象的接口；所以要想作为target，必须同时实现Runnable接口。
+Java提供了一个FutureTask类，该类实现了Runnable接口，该类的run()方法会调用Callable对象的call()方法，这样就能把Callable和Thread结合起来使用了。同时为了方便对Callable对象的操作，Java还提供了Future接口。
+
 ## run()和start()的区别？多次start一个线程会怎么样？
 
 run()方法依旧只有主线程，start（）方法会启动一个线程来执行。
@@ -138,7 +142,7 @@ join 让主线程等待子线程结束后再运行。
  
 ## JAVA 线程池
 
-#### Java四种线程池
+### Java四种线程池
 
 newFixedThreadPool 创建一个定长线程池，超出的线程会放在队列中等待corePoolSize为nThread，maximumPoolSize为nThread适用：执行长期的任务，性能好很多
 
@@ -150,7 +154,7 @@ newSingleThreadExecutor 创建一个单线程化的线程池，它只会用唯�
 
  
 
-#### 相比new Thread，Java提供的四种线程池的好处在于
+### 相比new Thread，Java提供的四种线程池的好处在于
 
 1.重用存在的线程，减少对象的创建、销毁的开销
 
@@ -159,7 +163,7 @@ newSingleThreadExecutor 创建一个单线程化的线程池，它只会用唯�
 3.提高线程的可管理性，线程是稀缺资源，如果无限的创建，不仅消耗系统资源，还会降低系统的稳定性，使用线程池可以进行统一的分配、调优和监控。
 
  
-##### 线程池任务执行流程：
+### 线程池任务执行流程：
 
 核心线程----》工作队列---〉》非核心线程----〉》拒绝策略
 
@@ -175,14 +179,17 @@ newSingleThreadExecutor 创建一个单线程化的线程池，它只会用唯�
 
 当设置allowCoreThreadTimeOut(true)时，线程池中corePoolSize线程空闲时间达到keepAliveTime也将关闭
  
+### 核心线程和工作线程的区别
 
-##### 线程池固定数目大小 
+工作线程设置了过期时间，当线程池中线程数大于corepoolsize时，keepalivetime为多余空闲线程等待任务的最长时间，超过这个时间后多余的线程将会被终止。
+
+### 线程池核心线程数如何确定 
 
 如果是CPU密集型任务，就需要尽量压榨CPU，参考值可以设为 NCPU+1
 
 如果是IO密集型任务，参考值可以设置为2*NCPU
 
-##### 线程池的核心参数
+### 线程池的核心参数
 
 corePollsize：核心线程数
 
