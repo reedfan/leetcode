@@ -24,7 +24,7 @@ import java.util.List;
  */
 public class PermuteUnique47 {
     public static void main(String[] args) {
-        int[] nums = {1, 1, 1};
+        int[] nums = {1,1,3};
         new PermuteUnique47().permuteUnique(nums);
 
     }

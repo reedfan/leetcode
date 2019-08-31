@@ -1,8 +1,10 @@
 
 
-![leetcode1](https://github.com/reedfan/leetcode-/blob/master/leetcode.md)
+![leetcode](https://github.com/reedfan/leetcode-/blob/master/leetcode.md)
 
 ![java 基础](https://github.com/reedfan/leetcode-/blob/master/basicjava.md)
+
+![java 多线程](https://github.com/reedfan/leetcode-/blob/master/mutilthreas.md)
 
 ![spring](https://github.com/reedfan/leetcode-/blob/master/spring.md)
 

@@ -10,6 +10,9 @@
 ### 4. 二叉树和递归
 >[树的遍历](https://blog.csdn.net/reed1991/article/details/53363543)
 ### 5. 递归与回溯
+>[回溯题的一些套路](https://leetcode-cn.com/circle/article/GV6eQ2/)
+
+>[递归回溯专题](https://blog.csdn.net/reed1991/article/details/58637729)
 ### 6. 贪心算法
 >[贪心算法](https://blog.csdn.net/reed1991/article/details/96470577)
 

@@ -25,7 +25,6 @@ import java.util.List;
 public class PermuteUnique47BackTracking {
     List<List<Integer>> lists = new ArrayList<>();
     boolean[] visited;
-
     public List<List<Integer>> permuteUnique(int[] nums) {
         if (nums == null || nums.length == 0) {
             return lists;
@@ -53,7 +52,7 @@ public class PermuteUnique47BackTracking {
                 continue;
             }
 
-            ////i-1和i的值相等，且i-1没被用过（之后可能会被用就产生重复）
+            //i-1和i的值相等，且i-1没被用过（之后可能会被用就产生重复）
 
             //基本难点就是要去掉重复的
             //以这个[1,1,2]为例

@@ -41,7 +41,6 @@ import java.util.List;
 
 public class combinationSum40 {
     List<List<Integer>> lists = new ArrayList<>();
-
     public List<List<Integer>> combinationSum2(int[] candidates, int target) {
         if (candidates == null || candidates.length == 0 || target < 0) {
             return lists;
