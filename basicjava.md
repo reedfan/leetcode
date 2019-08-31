@@ -1,6 +1,232 @@
 
 
 
+
+Object类定义的九个方法
+
+ getClass()   hashcode()   toString()  wait()  notify()  notifyAll()  wait(long times) equals() wait(long timeout int nanous)
+String为什么是final类型的
+
+1.因为字符串是不可变的，所以是线程安全的
+
+2.字符串是不可变的，字符串池才有可能实现，如果噶能变的话，
+
+  A和B指向同一个地址，A改变值，B也要跟着改变了。
+
+ 3.字符串是不可变的，所以它在创建的时候hashcode就被缓存了，
+
+ 不需要重新计算。如果可以变，比如用StringBuilder做模拟，
+
+ str1 = a ，str2 = ab， str3 = str1，str2+=b，
+
+ 则set中的值为两个ab，显然违背了set的本意
+
+ 
+java中为什么要单继承，多实现
+
+若为多继承，那么当多个父类中有重复的属性或者方法时，子类的调用结果会含糊不清，因此用了单继承。
+
+为什么是多实现呢。
+
+通过实现接口拓展了类的功能，若实现的多个接口中有重复的方法也没关系，因为实现类中必须重写接口中的方法，所以调用时还是调用的实现类中重写的方法。那么各个接口中重复的变量又是怎么回事呢。 
+
+接口中，所有属性都是 static final修饰的，即常量，这个什么意思呢，由于JVM的底层机制，所有static final修饰的变量都在编译时期确定了其值，若在使用时，两个相同的常量值不同，在编译时期就不能通过。
+volatile
+
+volatile的本质是告诉jvm，当前变量在寄存器中的值是不确定的，需要从主存中读取。
+
+Volatile可以禁止语义重排
+
+Volatile的作用实例：很多线程用同一个标识符判断某件事是否执行，当一个线程改变这个标识的时候，能立即被其他线程看见
+Collection
+
+ArrayList 线程不安全 初始容量为10，1.5倍扩容 扩容后将老数组的值复制到新数组
+
+在每次添加新的元素时，ArrayList都会检查是否需要进行扩容操作，扩容操作带来数据向新数组的重新拷贝，所以如果我们知道具体业务数据量， 在构造ArrayList时可以给ArrayList指定一个初始容量，这样就会减少扩容时数据的拷贝问题。
+
+ 
+
+HashMap在jdk1.7是头插法，JDK1.8改成了尾插法，解决哈希冲突是用链表
+Hashmap和HashTable
+
+hashmap继承自abstractmap， hashtable继承自Dictionary
+
+HashMap可以有一个key为null，value可以为null，     hashtable放入key和value都不能为null
+
+HashMap不是现成安全的，       Hashtable是线程安全的，他的所有的方法都用synchronized加锁了
+hashmap的负载因子为什么是0.75
+
+简单翻译一下就是在理想情况下,使用随机哈希码,节点出现的频率在hash桶中遵循泊松分布，同时给出了桶中元素个数和概率的对照表
+
+从上面的表中可以看到当桶中元素到达8个的时候，概率已经变得非常小，也就是说用0.75作为加载因子，每个碰撞位置的链表长度超过８个是几乎不可能的。
+HashMap的遍历
+
+既需要key，又需要value，用entrySet。因为entryset会多一次查询map。更优雅的方式map.forEach
+
+只需要key，可以用keyset。
+多态
+
+同一消息可以根据发送对象的不同而采用多种不同的行为方式。
+
+多态存在的三个必要条件
+
+1.要有继承
+
+2.要有重写
+
+3.父类引用指向子类的对象
+泛型
+
+在编译之后，程序会采取去泛型化的措施。Java中的泛型，只在编译阶段有效。在编译过程中，正确检查泛型结果后，会将泛型的相关信息擦除。也就是说，泛型信息不会进入到运行阶段。
+
+泛型的好处:
+
+1.泛型可以知道一个对象的限定类型是什么，比较安全
+
+2.消除了强制类型转换，使得代码可读性好，消除了出错的机会。
+
+泛型：即参数化类型，所谓参数化类型，是指操作的数据类型在定义时被指定为一个参数，然后在使用时传入具体的类型。
+
+泛型不能为基本类型
+
+ 
+
+可以自定义泛型，泛型在Java集合类框架中被广泛的使用
+方法覆盖与方法重载
+
+方法覆盖：子类重新定义了父类的方法，有相同的类型、参数列表和返回类型
+
+方法重载：同一个类有两个或者多个方法的方法名相同，但是参数不同
+接口、抽象类
+
+类可以实现多个接口，但是只能继承一个抽象类
+
+Java接口中声名的变量默认是final类型的，抽象类可以包含非final类型变量
+
+抽象类可以有默认的方法实现，接口完全抽象的，根本不存在方法的实现
+
+抽象方法可以有public、protected、default这些修饰，接口方法默认修饰是public
+
+AbstractMap是Map接口的实现类之一，也是HashMap、TreeMap、ConcurrentHashMap等的父类， AbstractMap提供了Map的基本实现，使得我们以后要实现一个Map不用从头开始，只需要继承AbstractMap。
+
+ 
+Java反射机制
+
+反射机制是在运行状态中，对于任意一个类，都能知道这个类的所有属性和方法
+
+getDeclaredField 获得一个类的所有字段
+
+getField 获取类的public字段
+
+getDeclaredMethods（） 获取类的所有方法
+
+getMethods（） 返回某个类的所有公用方法
+
+getDeclaredConstructor（） 返回所有的构造器
+
+getConstructor（） 返回public构造函数
+
+ 
+
+Java反射的作用：
+
+在IDEA中输入一个类，按".",编译器就会自动列出他的属性和方法，这里就会用到反射。
+动态代理和静态代理的区别
+
+代理模式是常用的Java设计模式，其特征是代理类与委托类有同样的接口，代理类主要负责为委托类预处理消息、过滤消息、把消息传给委托类，以及事后处理消息等。代理类与委托类之间通常会存在关联关系，一个代理类的对象与一个委托类的对象关联，代理类的对象并不真正实现服务，而是通过调用委托类的对象的相关的方法，来提供特点的服务。
+
+按照代理类创建的时期，代理类可分为两种。
+
+静态代理类：由程序员创建或由特定工具生成源代码，再对其编译。在程序运行前，代理类的.class文件就已经存在了。
+
+动态代理类：在程序运行时，运用反射机制动态创建而成。
+Error类和Exception类都是Throwable类
+
+Error 系统中的错误 Exception（异常）
+
+checkedException try-catch捕获 比如IOexception，ClassNotFoundException
+
+runtimeExeception 空指针，数组越界
+
+NOClassDefFoundError是运行时报错，是一个错误（Error），
+
+ClassNotFoundException 是一个异常，可捕获       
+
+ 
+
+NOClassDefFoundError 要查找的类在编译时是存在的，运行时却找不到了，new操作来创建一个新的对象但却找不到该对象的类。
+
+ 
+
+ClassNotFoundException 编译的时候就找不到，class.forName动态加载
+
+ 
+
+常见的Exception
+
+1.nullpointerExeception  2.classnotfoundExcetion 3. .arithmeticexception（数据运算异常）4. java.lang.arrayindexoutofboundsexception （数组下标越界）
+
+5.ClassCastException（类型强制转换异常）
+
+ 
+
+对于try..catch捕获异常的形式来说，对于异常的捕获，可以有多个catch。对于try里面发生的异常，他会根据发生的异常和catch里面的进行匹配(怎么匹配，按照catch块从上往下匹配)，当它匹配某一个catch块的时候，他就直接进入到这个catch块里面去了，后面在再有catch块的话，它不做任何处理，直接跳过去，全部忽略掉。如果有finally的话进入到finally里面继续执行。换句话说，如果有匹配的catch，它就会忽略掉这个catch后面所有的catch。对我们这个方法来说，抛出的是IOException，当执行etct.doSomething();时，可能会抛出IOException，一但抛出IOException，它首先进入到catch (Exception e) {}里面，先和Exception匹配，由于OExceptionextends Exception,根据多态的原则，IOException是匹配Exception的，所以程序就会进入到catch (Exception e) {}里面，进入到第一个catch后，后面的catch都不会执行了，所以catch (IOException e) {}永远都执行不到，就给我们报出了前面的错误:已捕捉到异常 java.io.IOException。
+
+ 
+
+总结:在写异常处理的时候，一定要把异常范围小的放在前面，范围大的放在后面，Exception这个异常的根类一定要刚在最后一个catch里面，如果放在前面或者中间，任何异常都会和Exception匹配的，就会报已捕获到...异常的错误。
+
+static
+
+修饰变量：类加载时初始化，JVM只分配一次内存，所有类共享静态变量。
+
+修饰方法:在类加载时就存在，不依赖任何实例：static方法必须实现，不能用abstract修饰。
+
+修饰代码块：在类加载完之后会执行代码块中的内容。static代码块有多个，JVM会按照他们在类中出现的先后顺序依次执行它们，每个代码块只被执行一次。
+
+static final用来修饰成员变量和成员方法，可简单理解为“全局变量”！
+
+当需要一个方法一初始化就要运行的时候，就要用static来修饰。
+序列化与反序列化
+
+序列化：将数据分解成字节流，以便存储在文件中或在网络上传输
+
+反序列化：打开字节流并重构对象。
+
+在运行反序列化时，JVM会将传来的字节流的SeriaVersionUID与本地相应实体（类）的seriaVersionUID进行比较，如果相同就认为是一致的，可以进行反序列化，否则会出现序列化版本不一致异常。
+
+如果没有显示声名序列号，程序在编译时会自己生成这个版本的序列号。在存储文件中，如果在你更改实体类的时候又会重新生成一个序列号，在程序运行的时候，Java的序列化机制在运行时判断类的serialVersionUID来验证版本一致性的。
+
+Java序列化排除序列化字段 transient
+IO与NIO
+
+IO                   NIO
+
+面向流                   面向缓冲
+
+阻塞IO                非阻塞IO
+
+无                 选择器
+
+ 
+
+NIO的核心在于：通道和缓冲区（Buffer）， 通道表示IO源到IO设备（例如：文件，套接字）的链接，Channel负责传输，Buffer负责存储
+
+FileInputStream/FileOutPutStream字节流
+
+FileReader/FileWriter字符流
+
+ 
+值传递和引用传递
+
+值传递是指在调用函数时将实际数复制一份传递到函数中，这样在函数中如果对形参进行修改，将不会影响到实际参数。简单来说就是直接复制了一份数据过去，因为是直接复制，所以这种方式在复制时如果传递的数据非常大，运行效率将会降低，所以Java在传递数据量很小的时候是值传递，比如Java的基本类型：int,float,double,boolean等类型。
+
+引用传递操作的是源数据，二维数组，List，Map等除了基本的数据类型都是引用传递。
+Serizable
+
+当我们定义了一个实现Serializable接口的类之后，一般我们会手动在类内部定义一个private static final long serialVersionUID字段，用来保存当前类的序列版本号。这样做的目的就是唯一标识该类，其对象持久化之后这个字段将会保存到持久化文件中，当我们对这个类做了一些更改时，新的更改可以根据这个版本号找到已持久化的内容，来保证来自类的更改能够准确的体现到持久化内容中。而不至于因为未定义版本号，而找不到原持久化内容。
+
+
 ## 多线程总结
  thread.setName(“设置一个线程名称”);这是一种规范，在创建线程完成以后，都需要设置名称。
  

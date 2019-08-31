@@ -4,7 +4,7 @@
 
 ![java 基础](https://github.com/reedfan/leetcode-/blob/master/basicjava.md)
 
-![java 多线程](https://github.com/reedfan/leetcode-/blob/master/mutilthreas.md)
+![java 多线程](https://github.com/reedfan/leetcode-/blob/master/mutilthread.md)
 
 ![spring](https://github.com/reedfan/leetcode-/blob/master/spring.md)
 
