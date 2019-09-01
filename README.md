@@ -6,6 +6,8 @@
 
 ![java 多线程](https://github.com/reedfan/leetcode-/blob/master/mutilthread.md)
 
+![java 虚拟机](https://github.com/reedfan/leetcode-/blob/master/jvm.md)
+
 ![spring](https://github.com/reedfan/leetcode-/blob/master/spring.md)
 
 ![操作系统](https://github.com/reedfan/leetcode-/blob/master/os.md)

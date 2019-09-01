@@ -51,7 +51,6 @@ public class Nqueue51 {
     }
 
     private boolean isDiagonalAttack(List<Integer> currentQueen, int i) {
-        // TODO Auto-generated method stub
         int currentRow = currentQueen.size();
         int currentCol = i;
         //判断每一行的皇后的情况

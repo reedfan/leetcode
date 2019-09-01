@@ -24,29 +24,25 @@ package leetcode.gredy;
  */
 public class Jump45 {
     public static void main(String[] args) {
-        int[] nums = {2,3,1,1,4};
+        int[] nums = {2, 3, 1, 1, 4};
         System.out.println(new Jump45().jump(nums));
     }
+
     public int jump(int[] nums) {
         int cnt = 0;
         if (nums == null || nums.length == 0) {
             return cnt;
         }
         int len = nums.length;
-        int maxPos = 0;
-        int right = 0;   //此次最远能到达的位置
+        int maxPos = 0; //此次最远能到达的位置
+        int right = 0;   //上次最远能到达的位置
 
-        /**
-         * 这里要注意一个细节，就是 for 循环中，i < nums.length - 1，少了末尾。因为开始的时候边界是第 0 个位置，steps 已经加 1 了。
-         * 如下图，如果最后一步刚好跳到了末尾，此时 steps 其实不用加 1 了。如果是 i < nums.length，i 遍历到最后的时候，会进入 if 语句中，steps 会多加 1 。
-         */
         for (int i = 0; i < len - 1; i++) {
             maxPos = (nums[i] + i) > maxPos ? (nums[i] + i) : maxPos;
-            if(i == right){
+            if (i == right) {
                 cnt++;
                 right = maxPos;
             }
-
 
         }
 

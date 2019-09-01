@@ -194,6 +194,7 @@ Select * from A right join B on A.id = B.id
 内连接：只有两个表相匹配的行才在表中显现出来
 
 外链接：包含表中的所有数据
+
 ## MyIsam和InnerDb
 
 MyISAM类型不支持事务处理等高级处理，而InnoDB类型支持。MyISAM类型的表强调的是性能，其执行数度比InnoDB类型更快，但是不提供事务支持，而InnoDB提供事务支持以及外部键等高级数据库功能。
