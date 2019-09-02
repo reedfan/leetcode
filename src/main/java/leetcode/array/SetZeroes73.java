@@ -47,6 +47,7 @@ public class SetZeroes73 {
         int col = matrix[0].length;
         boolean firstColHasZero = false;
         for (int i = 0; i < row ; i++) {
+            //第一列是否有0值
             if(matrix[i][0] == 0){
                 firstColHasZero = true;
             }
@@ -61,6 +62,7 @@ public class SetZeroes73 {
         }
 
 
+        //行置零
         for (int i = 1; i < row; i++) {
             if(matrix[i][0] == 0){
                 for (int j = 1; j <col; j++) {
@@ -69,6 +71,7 @@ public class SetZeroes73 {
             }
         }
 
+        //列置零
         for (int i = 1; i < col; i++) {
             if(matrix[0][i] == 0){
                 for (int j = 1; j<row; j++) {

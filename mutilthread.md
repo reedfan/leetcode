@@ -1,4 +1,6 @@
 
+
+
 ## 创建线程的三种方式
 
 1.extends Thread   (Thread其实也继承了Runnable，并做了一定的封装)    
