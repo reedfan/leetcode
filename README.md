@@ -17,3 +17,5 @@
 ![计算机网络](https://github.com/reedfan/leetcode-/blob/master/computernetwork.md)
 
 ![设计模式](https://github.com/reedfan/leetcode-/blob/master/designpattern.md)
+
+![分布式](https://github.com/reedfan/leetcode-/blob/master/distribution.md)
