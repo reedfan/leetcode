@@ -33,9 +33,12 @@ public class Subsets78 {
     private ArrayList<List<Integer>> res;
 
     public List<List<Integer>> subsets(int[] nums) {
-        Stack<Integer> stack = new Stack<>();
+        res  = new ArrayList<>();
+        if (nums == null || nums.length == 0) {
+            return res;
+        }
         List<Integer> list = new ArrayList<>();
-//        res.add(list);
+        res.add(new ArrayList<>());
         generate(0, nums, list);
         return res;
     }
@@ -45,9 +48,11 @@ public class Subsets78 {
         if (start >= nums.length) {
             return;
         }
+        //选择放入次数
         list.add(nums[start]);
         res.add(new ArrayList<>(list));
         generate(start + 1, nums, list);
+        //选择不放入次数
         list.remove(list.size()-1);
         generate(start + 1, nums, list);
     }
@@ -68,20 +73,16 @@ public class Subsets78 {
     }
 
     public List<List<Integer>> subsets1(int[] nums) {
-
         res = new ArrayList<>();
         if (nums == null || nums.length == 0) {
             return res;
         }
         List<Integer> list = new ArrayList<>();
         int len = nums.length;
-
         for (int i = 0; i <= len; i++) {
-
             generateCombinations(nums, len, i, 0, list);
         }
         return res;
-
     }
 
 
