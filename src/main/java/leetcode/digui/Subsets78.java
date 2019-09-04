@@ -2,6 +2,7 @@ package leetcode.digui;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
 
 /**
  * 给定一组不含重复元素的整数数组 nums，返回该数组所有可能的子集（幂集）。
@@ -28,7 +29,28 @@ import java.util.List;
  * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
  */
 public class Subsets78 {
+
     private ArrayList<List<Integer>> res;
+
+    public List<List<Integer>> subsets(int[] nums) {
+        Stack<Integer> stack = new Stack<>();
+        List<Integer> list = new ArrayList<>();
+//        res.add(list);
+        generate(0, nums, list);
+        return res;
+    }
+
+    private void generate(int start, int[] nums, List<Integer> list) {
+        //终止条件
+        if (start >= nums.length) {
+            return;
+        }
+        list.add(nums[start]);
+        res.add(new ArrayList<>(list));
+        generate(start + 1, nums, list);
+        list.remove(list.size()-1);
+        generate(start + 1, nums, list);
+    }
 
     // 求解C(n,k), 当前已经找到的组合存储在c中, 需要从start开始搜索新的元素
     private void generateCombinations(int[] nums, int n, int k, int start, List<Integer> list) {
@@ -45,7 +67,7 @@ public class Subsets78 {
         }
     }
 
-    public List<List<Integer>> subsets(int[] nums) {
+    public List<List<Integer>> subsets1(int[] nums) {
 
         res = new ArrayList<>();
         if (nums == null || nums.length == 0) {

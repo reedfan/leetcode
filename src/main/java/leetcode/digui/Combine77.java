@@ -26,7 +26,6 @@ import java.util.List;
 public class Combine77 {
 
     private ArrayList<List<Integer>> res;
-
     // 求解C(n,k), 当前已经找到的组合存储在c中, 需要从start开始搜索新的元素
     private void generateCombinations(int n, int k, int start, List<Integer> list) {
         if (list.size() == k) {
