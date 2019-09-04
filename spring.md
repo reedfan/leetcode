@@ -9,6 +9,7 @@ request：一次Http请求，容器会返回该bean的同一实例
 session：每次会话创建一个实例
 
 globalsession：全局Httpsession中，容器会返回该bean的同一实例
+
 ## 2.Bean的生命周期
 
  1、实例化一个Bean－－也就是我们常说的new；
