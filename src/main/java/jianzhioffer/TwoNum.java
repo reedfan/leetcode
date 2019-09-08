@@ -1,4 +1,4 @@
-package leetcode1;
+package jianzhioffer;
 
 import java.util.HashMap;
 import java.util.Map;

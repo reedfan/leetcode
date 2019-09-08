@@ -1,4 +1,6 @@
-package leetcode.arraylist;
+package jianzhioffer;
+
+import leetcode.arraylist.ListNode;
 
 import java.util.ArrayList;
 
@@ -8,7 +10,7 @@ import java.util.ArrayList;
  * Time: 11:17
  * 从头到尾打印链表
  */
-public class Solution4 {
+public class PrintListFromTailToHead3 {
     ArrayList<Integer> result = new ArrayList<Integer>();
     public ArrayList<Integer> printListFromTailToHead(ListNode listNode) {
         if (listNode != null){

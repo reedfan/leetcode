@@ -1,4 +1,4 @@
-package leetcode1;
+package jianzhioffer;
 
 /**
  * created by reedfan on 2019/4/28 0028
