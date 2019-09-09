@@ -31,7 +31,35 @@ import java.util.List;
  * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
  */
 
-public class LevelOrder102 {
+public class N102LevelOrder {
+
+    List<List<Integer>> lists = new ArrayList<>();
+    public List<List<Integer>> levelOrderDFS(TreeNode root) {
+        DFS(root,0);
+        return lists;
+
+    }
+
+    private void DFS(TreeNode root, int level){
+        if(root == null){
+            return;
+        }
+        //当前层数还没有元素，先new一个空的列表
+        if(lists.size() <= level){
+            lists.add(new ArrayList<>());
+        }
+        //当前值加入
+        lists.get(level).add(root.val);
+        DFS(root.left,level+1);
+        DFS(root.right,level+1);
+    }
+
+
+
+
+
+
+    //BFS
 
     public List<List<Integer>> levelOrder(TreeNode root) {
         List<List<Integer>> lists = new ArrayList<>();
@@ -45,7 +73,6 @@ public class LevelOrder102 {
             List<Integer> newList = new ArrayList<>();
             for (int i = 0; i < cnt; i++) {
                 TreeNode node = list.peekFirst();
-                list.removeFirst();
                 newList.add(node.val);
                 if(node.left!=null){
                     list.add(node.left);

@@ -25,7 +25,7 @@ public class N27Permutation {
 
     }
 
-    // TODO: 2019-09-08  
+    // TODO: 2019-09-08
     List<List<Integer>> lists = new ArrayList<>();
 
     public List<List<Integer>> Permutation(int[] nums) {

@@ -40,7 +40,7 @@ package leetcode.tree;
  * 链接：https://leetcode-cn.com/problems/sum-root-to-leaf-numbers
  * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
  */
-public class SumNumbers129 {
+public class N129SumNumbers {
 
     public int sumNumbers(TreeNode root) {
         int sum = 0;

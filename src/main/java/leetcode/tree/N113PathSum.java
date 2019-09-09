@@ -31,7 +31,7 @@ import java.util.List;
  * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
  */
 
-public class PathSum113 {
+public class N113PathSum {
     List<List<Integer>> lists = new ArrayList<>();
     public List<List<Integer>> pathSum(TreeNode root, int sum) {
         if(root == null){

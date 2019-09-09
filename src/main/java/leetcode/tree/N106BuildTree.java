@@ -23,12 +23,12 @@ package leetcode.tree;
  * 链接：https://leetcode-cn.com/problems/construct-binary-tree-from-inorder-and-postorder-traversal
  * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
  */
-public class BuildTree106 {
+public class N106BuildTree {
 
     public static void main(String[] args) {
         int[] postorder = {9,15,7,20,3};
         int[] inorder = {9, 3, 15, 20, 7};
-        TreeNode node = new BuildTree106().buildTree( inorder,postorder);
+        TreeNode node = new N106BuildTree().buildTree( inorder,postorder);
 
     }
     public TreeNode buildTree(int[] inorder, int[] postorder) {

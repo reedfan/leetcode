@@ -35,14 +35,14 @@ import java.util.Stack;
  * 链接：https://leetcode-cn.com/problems/validate-binary-search-tree
  * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
  */
-public class IsValidBST98 {
+public class N98IsValidBST {
     public static void main(String[] args) {
         TreeNode node = new TreeNode(10);
         node.left = new TreeNode(5);
         node.right = new TreeNode(15);
         node.right.left = new TreeNode(6);
         node.right.right = new TreeNode(20);
-        new IsValidBST98().isValidBST(node);
+        new N98IsValidBST().isValidBST(node);
 
     }
 

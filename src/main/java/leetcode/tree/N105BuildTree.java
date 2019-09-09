@@ -24,11 +24,11 @@ package leetcode.tree;
  * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
  */
 
-public class BuildTree105 {
+public class N105BuildTree {
     public static void main(String[] args) {
         int[] preorder = {3, 9, 20, 15, 7};
         int[] inorder = {9, 3, 15, 20, 7};
-        new BuildTree105().buildTree(preorder, inorder);
+        new N105BuildTree().buildTree(preorder, inorder);
 
     }
 

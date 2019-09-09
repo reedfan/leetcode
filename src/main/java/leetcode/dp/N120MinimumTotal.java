@@ -23,7 +23,7 @@ import java.util.List;
  * 链接：https://leetcode-cn.com/problems/triangle
  * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
  */
-public class MinimumTotal120 {
+public class N120MinimumTotal {
 
     public static void main(String[] args) {
         List<Integer> list1 = new ArrayList<>();
@@ -47,7 +47,7 @@ public class MinimumTotal120 {
         lists.add(list4);
 
 
-        new MinimumTotal120().minimumTotal(lists);
+        new N120MinimumTotal().minimumTotal(lists);
     }
     public int minimumTotal(List<List<Integer>> triangle) {
         if(triangle == null || triangle.size() == 0){
