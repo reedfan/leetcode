@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * 给定一个整数 n，返回 n 皇后不同的解决方案的数量。
 
- 示例:  leetcode1 52
+ 示例:  jianzhioffer 52
 
  输入: 4
  输出: 2

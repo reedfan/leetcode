@@ -40,6 +40,10 @@ public class Search81 {
             if (nums[mid] == target) {
                 return true;
             }
+            if (nums[start] == nums[mid]) {
+                start++;
+                continue;
+            }
             //前半部分有序
             if (nums[start] < nums[mid]) {
                 //target在前半部分
@@ -49,15 +53,13 @@ public class Search81 {
                     start = mid + 1;
                 }
             } else {
-                if (nums[start] == nums[mid]) {
-                    start++;
-                } else {//后半部分有序
-                    //target在后半部分
-                    if (nums[mid] < target && nums[end] >= target) {
-                        start = mid + 1;
-                    } else {  //否则，去后半部分找
-                        end = mid - 1;
-                    }
+                //后半部分有序
+                //target在后半部分
+                if (nums[mid] < target && nums[end] >= target) {
+                    start = mid + 1;
+                } else {  //否则，去后半部分找
+                    end = mid - 1;
+
                 }
             }
         }

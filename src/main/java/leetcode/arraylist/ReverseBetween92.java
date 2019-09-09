@@ -14,6 +14,8 @@ package leetcode.arraylist;
  * 来源：力扣（LeetCode）
  * 链接：https://leetcode-cn.com/problems/reverse-linked-list-ii
  * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+ * <p>
+ * 1.找到起点切断
  */
 public class ReverseBetween92 {
 
@@ -23,26 +25,39 @@ public class ReverseBetween92 {
         listNode1.next.next = new ListNode(3);
         listNode1.next.next.next = new ListNode(4);
         listNode1.next.next.next.next = new ListNode(5);
-        System.out.println(new ReverseBetween92().reverseBetween(listNode1,2,4));
+        System.out.println(new ReverseBetween92().reverseBetween(listNode1, 2, 5));
     }
+
     public ListNode reverseBetween(ListNode head, int m, int n) {
 
         ListNode res = new ListNode(0);
         res.next = head;
         ListNode node = res;
-        for (int i = 1; i < m ; i++) {
+        //找到需要反转的那一段的上一个节点。
+        for (int i = 1; i < m; i++) {
             node = node.next;
         }
-        ListNode tmp = node;
-        ListNode pre = null;
-        ListNode next = null;
-        for (int i = 0; i < n-m; i++) {
-            next = tmp.next;
-            tmp.next = pre;
-            pre = tmp;
-            tmp = next;
-        }
 
+        //node.next就是需要反转的这段的起点。
+        ListNode nextHead = node.next;
+        ListNode next = null;
+
+        ListNode pre = null;
+
+        //反转n到m这一段
+        for (int i = 0; i <= n - m; i++) {
+            next = nextHead.next;
+            nextHead.next = pre;
+            pre = nextHead;
+            nextHead = next;
+        }
+        //需要反转的那一段的上一个节点的next节点指向反转后链表的头结点
+        node.next = pre;
+        //找到反转这段的最后一个节点。
+        while (pre.next != null) {
+            pre = pre.next;
+        }
+        pre.next = next;
         return res.next;
     }
 }

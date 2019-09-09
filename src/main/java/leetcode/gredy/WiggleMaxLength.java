@@ -19,7 +19,7 @@ public class WiggleMaxLength {
 
     /**
      *
-     * leetcode1 376
+     * jianzhioffer 376
      */
 
     public int wiggleMaxLength(int[] nums){
