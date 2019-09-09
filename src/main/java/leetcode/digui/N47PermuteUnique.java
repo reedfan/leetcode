@@ -1,4 +1,4 @@
-package jianzhioffer;
+package leetcode.digui;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -6,27 +6,32 @@ import java.util.HashSet;
 import java.util.List;
 
 /**
- *
- 输入一个字符串,按字典序打印出该字符串中字符的所有排列。例如输入字符串abc,
- 则打印出由字符a,b,c所能排列出来的所有字符串abc,acb,bac,bca,cab和cba。
- 输入描述:
-
- 输入一个字符串,长度不超过9(可能有字符重复),字符只包括大小写字母。
-
-
+ * 给定一个可包含重复数字的序列，返回所有不重复的全排列。
+ * <p>
+ * 示例:
+ * <p>
+ * 输入: [1,1,2]
+ * 输出:
+ * [
+ * [1,1,2],
+ * [1,2,1],
+ * [2,1,1]
+ * ]
+ * <p>
+ * 来源：力扣（LeetCode）  47
+ * 链接：https://leetcode-cn.com/problems/permutations-ii
+ * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
  */
-
-public class N27Permutation {
+public class N47PermuteUnique {
     public static void main(String[] args) {
         int[] nums = {1,1,3};
-        new N27Permutation().Permutation(nums);
+        new N47PermuteUnique().permuteUnique(nums);
 
     }
 
-    // TODO: 2019-09-08
     List<List<Integer>> lists = new ArrayList<>();
 
-    public List<List<Integer>> Permutation(int[] nums) {
+    public List<List<Integer>> permuteUnique(int[] nums) {
         if (nums == null || nums.length == 0) {
             return lists;
         }
@@ -46,7 +51,7 @@ public class N27Permutation {
             return;
         }
 
-        HashSet<Integer> set = new HashSet<>();  //保存当前要交换的位置已经有过哪些数字了
+        HashSet<Integer>set = new HashSet<>();  //保存当前要交换的位置已经有过哪些数字了
         for (int i = start; i < nums.length; i++) {
             if (set.contains(nums[i])) {   //如果存在了就跳过，不去交换
                 continue;
