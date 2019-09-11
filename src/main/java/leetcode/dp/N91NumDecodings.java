@@ -26,13 +26,13 @@ package leetcode.dp;
  * 链接：https://leetcode-cn.com/problems/decode-ways
  * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
  */
-public class NumDecodings91 {
+public class N91NumDecodings {
 
     //递归解法存在大量的重复计算从中可以看出，在计算中进行了大量的重复计算，因此。可以想办法将重叠子问题记录下来，避免重复计算。
    // 引入一个数组dp[]，用来记录以某个字符为开始的解码数。动态规划其实就是一个填表的过程。整个过程的目标就是要填好新增的dp[]数组。
 
     public static void main(String[] args) {
-        System.out.println(new NumDecodings91().numDecodings("2206"));
+        System.out.println(new N91NumDecodings().numDecodings("2206"));
     }
 
     public int numDecodings(String s) {

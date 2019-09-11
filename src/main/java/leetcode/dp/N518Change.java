@@ -42,7 +42,7 @@ package leetcode.dp;
  * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
  */
 
-public class Change518 {
+public class N518Change {
     public int change(int amount, int[] coins) {
         if (coins == null) {
             return 0;

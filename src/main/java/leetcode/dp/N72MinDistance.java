@@ -1,8 +1,8 @@
 package leetcode.dp;
 
-public class MinDistance72 {
+public class N72MinDistance {
     public static void main(String[] args) {
-        System.out.println(new MinDistance72().minDistance("horse", "ros"));
+        System.out.println(new N72MinDistance().minDistance("horse", "ros"));
 
     }
 

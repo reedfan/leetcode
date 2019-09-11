@@ -1,6 +1,6 @@
 package leetcode.dp;
 
-public class Trap42 {
+public class N42Trap {
     public int trap1(int[] height) {
         if(height == null || height.length<3){
             return 0;

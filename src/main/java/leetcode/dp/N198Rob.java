@@ -1,11 +1,11 @@
 package leetcode.dp;
 
-public class Rob198 {
+public class N198Rob {
     public static void main(String[] args) {
         int[] nums = {1,2,3,1,5,4,6};
-        System.out.println(new Rob198().rob(nums));
-        System.out.println(new Rob198().robdigui(nums,nums.length-1));
-        System.out.println(new Rob198().robdp(nums));
+        System.out.println(new N198Rob().rob(nums));
+        System.out.println(new N198Rob().robdigui(nums,nums.length-1));
+        System.out.println(new N198Rob().robdp(nums));
 
 
 

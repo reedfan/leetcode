@@ -30,10 +30,10 @@ package leetcode.dp;
  * 链接：https://leetcode-cn.com/problems/combination-sum-iv
  * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
  */
-public class CombinationSum377 {
+public class N377CombinationSum {
     public static void main(String[] args) {
         int[] nums = {1, 2, 3};
-        System.out.println(new CombinationSum377().combinationSum4(nums,4));
+        System.out.println(new N377CombinationSum().combinationSum4(nums,4));
     }
     public int combinationSum4(int[] nums, int target) {
         if (nums == null) {

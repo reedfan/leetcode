@@ -1,9 +1,9 @@
 package leetcode.dp;
 
-public class UniquePaths62 {
+public class N62UniquePaths {
 
     public static void main(String[] args) {
-        System.out.println(new UniquePaths62().uniquePaths(3,2));
+        System.out.println(new N62UniquePaths().uniquePaths(3,2));
     }
 
 

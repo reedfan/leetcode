@@ -28,7 +28,7 @@ package leetcode.dp;
  * 链接：https://leetcode-cn.com/problems/climbing-stairs
  * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
  */
-public class ClimbStairs70 {
+public class N70ClimbStairs {
     public int climbStairs(int n) {
         if (n < 1) {
             return 0;

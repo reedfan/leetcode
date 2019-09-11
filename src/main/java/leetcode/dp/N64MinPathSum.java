@@ -1,6 +1,6 @@
 package leetcode.dp;
 
-public class MinPathSum64 {
+public class N64MinPathSum {
     public int minPathSum(int[][] grid) {
         if (grid == null || grid.length == 0 || grid[0].length == 0) {
             return 0;

@@ -31,14 +31,14 @@ package leetcode.dp;
  * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
  */
 
-public class UniquePathsWithObstacles63 {
+public class N63UniquePathsWithObstacles {
     public static void main(String[] args) {
         int[][] matrix = {
                 {0, 0},
                 {1, 1}, {0, 0}
 
         };
-        new UniquePathsWithObstacles63().uniquePathsWithObstacles(matrix);
+        new N63UniquePathsWithObstacles().uniquePathsWithObstacles(matrix);
 
 
     }

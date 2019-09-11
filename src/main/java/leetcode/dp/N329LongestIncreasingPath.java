@@ -1,7 +1,7 @@
 package leetcode.dp;
 
 
-public class LongestIncreasingPath329 {
+public class N329LongestIncreasingPath {
  
     /*
     给定一个整数矩阵matrix，每个位置你可以向左、右、下、上移动，找到其中最长的递增路径 例如:
@@ -20,7 +20,7 @@ matrix = [
                 {6, 6, 8},
                 {2, 1, 1}
         };
-        int max = new LongestIncreasingPath329().longestIncreasingPath(matrix);
+        int max = new N329LongestIncreasingPath().longestIncreasingPath(matrix);
         System.out.println(max);
     }
     int[][] d = {{-1, 0}, {0, 1}, {1, 0}, {0, -1}};
