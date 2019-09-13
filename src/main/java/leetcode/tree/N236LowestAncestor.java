@@ -1,6 +1,6 @@
 package leetcode.tree;
 
-public class LowestAncestor {
+public class N236LowestAncestor {
 
     public static void main(String[] args) {
 
@@ -37,23 +37,6 @@ public class LowestAncestor {
     }
 
 
-    /**
-     * 二叉搜索树
-     */
-    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
-        while(root != null){
-            if(root.val > p.val && root.val > q.val){
-                //都比根节点值小，去根节点的左子树继续找
-                root = root.left;
-            }else if(root.val < p.val && root.val < q.val){
-                //都比根节点值大，去根节点的右子树继续找
-                root = root.right;
-            }else {
-                //根节点的值大于p而小于q，说明此时的根节点即为最近公共祖先。
-                return root;
-            }
-        }
-        return null;
-    }
+
 
 }
