@@ -279,6 +279,8 @@ FileInputStream/FileOutPutStream字节流
 
 FileReader/FileWriter字符流
 
+Channel（通道）和 buffer（缓冲区）就好像铁路和火车
+
 ### java中的基本类型
 一共有8个，它们分别为：
 1 字符类型：byte，char

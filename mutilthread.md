@@ -67,6 +67,9 @@ run()方法依旧只有主线程，start（）方法会启动一个线程来执�
 
 4、使用condition控制线程通信
 
+## 为什么JAVA要提供 wait/notify 机制？
+是为了避免轮询带来的性能损失
+
 ## Sleep和wait
 
 sleep来自Thread类，wait来自Object类

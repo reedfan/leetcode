@@ -28,6 +28,19 @@ Where score >= 60 group by s_name having (s_score)>=70  order by avg(s_score) de
 （3）连续被访问的列
 
 （4）返回大型结果集的查询
+
+## 什么时候不能使用索引 
+不要给选择率低的字段建索引(通过索引扫描的记录数超过30%，变成全表扫描)
+联合索引中:第一个索引列使用范围查询,第一个查询条件不是最左索引列 
+Like查询条件列最左以通配符% 开始 
+两个独立索引，其中一个用于检索，一个用于排序（索引不是越多越好，尽量合并索引） 表关联字段类型不一样（也包括长度不一样）
+索引字段条件上使用函数
+
+
+
+### 覆盖索引
+如果一个索引包含(或覆盖)所有需要查询的字段的值，称为‘覆盖索引’。即只需扫描索引而无须回表。
+
 ## 数据库优化
 
 1.where及order by涉及的列上建索引
@@ -50,13 +63,13 @@ select id from t where num = 10 union all select id from t where Name = 'admin'
 
   select id from t where num between 1 and 3
 
-6. 尽量避免在 where子句中对字段进行表达式操作
+6 尽量避免在 where子句中对字段进行表达式操作
 
 select id from t where num/2 = 100，应该为
 
 select id from t where num = 100*2
 
-7. 应尽量避免在where子句中对字段进行函数操作
+7.应尽量避免在where子句中对字段进行函数操作
 
 select id from t where substring(name,1,3) = ’abc’可以改为
 
