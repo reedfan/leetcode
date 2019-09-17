@@ -6,7 +6,7 @@ String这种   启动类加载器  jre/lib/rt.jar
 
 自己写的     应用类加载器
 
-            自定义加载器
+。           自定义加载器
 
 ## 类加载器工作机制
 
@@ -73,6 +73,11 @@ java.lang.SecurityException: Prohibited package name: java.lang
 
 4.本地方法栈JNI引用的对象
 
+### GC的触发条件
+youngGC的eden区满则触发youngGC，将eden区和一个servivor区存活的对象分配到另一个servivor区。
+第一次youngGC是将eden区存活的内存分到其中一个servivor分区
+默认15次youngGC还没被回收就会进入老年代,对象很大也会直接进入老年代
+
  
 
 java 1.8 永久代消失了，由元空间取代
@@ -97,3 +102,21 @@ Intelij Idea内存泄漏   JProfiler
 
 
 -XX:+PrintGCDetails   打印出GC信息
+
+### 问题排查
+1.jps查看进程号
+jps(Java Virtual Machine Process Status Tool)
+jps主要用来输出JVM中运行的进程状态信息。
+2.top -Hp pid可以查看某个进程的线程信息
+-H 显示线程信息，-p指定pid
+printf "%x\n" 8600 
+jstack 8591|grep 2198
+
+排查内存溢出
+jmap可以打印dump文件，打印出来以后，可以用jprofiler或者mat来看
+
+
+### jvm的一些工具
+jstack主要用来查看某个Java进程内的线程堆栈信息。
+jstat主要是 jvm相关的一些信息
+jmap  生成存储快照

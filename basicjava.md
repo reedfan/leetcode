@@ -35,15 +35,32 @@ Volatile可以禁止语义重排
 
 Volatile的作用实例：很多线程用同一个标识符判断某件事是否执行，当一个线程改变这个标识的时候，能立即被其他线程看见
 
-## Collection
+### switch 
+能否作用在 byte 上，能否作用在 long 上，能 否作用在 String 上?
+switch只能时int 或这能转化为int型的byte,short,char,jdk1.7之后String也可以。在 switch（ expr1）中， expr1 只能是一个整数表达式或者枚举常量（更大字体），整数表达式可以是 int
+基本类型或 Integer 包装类型，由于， byte,short,char 都可以隐含转换为 int，所以，这些类型以及这些类型的包装类型也是可以的。显然， long 和 String 类型都不符合 switch 的语法规定，并且不能被隐式转换成 int类型，所以，它们不能作用于 swtich 语句中。 另外由于 JDK1.7 中引入新特性，所以 swtich 语句可以接收
+一个 String 类型的值， String 可以作用在 swtich 上。
 
+## Collection
+### ArrayList
 ArrayList 线程不安全 初始容量为10，1.5倍扩容 扩容后将老数组的值复制到新数组
 
 在每次添加新的元素时，ArrayList都会检查是否需要进行扩容操作，扩容操作带来数据向新数组的重新拷贝，所以如果我们知道具体业务数据量， 在构造ArrayList时可以给ArrayList指定一个初始容量，这样就会减少扩容时数据的拷贝问题。
 
- 
+### ArrayList和Vector的区别
+1）  Vector的方法都是同步的(Synchronized),是线程安全的(thread-safe)，而ArrayList的方法不是，由于线程的同步必然要影响性能，因此,ArrayList的性能比Vector好。 
+2） 当Vector或ArrayList中的元素超过它的初始大小时,Vector会将它的容量翻倍,而ArrayList只增加50%的大小，这样,ArrayList就有利于节约内存空间
+
+### HashSet、 TreeSet、TreeSet
+TreeSet 大小排序, LinkedHashSet  按照顺序排序
+HashSet是由一个hash表来实现的，因此，它的元素是无序的。add()，remove()，contains()方法的时间复杂度是O(1)。 另一方面，TreeSet是由一个树形的结构来实现的，它里面的元素是有序的。因此，add()，remove()，contains()方法的时间复杂度是O(logn)。
+linked 也是O（1），但是性能逊色一点
 
 HashMap在jdk1.7是头插法，JDK1.8改成了尾插法，解决哈希冲突是用链表
+
+### hashmap为什么线程不安全?
+因为在多线程情况下。假如快到resize零界点的时候。多个线程同时对这个hashmap进行了put操作。操作后超过临界值。多个线程各自进行resize操作。可能导致链表成环。
+然后当调用这个hashmap查找一个不存在的key。而这个key的hash结果正好等于成环的那个table的时候，就会形成死循环。
 
 ### Hashmap和HashTable的区别
 
@@ -169,11 +186,12 @@ ClassNotFoundException 编译的时候就找不到，class.forName动态加载
 
 5.ClassCastException（类型强制转换异常）
 
- 
+### StackOverflowError和OutOfMemoryError
+StackOverflowError：递归过深，递归没有出口。
+OutOfMemoryError：JVM空间溢出，创建对象速度高于GC回收速度。
+
 
 对于try..catch捕获异常的形式来说，对于异常的捕获，可以有多个catch。对于try里面发生的异常，他会根据发生的异常和catch里面的进行匹配(怎么匹配，按照catch块从上往下匹配)，当它匹配某一个catch块的时候，他就直接进入到这个catch块里面去了，后面在再有catch块的话，它不做任何处理，直接跳过去，全部忽略掉。如果有finally的话进入到finally里面继续执行。换句话说，如果有匹配的catch，它就会忽略掉这个catch后面所有的catch。对我们这个方法来说，抛出的是IOException，当执行etct.doSomething();时，可能会抛出IOException，一但抛出IOException，它首先进入到catch (Exception e) {}里面，先和Exception匹配，由于OExceptionextends Exception,根据多态的原则，IOException是匹配Exception的，所以程序就会进入到catch (Exception e) {}里面，进入到第一个catch后，后面的catch都不会执行了，所以catch (IOException e) {}永远都执行不到，就给我们报出了前面的错误:已捕捉到异常 java.io.IOException。
-
- 
 
 总结:在写异常处理的时候，一定要把异常范围小的放在前面，范围大的放在后面，Exception这个异常的根类一定要刚在最后一个catch里面，如果放在前面或者中间，任何异常都会和Exception匹配的，就会报已捕获到...异常的错误。
 
@@ -188,6 +206,8 @@ ClassNotFoundException 编译的时候就找不到，class.forName动态加载
 static final用来修饰成员变量和成员方法，可简单理解为“全局变量”！
 
 当需要一个方法一初始化就要运行的时候，就要用static来修饰。
+
+static方法是在调用的时候执行。static代码块和static变量在类加载的时候执行
 
 ### 序列化与反序列化
 
@@ -219,6 +239,13 @@ FileInputStream/FileOutPutStream字节流
 
 FileReader/FileWriter字符流
 
+### java中的基本类型
+一共有8个，它们分别为：
+1 字符类型：byte，char
+2 基本整型：short，int，long
+3 浮点型：float，double
+4 布尔类型：boolean
+String不是基本的数据类型，是final修饰的java类
  
 ### 值传递和引用传递
 
@@ -232,7 +259,7 @@ FileReader/FileWriter字符流
  thread.setName(“设置一个线程名称”);这是一种规范，在创建线程完成以后，都需要设置名称。
  
  
- ### 线程池
+### 线程池
  SychronousQueue
  1：插入操作必须等待另一个线程的的删除，删除操作必须等待另一个线程的插入操作
  如put插入然后等待另一个线程的take或poll  take 移除元素等待等待另一个线程put或add操作，等到对应操作后实现transfer，传给相应的消费者

@@ -205,8 +205,10 @@ AbortPolicy 丢弃任务并抛出异常
 DiscardPolicy 丢弃任务，不抛出异常
 
 ## 为什么不建议使用Excutors来创建线程池
+newCachedThreadPool 只会重用空闲并且可用的线程，所以上述代码只能不停地创建新线程，在 64-bit JDK 1.7 中 -Xss 默认是 1024k，也就是 1M，那就是需要 10000*1M = 10G 的堆外内存空间来给线程使用，但是我的机器总共就 8G 内存，不够创建新的线程，所以就 OOM 了。
+总结一下：所以这个 newCachedThreadPool 大家一般不用就是这样的原因，因为它的最大值是在初始化的时候设置为 Integer.MAX_VALUE，一般来说机器都没那么大内存给它不断使用。当然知道可能出问题的点，就可以去重写一个方法限制一下这个最大值，但是出于后期维护原因，一般来说用 newFixedThreadPool 也就足够了。 
     
- Executors创建的线程池存在OOM的风险。[具体原因](https://www.hollischuang.com/archives/2888)
+Executors创建的线程池存在OOM的风险。[具体原因](https://www.hollischuang.com/archives/2888)
 
 # 线程同步
 
@@ -283,9 +285,10 @@ lock                                synchronized
 
 当线程A执行完之后，要唤醒线程B是需要时间的，而且线程B醒来后还要再次竞争锁，所以如果在切换过程当中，来了一个线程C，那么线程C是有可能获取到锁的，如果C获取到了锁，B就只能继续乖乖休眠了。
 
-公平锁：就是很公平，在并发环境中，每个线程在获取锁的时候会先查看此锁维护的等待队列，如果为空，或者当前线程线程是等待队列的第一个，就占有锁，否则就会加入到等待队列中，以后会按照FIFO的规则从队列中取到自己
+公平锁：就是很公平，在并发环境中，每个线程在获取锁的时候会先查看此锁维护的等待队列，如果为空，或者当前线程线程是等待队列的第一个，就占有锁，否则就会加入到等待队列中，以后会按照FIFO的规则从队列中取到自己。
+new RenentrantLock(boolean fair)；将fair设为true就是公平锁。
 
- 非公平锁比较粗鲁，上来就直接尝试占有锁，如果尝试失败，就再采用类似公平锁那种方式
+非公平锁比较粗鲁，上来就直接尝试占有锁，如果尝试失败，就再采用类似公平锁那种方式
 
 
  
@@ -374,4 +377,8 @@ ThreadLocal类中有一个map，用于存储每一个线程的变量副本，map
 
 所有如果需要进行多个线程之间通信，用同步机制，如果要隔离多个线程之间的共享冲突，采用ThreadLocal
 
-Public protected default private
+### ThreadLocal内存泄漏问题
+每个thread中都存在一个map, map的类型是ThreadLocal.ThreadLocalMap. Map中的key为一个threadlocal实例. 这个Map的确使用了弱引用,不过弱引用只是针对key. 每个key都弱引用指向threadlocal. 当把threadlocal实例置为null以后,没有任何强引用指向threadlocal实例,所以threadlocal将会被gc回收. 但是,我们的value却不能回收,因为存在一条从current thread连接过来的强引用. 只有当前thread结束以后, current thread就不会存在栈中,强引用断开, Current Thread, Map, value将全部被GC回收.
+所以得出一个结论就是只要这个线程对象被gc回收，就不会出现内存泄露，但在threadLocal设为null和线程结束这段时间不会被回收的，就发生了我们认为的内存泄露。其实这是一个对概念理解的不一致，也没什么好争论的。最要命的是线程对象不被回收的情况，这就发生了真正意义上的内存泄露。比如使用线程池的时候，线程结束是不会销毁的，会再次使用的。就可能出现内存泄露。
+
+
