@@ -124,3 +124,32 @@ CGlib必须依赖于CGlib的类库，CGlib的原理是针对目标类生成一�
 2、在web.xml 中会提供有 contextLoaderListener。在web 容器启动时，会触发容器初始化事件，此时 contextLoaderListener 会监听到这个事件，其 contextInitialized 方法会被调用，在这个方法中，spring 会初始化一个启动上下文，这个上下文就被称为根上下文，即 WebApplicationContext ，这是一个借口类，确切的说，其实际实现类是 XmlWebApplicaitonContext 。这个就是Spring 的Ioc 容器，其对应的Bean 定义的配置由web.xml 中的 context-param 标签指定。在这个Ioc 容器初始化完毕后，spring 以WebApplicationContext.ROOTWEBAPPLICATIONEXTATTRIBUTE 为属性key，将其存储到 servletContext 中，便于获取
 
 3、contextLoaderListener 监听器初始化完毕后，开始初始化web.xml 中配置的servlet ，这个servlet 可以配置多个，以最常见的DispatcherServlet 为例，这个servlet 实际上是一个标准的前端控制器，用以转发、匹配、处理每个servlet 请求。DispatcherServlet 上下文在初始化的时候会建立自己的Ioc 上下文，用以持有springmvc 相关的bean。在建立DispatherSrvlet 自己的Ioc 上下文时，会利用 WebApplicationContext.ROOTWEBAPPLICATIONCONTEXTATTRIBUTE 先从ServletContext 中获取之前的根上下文（即 WebApplicationContext）作为自己上下文的parent 上下文，有了这个parent 上下文之后，再初始化自己持有的上下文。这个DispatcherServlet 初始化自己上下的工作在其 initStrategies 方法中可以看到，大概的工作就是初始化处理器映射、视图解析等，这个servlet 自己持有的上下文默认实现类也是 XmlWebApplicationContext。初始化完毕后，spring以与Servlet 的名字相关的属性为属性key，将其存到servletcontext 中，以便后续使用。这样每个Servlet 都持有自己的上下文，即拥有自己独立的bean 空间，同事各个servlet 共享相同的bean，即根上下文定义的那些bean
+
+
+## 常用的一些注解
+### @Cacheable
+@Cacheable(cacheNames = {"nihao","hello"}, key = "#p0")
+#p0为第一个参数        假如值为jj
+因此会产生两个key
+一个是 nihao:jj      一个是hello:jj
+
+@Cacheable(cacheNames = {"nihao","hello"}, key = "#userName")
+作用同上
+
+也可以用bean的一个属性作为key
+@Cacheable(value="users", key="#user.id")
+   public User find(User user) {
+      return null;
+}
+
+### @Transactional(readOnly = true)
+只读事务（@Transactional(readOnly = true)）的一些概念
+在将事务设置成只读后，相当于将数据库设置成只读数据库，此时若要进行写的操作，会出现错误
+
+
+### @Value中冒号的作用
+先说明冒号的作用 ：可以设置默认值
+@Value中可以使用
+@Value("${hello:defaultValue}")
+private String hello;
+若找不到属性值hello，那么就会默认赋值 defaultValue

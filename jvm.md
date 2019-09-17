@@ -79,6 +79,8 @@ youngGC的eden区满则触发youngGC，将eden区和一个servivor区存活的�
 默认15次youngGC还没被回收就会进入老年代,对象很大也会直接进入老年代
 
  
+老生代回收用广度   占用内存大点，但是速度快点
+新生代回收用深度    深度优先算法占内存少，因为有回溯，但移动较慢
 
 java 1.8 永久代消失了，由元空间取代
 
@@ -86,6 +88,11 @@ Eclipse内存泄露 MAT
 
 Intelij Idea内存泄漏   JProfiler
 
+### JVM垃圾回收器
+因为和用户线程一起执行，不能在空间将满时再清理。
+ -XX:CMSInitiatingOccupancyFraction设置触发GC的阈值。 设定老年代空间被使用多少后触发。
+ 如果不幸内存预留空间不足，就会引起concurrent mode failure.
+在CMS遇到空间不足时，可以使用串行收集器作为后备。
  
 
 ## JVM调优

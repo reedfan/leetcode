@@ -75,9 +75,10 @@ sleep必须捕获异常，而wait、notify不需要捕获异常
 
 sleep方法没有释放锁，wait释放锁，进入等待池等待，出让系统资源，需要其他线程调用notify方法将其唤醒
 
- 
+ wait多用于线程交互   sleep多用于暂停执行
 
-join 让主线程等待子线程结束后再运行。
+## join 
+让主线程等待子线程结束后再运行。
 
 作用1：让线程顺序执行
 
@@ -242,7 +243,8 @@ lock                                synchronized
 
 读写锁可以提高多个线程进行读操作的效率
 
-需要收到在finally中unlock               
+需要收到在finally中unlock
+synchronized底层是悲观锁，LOCK是乐观锁，基于cas            
 
 ## Synchronized小结
 
@@ -290,10 +292,21 @@ new RenentrantLock(boolean fair)；将fair设为true就是公平锁。
 
 非公平锁比较粗鲁，上来就直接尝试占有锁，如果尝试失败，就再采用类似公平锁那种方式
 
-
+## synchronized 对象锁和全局锁
+static synchronized   和synchronized(xxx.class）是全局锁
+synchronized 和 synchronized(this）是对象锁
  
 
- 
+##  锁优化的思路
+1.减少锁持有时间  只在线程安全要求的代码块上加锁
+2.减小锁的粒度  典型例子   concurrentHashMap
+3.锁分离  读写锁 readWriteLock   linkedBlockingQueue 从头部取出数据，从尾部放数据
+4.锁粗化  比如两个同步代码块之间不需要做其他的工作，或者做其他的工作时间很短，可以整合成一次锁请求
+5.所消除   在及时编译时，如果发现不可能共享的对象，则可以消除这些对象的锁操作
+
+锁升级
+锁的四个状态
+无锁状态、偏向锁状态、轻量级锁状态、重量级锁
 
 
 # JUC
@@ -312,6 +325,8 @@ state=0 表示可用
 
 release的同步状态相对简单，需要找到头结点的后继结点进行唤醒，若后继结点为空或处于cancel状态，从后向前遍历找寻一个正常结点，唤醒其对应的线程。
 
+AQS 定义两种资源方式 Exlusive（独占，只有一个线程能执行，如ReentrantLock）和share
+（共享，多个线程同时执行，如semaphore/countDownLatch)   
 
 共享式：同一时刻可以有多个线程同时获取到同步状态，这也是"共享的"的意义所在，其待重写的尝试获取同步状态的方法tryAcquireShared返回值为int
 
@@ -381,4 +396,14 @@ ThreadLocal类中有一个map，用于存储每一个线程的变量副本，map
 每个thread中都存在一个map, map的类型是ThreadLocal.ThreadLocalMap. Map中的key为一个threadlocal实例. 这个Map的确使用了弱引用,不过弱引用只是针对key. 每个key都弱引用指向threadlocal. 当把threadlocal实例置为null以后,没有任何强引用指向threadlocal实例,所以threadlocal将会被gc回收. 但是,我们的value却不能回收,因为存在一条从current thread连接过来的强引用. 只有当前thread结束以后, current thread就不会存在栈中,强引用断开, Current Thread, Map, value将全部被GC回收.
 所以得出一个结论就是只要这个线程对象被gc回收，就不会出现内存泄露，但在threadLocal设为null和线程结束这段时间不会被回收的，就发生了我们认为的内存泄露。其实这是一个对概念理解的不一致，也没什么好争论的。最要命的是线程对象不被回收的情况，这就发生了真正意义上的内存泄露。比如使用线程池的时候，线程结束是不会销毁的，会再次使用的。就可能出现内存泄露。
 
+### ThreadLocal和synchronized
 
+ThreadLocal使用场合主要解决多线程中数据数据因并发产生不一致问题。ThreadLocal为每个线程的中并发访问的数据提供一个副本，通过访问副本来运行业务，这样的结果是耗费了内存，单大大减少了线程同步所带来性能消耗，也减少了线程并发控制的复杂度。
+ 
+ThreadLocal不能使用原子类型，只能使用Object类型。ThreadLocal的使用比synchronized要简单得多。
+ 
+ThreadLocal和Synchonized都用于解决多线程并发访问。但是ThreadLocal与synchronized有本质的区别。synchronized是利用锁的机制，使变量或代码块在某一时该只能被一个线程访问。而ThreadLocal为每一个线程都提供了变量的副本，使得每个线程在某一时间访问到的并不是同一个对象，这样就隔离了多个线程对数据的数据共享。而Synchronized却正好相反，它用于在多个线程间通信时能够获得数据共享。
+ 
+Synchronized用于线程间的数据共享，而ThreadLocal则用于线程间的数据隔离。
+ 
+当然ThreadLocal并不能替代synchronized,它们处理不同的问题域。Synchronized用于实现同步机制，比ThreadLocal更加复杂。
