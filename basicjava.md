@@ -2,27 +2,22 @@
 
 
 
-Object类定义的九个方法
+### Object类定义的九个方法
 
  getClass()   hashcode()   toString()  wait()  notify()  notifyAll()  wait(long times) equals() wait(long timeout int nanous)
-String为什么是final类型的
+
+### String为什么是final类型的
 
 1.因为字符串是不可变的，所以是线程安全的
 
-2.字符串是不可变的，字符串池才有可能实现，如果噶能变的话，
+2.字符串是不可变的，字符串池才有可能实现，如果能变的话，A和B指向同一个地址，A改变值，B也要跟着改变了。
 
-  A和B指向同一个地址，A改变值，B也要跟着改变了。
+3.字符串是不可变的，所以它在创建的时候hashcode就被缓存了，不需要重新计算。如果可以变，比如用StringBuilder做模拟，
 
- 3.字符串是不可变的，所以它在创建的时候hashcode就被缓存了，
-
- 不需要重新计算。如果可以变，比如用StringBuilder做模拟，
-
- str1 = a ，str2 = ab， str3 = str1，str2+=b，
-
- 则set中的值为两个ab，显然违背了set的本意
+str1 = a ，str2 = ab， str3 = str1，str2+=b，则set中的值为两个ab，显然违背了set的本意
 
  
-java中为什么要单继承，多实现
+### java中为什么要单继承，多实现
 
 若为多继承，那么当多个父类中有重复的属性或者方法时，子类的调用结果会含糊不清，因此用了单继承。
 
@@ -31,14 +26,16 @@ java中为什么要单继承，多实现
 通过实现接口拓展了类的功能，若实现的多个接口中有重复的方法也没关系，因为实现类中必须重写接口中的方法，所以调用时还是调用的实现类中重写的方法。那么各个接口中重复的变量又是怎么回事呢。 
 
 接口中，所有属性都是 static final修饰的，即常量，这个什么意思呢，由于JVM的底层机制，所有static final修饰的变量都在编译时期确定了其值，若在使用时，两个相同的常量值不同，在编译时期就不能通过。
-volatile
+
+### volatile
 
 volatile的本质是告诉jvm，当前变量在寄存器中的值是不确定的，需要从主存中读取。
 
 Volatile可以禁止语义重排
 
 Volatile的作用实例：很多线程用同一个标识符判断某件事是否执行，当一个线程改变这个标识的时候，能立即被其他线程看见
-Collection
+
+## Collection
 
 ArrayList 线程不安全 初始容量为10，1.5倍扩容 扩容后将老数组的值复制到新数组
 
@@ -47,14 +44,16 @@ ArrayList 线程不安全 初始容量为10，1.5倍扩容 扩容后将老数组
  
 
 HashMap在jdk1.7是头插法，JDK1.8改成了尾插法，解决哈希冲突是用链表
-Hashmap和HashTable
+
+### Hashmap和HashTable的区别
 
 hashmap继承自abstractmap， hashtable继承自Dictionary
 
 HashMap可以有一个key为null，value可以为null，     hashtable放入key和value都不能为null
 
 HashMap不是现成安全的，       Hashtable是线程安全的，他的所有的方法都用synchronized加锁了
-hashmap的负载因子为什么是0.75
+
+### hashmap的负载因子为什么是0.75
 
 简单翻译一下就是在理想情况下,使用随机哈希码,节点出现的频率在hash桶中遵循泊松分布，同时给出了桶中元素个数和概率的对照表
 
@@ -64,7 +63,8 @@ HashMap的遍历
 既需要key，又需要value，用entrySet。因为entryset会多一次查询map。更优雅的方式map.forEach
 
 只需要key，可以用keyset。
-多态
+
+### 多态
 
 同一消息可以根据发送对象的不同而采用多种不同的行为方式。
 
@@ -75,7 +75,8 @@ HashMap的遍历
 2.要有重写
 
 3.父类引用指向子类的对象
-泛型
+
+### 泛型
 
 在编译之后，程序会采取去泛型化的措施。Java中的泛型，只在编译阶段有效。在编译过程中，正确检查泛型结果后，会将泛型的相关信息擦除。也就是说，泛型信息不会进入到运行阶段。
 
@@ -89,15 +90,15 @@ HashMap的遍历
 
 泛型不能为基本类型
 
- 
-
 可以自定义泛型，泛型在Java集合类框架中被广泛的使用
-方法覆盖与方法重载
+
+### 方法覆盖与方法重载
 
 方法覆盖：子类重新定义了父类的方法，有相同的类型、参数列表和返回类型
 
 方法重载：同一个类有两个或者多个方法的方法名相同，但是参数不同
-接口、抽象类
+
+### 接口、抽象类
 
 类可以实现多个接口，但是只能继承一个抽象类
 
@@ -110,7 +111,7 @@ Java接口中声名的变量默认是final类型的，抽象类可以包含非fi
 AbstractMap是Map接口的实现类之一，也是HashMap、TreeMap、ConcurrentHashMap等的父类， AbstractMap提供了Map的基本实现，使得我们以后要实现一个Map不用从头开始，只需要继承AbstractMap。
 
  
-Java反射机制
+### Java反射机制
 
 反射机制是在运行状态中，对于任意一个类，都能知道这个类的所有属性和方法
 
@@ -128,10 +129,11 @@ getConstructor（） 返回public构造函数
 
  
 
-Java反射的作用：
+### Java反射的作用：
 
 在IDEA中输入一个类，按".",编译器就会自动列出他的属性和方法，这里就会用到反射。
-动态代理和静态代理的区别
+
+### 动态代理和静态代理的区别
 
 代理模式是常用的Java设计模式，其特征是代理类与委托类有同样的接口，代理类主要负责为委托类预处理消息、过滤消息、把消息传给委托类，以及事后处理消息等。代理类与委托类之间通常会存在关联关系，一个代理类的对象与一个委托类的对象关联，代理类的对象并不真正实现服务，而是通过调用委托类的对象的相关的方法，来提供特点的服务。
 
@@ -140,7 +142,8 @@ Java反射的作用：
 静态代理类：由程序员创建或由特定工具生成源代码，再对其编译。在程序运行前，代理类的.class文件就已经存在了。
 
 动态代理类：在程序运行时，运用反射机制动态创建而成。
-Error类和Exception类都是Throwable类
+
+## Error类和Exception类都是Throwable类
 
 Error 系统中的错误 Exception（异常）
 
@@ -152,17 +155,15 @@ NOClassDefFoundError是运行时报错，是一个错误（Error），
 
 ClassNotFoundException 是一个异常，可捕获       
 
- 
+### NOClassDefFoundError和ClassNotFoundException
 
 NOClassDefFoundError 要查找的类在编译时是存在的，运行时却找不到了，new操作来创建一个新的对象但却找不到该对象的类。
-
- 
 
 ClassNotFoundException 编译的时候就找不到，class.forName动态加载
 
  
 
-常见的Exception
+### 常见的Exception
 
 1.nullpointerExeception  2.classnotfoundExcetion 3. .arithmeticexception（数据运算异常）4. java.lang.arrayindexoutofboundsexception （数组下标越界）
 
@@ -176,7 +177,7 @@ ClassNotFoundException 编译的时候就找不到，class.forName动态加载
 
 总结:在写异常处理的时候，一定要把异常范围小的放在前面，范围大的放在后面，Exception这个异常的根类一定要刚在最后一个catch里面，如果放在前面或者中间，任何异常都会和Exception匹配的，就会报已捕获到...异常的错误。
 
-static
+### static
 
 修饰变量：类加载时初始化，JVM只分配一次内存，所有类共享静态变量。
 
@@ -187,7 +188,8 @@ static
 static final用来修饰成员变量和成员方法，可简单理解为“全局变量”！
 
 当需要一个方法一初始化就要运行的时候，就要用static来修饰。
-序列化与反序列化
+
+### 序列化与反序列化
 
 序列化：将数据分解成字节流，以便存储在文件中或在网络上传输
 
@@ -198,15 +200,16 @@ static final用来修饰成员变量和成员方法，可简单理解为“全�
 如果没有显示声名序列号，程序在编译时会自己生成这个版本的序列号。在存储文件中，如果在你更改实体类的时候又会重新生成一个序列号，在程序运行的时候，Java的序列化机制在运行时判断类的serialVersionUID来验证版本一致性的。
 
 Java序列化排除序列化字段 transient
-IO与NIO
 
-IO                   NIO
+### IO与NIO
+
+IO                        NIO
 
 面向流                   面向缓冲
 
-阻塞IO                非阻塞IO
+阻塞IO                   非阻塞IO
 
-无                 选择器
+无                       选择器
 
  
 
@@ -217,14 +220,12 @@ FileInputStream/FileOutPutStream字节流
 FileReader/FileWriter字符流
 
  
-值传递和引用传递
+### 值传递和引用传递
 
 值传递是指在调用函数时将实际数复制一份传递到函数中，这样在函数中如果对形参进行修改，将不会影响到实际参数。简单来说就是直接复制了一份数据过去，因为是直接复制，所以这种方式在复制时如果传递的数据非常大，运行效率将会降低，所以Java在传递数据量很小的时候是值传递，比如Java的基本类型：int,float,double,boolean等类型。
 
 引用传递操作的是源数据，二维数组，List，Map等除了基本的数据类型都是引用传递。
-Serizable
 
-当我们定义了一个实现Serializable接口的类之后，一般我们会手动在类内部定义一个private static final long serialVersionUID字段，用来保存当前类的序列版本号。这样做的目的就是唯一标识该类，其对象持久化之后这个字段将会保存到持久化文件中，当我们对这个类做了一些更改时，新的更改可以根据这个版本号找到已持久化的内容，来保证来自类的更改能够准确的体现到持久化内容中。而不至于因为未定义版本号，而找不到原持久化内容。
 
 
 ## 多线程总结
