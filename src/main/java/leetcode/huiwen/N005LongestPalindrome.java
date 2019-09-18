@@ -1,8 +1,8 @@
 package leetcode.huiwen;
 
-public class LongestPalindrome5 {
+public class N005LongestPalindrome {
     public static void main(String[] args) {
-        System.out.println(new LongestPalindrome5().longestPalindrome("ac"));
+        System.out.println(new N005LongestPalindrome().longestPalindrome("ac"));
     }
 
     //动态规划法
