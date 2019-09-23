@@ -28,20 +28,9 @@ public class FutureTaskExample {
         Thread computeThread = new Thread(futureTask);
         computeThread.start();
 
+        //此时可以去干其他的事情
         System.out.println("other task is running...");
         Thread.sleep(3000);
-
-
-        /*Thread otherThread = new Thread(() -> {
-            System.out.println("other task is running...");
-            try {
-                Thread.sleep(3000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        });
-        otherThread.start();*/
-
 
         System.out.println(System.currentTimeMillis()-t1);
         System.out.println(futureTask.get());

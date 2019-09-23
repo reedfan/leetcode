@@ -9,15 +9,32 @@ Select  s_name, avg(score) from student
 Where score >= 60 group by s_name having (s_score)>=70  order by avg(s_score) desc
 ## 四种索引
 
-主键和唯一索引的区别
 
-1.主键不允许空值，唯一索引允许空值
+1.主键索引不允许空值，唯一索引允许空值，一张表中只能有一个主键索引
 
-2.一个表中可以有多个唯一索引，但只能有一个主键
+2.唯一索引允许一个空值，一个表中可以有多个唯一索引。
 
 3.非唯一索引
 
+4.组合索引：多列值组成一个索引，专门用于组合搜索，其效率大于索引合并
+
 4.聚集索引：在聚集索引中，表中行的物理顺序与键值的逻辑（索引）顺序相同
+
+## 索引的使用
+创建普通索引CREATE INDEX index_name ON table_name(col_name);
+创建唯一索引CREATE UNIQUE INDEX index_name ON table_name(col_name);
+创建普通组合索引CREATE INDEX index_name ON table_name(col_name_1,col_name_2);
+创建唯一组合索引CREATE UNIQUE INDEX index_name ON table_name(col_name_1,col_name_2);
+
+### 通过修改表结构创建索引
+ALTER TABLE table_name ADD INDEX index_name(col_name);
+
+### 创建表时直接指定索引
+CREATE TABLE table_name (ID INT NOT NULL,col_name VARCHAR (16) NOT NULL,INDEX index_name (col_name));
+
+## 删除索引
+直接删除索引DROP INDEX index_name ON table_name;
+修改表结构删除索引ALTER TABLE table_name DROP INDEX index_name;
 
 什么时候使用聚集索引？
 

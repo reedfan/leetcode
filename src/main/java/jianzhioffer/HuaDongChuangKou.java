@@ -1,4 +1,4 @@
-package leetcode.array;
+package jianzhioffer;
 
 import java.util.ArrayList;
 import java.util.LinkedList;

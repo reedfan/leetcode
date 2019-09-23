@@ -110,7 +110,7 @@ Intelij Idea内存泄漏   JProfiler
 
 -XX:+PrintGCDetails   打印出GC信息
 
-### 问题排查
+### 线上CPU100%排查
 1.jps查看进程号
 jps(Java Virtual Machine Process Status Tool)
 jps主要用来输出JVM中运行的进程状态信息。

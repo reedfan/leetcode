@@ -9,8 +9,8 @@ package leetcode.array;
 public class FindkthInArray {
 
     public static void main(String[] args) {
-        int[] array =  {92, 5, 88, 13, 80,7};
-        System.out.println(findKthLargest(array,5));
+        int[] array =  {3,3,3,3,4,3,3,3,3};
+        System.out.println(findKthLargest(array,1));
     }
 
     public static int findKthLargest(int[] nums,int k){
