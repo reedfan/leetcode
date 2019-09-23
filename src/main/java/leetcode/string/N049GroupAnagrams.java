@@ -24,11 +24,11 @@ import java.util.*;
  * 链接：https://leetcode-cn.com/problems/group-anagrams
  * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
  */
-public class GroupAnagrams49 {
+public class N049GroupAnagrams {
 
     public static void main(String[] args) {
         String[] strs = {"eat", "tea", "tan", "ate", "nat", "bat"};
-        new GroupAnagrams49().groupAnagrams(strs);
+        new N049GroupAnagrams().groupAnagrams(strs);
     }
 
     public List<List<String>> groupAnagrams(String[] strs) {

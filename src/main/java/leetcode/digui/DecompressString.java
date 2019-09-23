@@ -1,6 +1,7 @@
 package leetcode.digui;
 
-public class DecompressString {
+public class
+DecompressString {
 
     public static void main(String[] args) {
         String test1 = "3{a}2{bc}";
