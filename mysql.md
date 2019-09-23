@@ -274,3 +274,39 @@ MyIsam是表级锁，InnoDB是行级锁和表级锁都可以
 尽量用相等条件访问数据，这样可以避免间隙锁对并发插入的影响； 不要申请超过实际需要的锁级别；除非必须，查询时不要显示加锁；
 
  对于一些特定的事务，可以使用表锁来提高处理速度或减少死锁的可能。
+ 
+ 
+## 数据库调优思路
+1.慢查询的开启并捕获
+2.explain+慢sql分析
+3.show profile查询sql在mysql服务器里面的执行细节和生命周期情况
+4.sql数据库服务器的参数调优
+
+## 小表驱动大表
+优化原则：小表驱动大表
+select * from A where id in (select id from B)等价于
+for select id from B
+for select * from A where A.id = B.id
+当B表的数据集必须小于A表的数据集时，用in优于exists
+
+
+select * from A where exists (select 1 from B where B.id = A.id)等价于
+for select id from A
+for select * from B where B.id = A.id
+当A表的数据集必须小于B表的数据集时，用exists优于in
+
+## exists
+select ... from table where exists (subquery)
+该语法可以理解为： 将主查询的数据，放到子查询中做条件验证，根据验证结果(TRUE或FALSE)来决定主查询的数据是否得以保留。
+
+
+
+
+
+
+
+
+
+
+
+
