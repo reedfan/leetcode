@@ -22,14 +22,12 @@ public class TestVolatile {
         }
     }
 
-
-
-
 }
 
 class ThreadDeMo implements Runnable{
-    //不加volatile,将不会强制从主存读取数据
-    private  boolean flag = false;
+    //不加volatile,将不会强制从主存读取数据，主程序读到的flag一直是false
+    //将会一直阻塞住
+    private volatile boolean flag = false;
 
     public boolean isFlag() {
         return flag;
