@@ -12,7 +12,7 @@ import java.util.Comparator;
  * 例如输入数组{3，32，321}，则打印出这三个数字能排成的最小数字为321323
  */
 
-public class Solution26 {
+public class N32PrintMinNumber {
     public String PrintMinNumber(int [] numbers) {
         if(numbers.length == 0){
             return "";
