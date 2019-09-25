@@ -168,6 +168,7 @@ getConstructor（） 返回public构造函数
 ### class.forName()和ClassLoader.loadClass（className）
 第一个需要初始化。一旦初始化，就会触发目标对象的static代码块，static参数也会被再次初始化
 第二个不会进行初始化，静态块和静态对象就不会执行。
+[反射中Class.forName()和ClassLoader.loadClass()的区别](https://blog.csdn.net/reed1991/article/details/55506729)
 
 ### 动态代理和静态代理的区别
 

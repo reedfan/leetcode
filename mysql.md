@@ -122,7 +122,7 @@ I(Isolation)隔离性 事务的执行是互不干扰的,一个事务不可能看
 
 D(Durability)持久性 意味着事务完成以后,该事务对数据库所做的更改便持久的保持在数据库中.
 
-
+### [ACID特性的实现原理](https://blog.csdn.net/reed1991/article/details/53446864)
  
 ## 数据库隔离级别
 读未提交  脏读    不可重复读     幻读
@@ -164,6 +164,8 @@ mysql 可重复读，  大多数数据库默认隔离级别为读已提交
 串行化：锁表，读锁和写锁阻塞。
 
 ![详细介绍请参考此文](https://blog.csdn.net/reed1991/article/details/99713045)
+
+### [深入理解mysql四种隔离级别及底层实现原理（MVCC和锁）](https://blog.csdn.net/reed1991/article/details/99713045)
 
 ## 为什么B+树适合做索引
 
@@ -299,7 +301,7 @@ for select * from B where B.id = A.id
 select ... from table where exists (subquery)
 该语法可以理解为： 将主查询的数据，放到子查询中做条件验证，根据验证结果(TRUE或FALSE)来决定主查询的数据是否得以保留。
 
-
+## [彻底搞清楚分布式数据库](https://blog.csdn.net/reed1991/article/details/101206871)
 
 
 

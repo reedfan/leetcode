@@ -210,6 +210,7 @@ public class JoinDemo {
 
 ## 为什么JAVA要提供 wait/notify 机制？
 是为了避免轮询带来的性能损失
+[深入理解wait/notify/notifyAll的作用](https://blog.csdn.net/reed1991/article/details/53782250)
 
 ## Sleep和wait
 
@@ -514,6 +515,7 @@ synchronized 和 synchronized(this）是对象锁
 锁的四个状态
 无锁状态、偏向锁状态、轻量级锁状态、重量级锁
 
+[Java -- 偏向锁、轻量级锁、自旋锁、重量级锁](https://blog.csdn.net/reed1991/article/details/53143734)
 
 # JUC
  
@@ -613,3 +615,5 @@ ThreadLocal和Synchonized都用于解决多线程并发访问。但是ThreadLoca
 Synchronized用于线程间的数据共享，而ThreadLocal则用于线程间的数据隔离。
  
 当然ThreadLocal并不能替代synchronized,它们处理不同的问题域。Synchronized用于实现同步机制，比ThreadLocal更加复杂。
+
+## [守护线程和用户线程的区别](https://blog.csdn.net/reed1991/article/details/53427243)
