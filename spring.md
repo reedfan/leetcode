@@ -162,3 +162,11 @@ private String hello;
 
 [BeanNameAware，BeanFactoryAware， ApplicationContextAware](https://blog.csdn.net/reed1991/article/details/53900645)
 
+## spring boot 与 spring cloud
+ spring boot 是一个快速整合第三方框架   关注的是 微观 具体关注快速方便的开发单个个体的服务 
+ spring cloud 关注的是 宏观  具体关注全局的微服务协调整理治理框架 将spring boot 开发的一个个单体服务整合 并管理起来
+它为各个微服务之间提供 配置管理 服务发现 断路器路由 微代理 全局锁 分布式会话 等 集成服务
+举个例子 ： 一所医院  boot 是 一个一个科室    cloud 是把一个一个科室 组合起来 对外称之为 医院
+存在依赖关系  cloud   离不开boot 
+
+
