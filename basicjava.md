@@ -309,6 +309,8 @@ public static Integer valueOf(int i) {
 
 引用传递操作的是源数据，二维数组，List，Map等除了基本的数据类型都是引用传递。
 
+### [强引用，软引用，弱引用](https://blog.csdn.net/reed1991/article/details/56680911)
+
  
  
 ## JVM 

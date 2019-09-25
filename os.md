@@ -15,3 +15,9 @@ while轮询、 wait notify机制、 同步synchronized共享存储
 阻塞和非阻塞是指进程访问的数据如果尚未就绪，进程是否需要等待
 
 [阻塞和非阻塞，同步和异步](https://blog.csdn.net/reed1991/article/details/53165005)
+
+
+## CPU密集型和IO密集型
+CPU密集型，技术比较多
+IO密集型，磁盘的读写操作比较多
+[CPU密集型和IO密集型](https://blog.csdn.net/reed1991/article/details/53900628)

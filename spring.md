@@ -10,6 +10,8 @@ session：每次会话创建一个实例
 
 globalsession：全局Httpsession中，容器会返回该bean的同一实例
 
+[Bean的作用域和生命周期](https://blog.csdn.net/reed1991/article/details/59201366)
+
 ## 2.Bean的生命周期
 
  1、实例化一个Bean－－也就是我们常说的new；
@@ -90,6 +92,8 @@ AOP中各种通知
 
 CGlib必须依赖于CGlib的类库，CGlib的原理是针对目标类生成一个子类，覆盖其中的所有方法，所以目标类和方法不能声名为final类型。
 
+[AOP](https://blog.csdn.net/reed1991/article/details/53900617)
+
 ## SpringMVC的执行流程
 
 1.客户端请求提交到DispatcherServlet
@@ -153,3 +157,8 @@ CGlib必须依赖于CGlib的类库，CGlib的原理是针对目标类生成一�
 @Value("${hello:defaultValue}")
 private String hello;
 若找不到属性值hello，那么就会默认赋值 defaultValue
+
+### [一些常用的注解](https://blog.csdn.net/reed1991/article/details/53352772)
+
+[BeanNameAware，BeanFactoryAware， ApplicationContextAware](https://blog.csdn.net/reed1991/article/details/53900645)
+

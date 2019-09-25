@@ -12,7 +12,7 @@ String这种   启动类加载器  jre/lib/rt.jar
 
 1.装载：将Java二进制代码导入jvm中，生成Class文件。
 
-2. 连接过程
+2.连接过程
 
 　　（1）验证：确保被加载类的正确性，即确保被加载的类符合javac编译的规范
 
@@ -108,6 +108,8 @@ java 1.8 永久代消失了，由元空间取代
 
 
 -XX:+PrintGCDetails   打印出GC信息
+
+## [GC调优相关](https://blog.csdn.net/reed1991/article/details/53363354)
 
 ### 线上CPU100%排查
 1.jps查看进程号
