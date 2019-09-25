@@ -1,6 +1,6 @@
-package leetcode.array;
+package jianzhioffer;
 
-public class UglyNumber {
+public class N33UglyNumber {
 
     public static void main(String[] args) {
         System.out.println(uglyNumber(7));

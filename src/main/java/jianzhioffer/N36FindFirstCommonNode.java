@@ -8,7 +8,7 @@ import leetcode.arraylist.ListNode;
  * Time: 15:49
  * 输入两个链表，找出它们的第一个公共结点。
  */
-public class Solution3 {
+public class N36FindFirstCommonNode {
     public ListNode FindFirstCommonNode(ListNode pHead1, ListNode pHead2) {
         int sum1 = findArrayLenth(pHead1);
         int sum2 = findArrayLenth(pHead2);
