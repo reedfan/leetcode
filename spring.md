@@ -130,7 +130,27 @@ CGlib必须依赖于CGlib的类库，CGlib的原理是针对目标类生成一�
 3、contextLoaderListener 监听器初始化完毕后，开始初始化web.xml 中配置的servlet ，这个servlet 可以配置多个，以最常见的DispatcherServlet 为例，这个servlet 实际上是一个标准的前端控制器，用以转发、匹配、处理每个servlet 请求。DispatcherServlet 上下文在初始化的时候会建立自己的Ioc 上下文，用以持有springmvc 相关的bean。在建立DispatherSrvlet 自己的Ioc 上下文时，会利用 WebApplicationContext.ROOTWEBAPPLICATIONCONTEXTATTRIBUTE 先从ServletContext 中获取之前的根上下文（即 WebApplicationContext）作为自己上下文的parent 上下文，有了这个parent 上下文之后，再初始化自己持有的上下文。这个DispatcherServlet 初始化自己上下的工作在其 initStrategies 方法中可以看到，大概的工作就是初始化处理器映射、视图解析等，这个servlet 自己持有的上下文默认实现类也是 XmlWebApplicationContext。初始化完毕后，spring以与Servlet 的名字相关的属性为属性key，将其存到servletcontext 中，以便后续使用。这样每个Servlet 都持有自己的上下文，即拥有自己独立的bean 空间，同事各个servlet 共享相同的bean，即根上下文定义的那些bean
 
 
+## spring 解决循环依赖
+1.重新设计结构消除循环依赖。
+2.使用注解 @lazy
+3.使用setter注入
+
+## spring的几种注入方式
+
+
 ## 常用的一些注解
+
+### @Resource和@Autowired
+@Resource是j2ee的注解，注入方式为byName。
+@Autowired是spring的注解，注入方式为byType。默认要求对象必须存在，如果允许为null值，可设置其required属性为false，
+如果我们想用(byName)来配置，可以结合@Qualifier来使用
+
+
+
+
+
+
+
 ### @Cacheable
 @Cacheable(cacheNames = {"nihao","hello"}, key = "#p0")
 #p0为第一个参数        假如值为jj

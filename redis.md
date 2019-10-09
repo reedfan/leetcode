@@ -1,3 +1,42 @@
+
+redis     incr（“reed”）表示reed+1
+incrBy（"reed",5)  表示reed+5
+decrBy  减
+jedis.keys("*");  所有的key
+
+jedis.lpush ()往lis里面加
+lrange（）取出来
+llen（）长度
+lpop() 弹出
+insert（）插入  after或者before某个元素  
+
+jedis.hset("userKey","age",12);
+jedis.hgetAll(userKey)
+jedis.hget(userKey,"name");
+jedis.hdel(userKey,"phone");
+jedis.hexists(userKey,"age")是否存在
+jedis.hkeys(userKey)取出所有的key
+jedis.hvals(userKey)取出所有的value
+
+
+set
+jedis. smembers(likely) 查看有哪些成员
+jedis.sunion()查交集
+jedis.sdiff()   我有你没有
+jedis.sinter() 查并集    应用：共同关注的好友
+jedis.scard()  看有多少人
+
+
+zset  有序的
+排行榜
+jedis.zrange()从低到高排序
+jedis.zrevrange() 从高到低排序
+jedis.zrangeByScoreWithScores() 
+
+
+
+
+
 ## 内存数据库优劣势有那些？
 
 首先说明，nosql与内存数据库不是一回事哦。内存数据库是以内存为主要存储介质的数据库工具。由于内存的读写速度很快，因此内存数据库的最大特点就是性能好，速度快。由于内存在系统中是稀缺的资源，因此内存数据库的容量大小受物理内存的限制，因此我们这内存数据库中所管理的数据，通常只有热点或者高频数据（而不是全部数据）。而内存数据库也会被要求根据灵活的策略与磁盘数据库进行数据同步。
