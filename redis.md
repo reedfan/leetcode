@@ -33,7 +33,9 @@ jedis.zrange()从低到高排序
 jedis.zrevrange() 从高到低排序
 jedis.zrangeByScoreWithScores() 
 
-
+## caffeine
+通常我们喜欢把cache放到redis里，可以把访问速度提升，但是redis也算是远程服务器，会有IO时间的开销，如果我们把缓存放在本地内存，
+性能能进一步提升，这也就带出了二级缓存概念。有人说为什么不把cache直接放到本地，如果是单机没问题，但是集群环境下还是需要两级缓存的配合。
 
 
 
@@ -61,3 +63,28 @@ jedis.zrangeByScoreWithScores()
 ## [redis持久化](https://blog.csdn.net/reed1991/article/details/53123485)
 
 ## [如何处理redis集群中的hot Key](https://blog.csdn.net/reed1991/article/details/56956765)
+其核心就是需要让请求尽量不要落在同一台机器上，要将其分散。
+1、 产生一个随机值作为key的后缀，由key变成key_suffix。
+2、 为了防止key在同一时间过期，过期时间也加个随机值设置成不一样
+3、 当key失效时，可以data = redis.GET(bakHotKey)，先去hotKey上K拉取,拉取不到再去数据库查
+
+redis 4.0添加了hotKey检测的功能。执行redis-cli时加上–hotkeys选项即可
+
+## 如何保证数据库与缓存双写的一致性
+最经典的缓存+数据库读写的模式，cache aside pattern
+
+1、Cache Aside Pattern
+
+（1）读的时候，先读缓存，缓存没有的话，那么就读数据库，然后取出数据后放入缓存，同时返回响应
+
+（2）更新的时候，先删除缓存，然后再更新数据库
+
+为什么是删除缓存，而不是更新缓存呢？
+缓存可能涉及到很多字段的计算，如果是更新的话，每次update都要去更新，假设一个缓存涉及的表的字段，在1分钟修改了100次，
+那么缓存更新100次，但是可能就读取了一次，出现大量的冷数据。
+而采用删除的策略，在1分钟内不过是重新计算一次而已，开销大幅度降低。 其实这是一个lazy计算的思想，只有用到了才去计算。
+
+先修改数据库，再删除缓存，如果删除缓存失败了怎么办？
+解决思路：先删除缓存，再修改数据库。
+
+

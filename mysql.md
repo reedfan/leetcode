@@ -301,6 +301,14 @@ select ... from table where exists (subquery)
 ## [彻底搞清楚分布式数据库](https://blog.csdn.net/reed1991/article/details/101206871)
 
 
+## [数据库分库分表](https://blog.csdn.net/reed1991/article/details/53144000)
+1.水平切割
+range来分：优点：扩容容易     缺点:容易产生数据热点
+hash分： 优点：平均分配请求压力   缺点：扩容比较麻烦，需要数据迁移。
+2.垂直切割
+将较少的访问频率很高的字段放到一个表里去，然后将较多的访问频率很低的字段放到另外一个表里去
+3.如何从未分库分表切换到分库分表上
+
 
 
 
