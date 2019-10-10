@@ -28,13 +28,30 @@ String这种   启动类加载器  jre/lib/rt.jar
 
 ## 强引用和弱引用
 
-引用类型 被垃圾回收的时间 用途 生存时间
+引用类型    被垃圾回收的时间       用途               生存时间
 
-强引用 从来不会 对象的一般状态 JVM停止时运行
+强引用        从来不会        对象的一般状态         JVM停止运行时终止
 
-软引用 内存不足时 对象缓存 内存不足时终止
+软引用       内存不足时         对象缓存             内存不足时终止
 
-弱引用 在垃圾回收时 对象缓存 GC运行后终止
+弱引用      在垃圾回收时        对象缓存               GC运行后终止
+
+ ```
+public static void main(String[] args) {
+        String str = new String("abc");    //强引用
+        SoftReference<String> softReference = new SoftReference<>(str); //软引用
+        str = null;    //去掉强引用
+        System.gc();   //垃圾回收器进行回收
+        System.out.println(softReference.get());
+        String strNew = new String("123");
+
+        WeakReference<String> weakReference = new WeakReference<>(strNew);//弱引用
+        strNew = null;
+        System.gc();
+        System.out.println(weakReference.get());
+    }
+  ```
+  输出结果为 abc  null
 
 ## 双亲委派模式优势
 
