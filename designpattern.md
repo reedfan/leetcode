@@ -11,6 +11,64 @@
 观察者：有个接收被观察者通知的方法。
 被观察者：(1)定义观察者的集合，并定义针对集合的添加、删除操作，用于增加、删除观察者
        （2）定义通知方法，用于将新情况通知给观察者
+       
+## [适配器模式](https://blog.csdn.net/reed1991/article/details/53133169)
+类的适配器：适配器类，继承了被适配类，同时实现标准接口，单源适配，很清晰
+ ```
+public class Adapter extends A implements B{
+
+	public void bMethod() {
+		
+	}
+	
+}
+ ```
+ 对象适配器：适配器类，直接关联被适配类，同时实现标准接口   可多源适配
+  ```
+ public class Adapter implements B {
+	private A a;
+	// 可以通过构造函数传入具体需要适配的被适配类对象
+    public Adapter (A a) {
+        this.a = a;
+    }
+
+}
+	
+```
+## [代理模式](https://blog.csdn.net/reed1991/article/details/87562997)
+（1）代理类C与委托类B实现同一接口 A 
+（2）在委托类中实现功能，在代理类的方法中中引用委托类的同名方法
+（3）外部类调用委托类某个方法时，直接以接口指向代理类的实例，这正是代理的意义所在：屏蔽。
+```
+public class C implements A {
+    @Override
+    public void Amethod() {
+        B b = new B();
+        b.quanli();
+    }
+}
+```
+
+## [装饰器模式](https://blog.csdn.net/reed1991/article/details/53106130)
+其作用是增强
+```
+public class C implements A {
+    private A a;
+
+    public Decorator(A a) {
+        this.a = a;
+    }
+    @Override
+    public void output() {
+        System.out.println("这是针对房子的前段装饰增强");
+        house.output();
+        System.out.println("这是针对房子的后段装饰增强");
+    }
+}
+```
+装饰器中持有的目标实例是从构造器传入的，而代理中持有的目标实例是自己创建的。
+
+那么这里又出现一个区别，代理模式和装饰器模式虽然都依赖于目标接口，但是代理针对的目标实现类是固定的，而装饰器模式可以随意指定，也就是说目标是可以自有扩展的。
 
 ## 为什么枚举可以实现单例
 枚举中所有的对象都是static final的，表明只能被实例化一次
