@@ -37,6 +37,23 @@ jedis.zrangeByScoreWithScores()
 通常我们喜欢把cache放到redis里，可以把访问速度提升，但是redis也算是远程服务器，会有IO时间的开销，如果我们把缓存放在本地内存，
 性能能进一步提升，这也就带出了二级缓存概念。有人说为什么不把cache直接放到本地，如果是单机没问题，但是集群环境下还是需要两级缓存的配合。
 
+## 假如Redis里面有1亿个key，其中有10w个key是以某个固定的已知的前缀开头的，如果将它们全部找出来？
+redis的单线程的。keys指令会导致线程阻塞一段时间，线上服务会停顿，直到指令执行完毕，服务才能恢复。这个时候可以使用scan指令，scan指令可以无阻塞的提取出指定模式的key列表，但是会有一定的重复概率，在客户端做一次去重就可以了，但是整体所花费的时间会比直接用keys指令长。
+[Redis中的Scan命令的使用](https://www.cnblogs.com/wy123/p/10955153.html)
+
+
+## redis分布式锁
+先拿setnx来争抢锁，抢到之后，再用expire给锁加一个过期时间防止锁忘记了释放。这样万一expire之前进程crash，就会导致锁得不到释放。
+我们可以使用set命令完成setnx和expire的操作，并且这种操作是原子操作。
+set key value [EX seconds] [PX milliseconds] [NX|XX]
+EX seconds：设置失效时长，单位秒
+PX milliseconds：设置失效时长，单位毫秒
+NX：key不存在时设置value，成功返回OK，失败返回(nil)
+XX：key存在时设置value，成功返回OK，失败返回(nil)
+
+案例：设置name=p7+，失效时长100s，不存在时设置
+ set name p7+ ex 100 nx
+[Redis的setnx命令如何设置key的失效时间（同时操作setnx和expire）](https://blog.csdn.net/qq_30038111/article/details/90696233)
 
 
 ## 内存数据库优劣势有那些？
@@ -61,6 +78,22 @@ jedis.zrangeByScoreWithScores()
 
 
 ## [redis持久化](https://blog.csdn.net/reed1991/article/details/53123485)
+
+## redis集群
+Redis Sentinal着眼于高可用，在master宕机时会自动将slave提升为master，继续提供服务。
+Redis Cluster着眼于扩展性，在单个redis内存不足时，使用Cluster进行分片存储。
+## 使用过Redis做异步队列？
+
+一般使用list结构作为队列，rpush生产消息，lpop消费消息。当lpop没有消息的时候，要适当sleep一会再重试。
+
+如果对方追问可不可以不用sleep呢？list还有个指令叫blpop，在没有消息的时候，它会阻塞住直到消息到来。
+
+如果对方追问能不能生产一次消费多次呢？使用pub/sub主题订阅者模式，可以实现1:N的消息队列。
+
+如果对方追问pub/sub有什么缺点？在消费者下线的情况下，生产的消息会丢失，得使用专业的消息队列如rabbitmq等。
+
+如果对方追问redis如何实现延时队列？使用sortedset，拿时间戳作为score，消息内容作为key调用zadd来生产消息，
+消费者用zrangebyscore指令获取N秒之前的数据轮询进行处理。
 
 ## [如何处理redis集群中的hot Key](https://blog.csdn.net/reed1991/article/details/56956765)
 其核心就是需要让请求尽量不要落在同一台机器上，要将其分散。
