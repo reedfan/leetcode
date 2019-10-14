@@ -44,7 +44,7 @@ ArrayList 线程不安全 初始容量为10，1.5倍扩容 扩容后将老数组
 1）  Vector的方法都是同步的(Synchronized),是线程安全的(thread-safe)，而ArrayList的方法不是，由于线程的同步必然要影响性能，因此,ArrayList的性能比Vector好。 
 2） 当Vector或ArrayList中的元素超过它的初始大小时,Vector会将它的容量翻倍,而ArrayList只增加50%的大小，这样,ArrayList就有利于节约内存空间
 
-### HashSet、 TreeSet、TreeSet
+### HashSet、 TreeSet、LinkedHashSet
 TreeSet 大小排序, LinkedHashSet  按照顺序排序
 HashSet是由一个hash表来实现的，因此，它的元素是无序的。add()，remove()，contains()方法的时间复杂度是O(1)。 另一方面，TreeSet是由一个树形的结构来实现的，它里面的元素是有序的。因此，add()，remove()，contains()方法的时间复杂度是O(logn)。
 linked 也是O（1），但是性能逊色一点
@@ -109,6 +109,12 @@ Collection 是一个集合接口
 
 ### 泛型
 
+泛型：即参数化类型，所谓参数化类型，是指操作的数据类型在定义时被指定为一个参数，然后在使用时传入具体的类型。
+
+泛型不能为基本类型
+
+可以自定义泛型，泛型在Java集合类框架中被广泛的使用
+
 在编译之后，程序会采取去泛型化的措施。Java中的泛型，只在编译阶段有效。在编译过程中，正确检查泛型结果后，会将泛型的相关信息擦除。也就是说，泛型信息不会进入到运行阶段。
 
 泛型的好处:
@@ -117,11 +123,7 @@ Collection 是一个集合接口
 
 2.消除了强制类型转换，使得代码可读性好，消除了出错的机会。
 
-泛型：即参数化类型，所谓参数化类型，是指操作的数据类型在定义时被指定为一个参数，然后在使用时传入具体的类型。
 
-泛型不能为基本类型
-
-可以自定义泛型，泛型在Java集合类框架中被广泛的使用
 
 ### 方法覆盖与方法重载
 
@@ -210,7 +212,7 @@ ClassNotFoundException 编译的时候就找不到，class.forName动态加载
 StackOverflowError：递归过深，递归没有出口。
 OutOfMemoryError：JVM空间溢出，创建对象速度高于GC回收速度。
 
-
+## try..catch捕获
 对于try..catch捕获异常的形式来说，对于异常的捕获，可以有多个catch。对于try里面发生的异常，他会根据发生的异常和catch里面的进行匹配(怎么匹配，按照catch块从上往下匹配)，当它匹配某一个catch块的时候，他就直接进入到这个catch块里面去了，后面在再有catch块的话，它不做任何处理，直接跳过去，全部忽略掉。如果有finally的话进入到finally里面继续执行。换句话说，如果有匹配的catch，它就会忽略掉这个catch后面所有的catch。对我们这个方法来说，抛出的是IOException，当执行etct.doSomething();时，可能会抛出IOException，一但抛出IOException，它首先进入到catch (Exception e) {}里面，先和Exception匹配，由于OExceptionextends Exception,根据多态的原则，IOException是匹配Exception的，所以程序就会进入到catch (Exception e) {}里面，进入到第一个catch后，后面的catch都不会执行了，所以catch (IOException e) {}永远都执行不到，就给我们报出了前面的错误:已捕捉到异常 java.io.IOException。
 
 总结:在写异常处理的时候，一定要把异常范围小的放在前面，范围大的放在后面，Exception这个异常的根类一定要刚在最后一个catch里面，如果放在前面或者中间，任何异常都会和Exception匹配的，就会报已捕获到...异常的错误。
@@ -277,7 +279,7 @@ switch只能时int 或这能转化为int型的byte,short,char,jdk1.7之后String
 基本类型或 Integer 包装类型，由于， byte,short,char 都可以隐含转换为 int，所以，这些类型以及这些类型的包装类型也是可以的。显然， long 和 String 类型都不符合 switch 的语法规定，并且不能被隐式转换成 int类型，所以，它们不能作用于 swtich 语句中。 另外由于 JDK1.7 中引入新特性，所以 swtich 语句可以接收
 一个 String 类型的值， String 可以作用在 swtich 上。
 
-缓存池
+## 缓存池
 
 new Integer(123) 与 Integer.valueOf(123) 的区别在于：
 

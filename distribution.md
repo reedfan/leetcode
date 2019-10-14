@@ -1,4 +1,12 @@
 
+### [系统架构中为什么要引入消息中间件](https://mp.weixin.qq.com/s?__biz=MzU0OTk3ODQ3Ng==&mid=2247484149&idx=1&sn=98186297335e13ec7222b3fd43cfae5a&chksm=fba6eaf6ccd163e0c2c3086daa725de224a97814d31e7b3f62dd3ec763b4abbb0689cc7565b0&mpshare=1&scene=1&srcid=0608fz8HKZvYxRhzFqyJ4Isq%23rd)
+1.解耦  2.异步  3.削峰
+
+### [系统架构引入消息中间件有什么缺点](https://mp.weixin.qq.com/s?__biz=MzU0OTk3ODQ3Ng==&mid=2247484157&idx=1&sn=f4644be2db6b1c230846cb4d62ae5be9&chksm=fba6eafeccd163e817b420d57478829d92251a6a5fd446f81805f0983a0d95cb6853a6735c4b&mpshare=1&scene=1&srcid=06083A6RVW3ZtKQRy6Ttq8tK%23rd)
+1.消息中间件可能会挂掉，导致系统可用性降低
+2.可能会丢消息，导致系统稳定性下降
+3.可能带来分布式一致性问题
+
 ## [kafka](https://blog.csdn.net/reed1991/article/details/88729252)
 
 ### Kafka消息保证生产的信息不丢失
@@ -16,6 +24,9 @@
 （1）去重：将消息的唯一标识保存到外部介质中，每次消费处理时判断是否处理过；
 （2）不管：大数据场景中，报表系统或者日志信息丢失几条都无所谓，不会影响最终的统计分析结
 
+## rabbitMQ
+### rabbitMQ消费者还没来得及消费消息就宕机了怎么办
+ 关闭autoAck的行为 ，channel.basicConsume()方法，传入的第二个参数：false
 ## [zookeeper](https://blog.csdn.net/reed1991/article/details/53811504)
 
 ## [Dubbo](https://blog.csdn.net/reed1991/article/details/86185091)
