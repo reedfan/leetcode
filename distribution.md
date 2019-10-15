@@ -27,6 +27,22 @@
 ## rabbitMQ
 ### rabbitMQ消费者还没来得及消费消息就宕机了怎么办
  关闭autoAck的行为 ，channel.basicConsume()方法，传入的第二个参数：false
+ 
+### RabbitMQ暂时放在了自己的内存中，还没来得及投递给消费者，此时RabbitMQ突然宕机了，会怎么样？ 
+1.首先让queue持久化
+2.消息到RabbitMQ的时候，需要定义这条消息也是durable，即持久化的。
+一旦标记了消息是持久化之后，就会让RabbitMQ把消息持久化写入到磁盘上去，此时如果RabbitMQ还没投递数据到消费者，
+结果就突然宕机了。那么再次重启的时候，就会把磁盘上持久化的消息给加载出来。
+
+
+## 生产者弄丢了数据
+生产者将数据发送到rabbitmq的时候，可能因为网络问题导致数据就在半路给搞丢了。
+1.使用事务（性能差）：在生产者发送数据之前开启rabbitmq事务（channel.txSelect），然后发送消息，如果消息没有成功被rabbitmq接收到，那么生产者会收到异常报错，此时就可以回滚事务（channel.txRollback）
+始rabbitmq事务机制，基本上吞吐量会下来，因为太耗性能。
+2.可以开启confirm模式，在生产者那里设置开启confirm模式之后，你每次写的消息都会分配一个唯一的id，然后如果写入了rabbitmq中，rabbitmq会给你回传一个ack消息，告诉你说这个消息ok了。如果rabbitmq没能处理这个消息，会回调你一个nack接口，告诉你这个消息接收失败，你可以重试。而且你可以结合这个机制自己在内存里维护每个消息id的状态，如果超过一定时间还没接收到这个消息的回调，那么你可以重发。
+事务机制和cnofirm机制最大的不同在于，事务机制是同步的，你提交一个事务之后会阻塞在那儿，但是confirm机制是异步的，你发送个消息之后就可以发送下一个消息，然后那个消息rabbitmq接收了之后会异步回调你一个接口通知你这个消息接收到了。
+所以一般在生产者这块避免数据丢失，都是用confirm机制的。
+
 ## [zookeeper](https://blog.csdn.net/reed1991/article/details/53811504)
 
 ## [Dubbo](https://blog.csdn.net/reed1991/article/details/86185091)
