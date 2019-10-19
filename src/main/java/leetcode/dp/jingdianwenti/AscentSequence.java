@@ -27,7 +27,7 @@ public class AscentSequence {
     private int findpos(int[] tmp, int num, int start, int end) {
         while (start < end) {
             int mid = start + (end - start) / 2;
-            if (tmp[mid] < num) {
+            if (tmp[mid] == num) {
                 return mid;
             }
             if (tmp[mid] < num) {
