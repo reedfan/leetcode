@@ -55,6 +55,12 @@ XX：key存在时设置value，成功返回OK，失败返回(nil)
  set name p7+ ex 100 nx
 [Redis的setnx命令如何设置key的失效时间（同时操作setnx和expire）](https://blog.csdn.net/qq_30038111/article/details/90696233)
 
+## redis的过期策略
+定期删除+惰性删除。
+1.定期删除，指的是 redis 默认是每隔 100ms 就随机抽取一些设置了过期时间的 key，检查其是否过期，如果过期就删除。
+为什么是抽取，而不是全部：全部的话数据量大会卡死。
+2.惰性删除 定期删除可能会导致很多过期 key 到了时间并没有被删除掉，那咋整呢？所以就是惰性删除了。这就是说，在你获取某个 key 的时候，redis 会检查一下 ，这个 key 如果设置了过期时间那么是否过期了？如果过期了此时就会删除，不会给你返回任何东西。
+惰性删除还是很多没删除的话就走淘汰机制
 
 ## 内存数据库优劣势有那些？
 
@@ -80,6 +86,7 @@ XX：key存在时设置value，成功返回OK，失败返回(nil)
 ## [redis持久化](https://blog.csdn.net/reed1991/article/details/53123485)
 
 ## redis集群
+主从模式（master/slaver）：master读和写，slave读，  缺点：master挂了以后，redis就不能对外服务了。
 Redis Sentinal着眼于高可用，在master宕机时会自动将slave提升为master，继续提供服务。
 Redis Cluster着眼于扩展性，在单个redis内存不足时，使用Cluster进行分片存储。
 ## 使用过Redis做异步队列？
@@ -95,11 +102,88 @@ Redis Cluster着眼于扩展性，在单个redis内存不足时，使用Cluster�
 如果对方追问redis如何实现延时队列？使用sortedset，拿时间戳作为score，消息内容作为key调用zadd来生产消息，
 消费者用zrangebyscore指令获取N秒之前的数据轮询进行处理。
 
+## [缓存穿透、缓存击穿、缓存雪崩](https://mp.weixin.qq.com/s?__biz=MzU0OTk3ODQ3Ng==&mid=2247484884&idx=1&sn=ceb798b6e8ef0ee608a992385f7d8568&chksm=fba6edd7ccd164c155271811f7948b476955cab41b23f2333847b8c268b31cc9f3332c2e3926&mpshare=1&scene=1&srcid=0608pIX1L8Fja1H99IyorW2X%23rd)
+缓存穿透：查一条根本不存在的数据：
+解决办法，接口层增加校验，如用户鉴权校验，id做基础校验，id<=0的直接拦截；
+查不到将相应的key缓存个null ，(适用范围：key有限的，重复率比较高）
+如果大量的key不存在，先用布隆过滤器过滤一下
+
+缓存击穿：大量的请求同时查询一个 key 时，此时这个key正好失效了，就会导致大量的请求都打到数据库上面去。这种现象我们称为缓存击穿。
+处理措施：1.热点数据设置永不过期
+2.加互斥锁，
+ ```
+ @Autowired
+    private StringRedisTemplate stringRedisTemplate;
+    @Autowired
+    private Jedis               jedis;
+    private final String        MUTEX_KEY = "MUTEX_";
+
+    public String getData(String key) throws InterruptedException {
+        String value = stringRedisTemplate.opsForValue().get(key);
+        //缓存失效
+        if (StringUtils.isBlank(value)) {
+            //设置分布式锁，只允许一个线程去查询DB，同时指定过期时间为1min，防止del操作失败，导致死锁，缓存过期无法加载DB数据
+            if (tryLock(MUTEX_KEY + key, 60L)) {
+                //从数据库查询数据,将查询的结果缓存起来
+                value = getValueFromDB();
+                stringRedisTemplate.opsForValue().set(key, value);
+
+                //释放分布式锁
+                stringRedisTemplate.delete(MUTEX_KEY + key);
+            } else {
+                //当锁被占用时，睡眠5s继续调用获取数据请求
+                Thread.sleep(5000);
+                getData(key);}
+        }
+        return value;
+    }
+
+    /**
+     * redis实现分布式事务锁 尝试获取锁
+     * 
+     * @param lockName  锁
+     * @param expireTime 过期时间
+     * @return
+     */
+    public Boolean tryLock(String lockName, long expireTime) {
+        //RedisCallback redis事务管理，将redis操作命令放到事务中处理，保证执行的原子性
+        String result = stringRedisTemplate.opsForValue().getOperations().execute(new RedisCallback<String>() {
+
+            /**
+             * @param key 使用key来当锁，因为key是唯一的。
+             * @param value 请求标识，可通过UUID.randomUUID().toString()生成,解锁时通value参数可识别出是哪个请求添加的锁
+             * @param nx 表示SET IF NOT EXIST，即当key不存在时，我们进行set操作；若key已经存在，则不做任何操作
+             * @param ex 表示过期时间的单位是秒
+             * @param time 表示过期时间
+             */
+            @Override
+            public String doInRedis(RedisConnection connection) throws DataAccessException {
+                return jedis.set(lockName, UUID.randomUUID().toString(), "NX", "EX", expireTime);
+            }
+        });
+
+        if ("OK".equals(result)) {
+            return true;
+        }
+        return false;
+    }
+
+    public String getValueFromDB() {
+        return "";
+    }
+ ```
+ 缓存雪崩：当某一时刻发生大规模的缓存失效的情况，比如你的缓存服务宕机了，会有大量的请求进来直接打到DB上面。结果就是DB 称不住，挂掉。
+ 
+ 1.使用redis集群缓存
+ 2.caffiene本地缓存，redis失效的时候，还能支撑一阵
+ 3.Hystrix进行限流 & 降级 ，比如一秒来了5000个请求，我们可以设置假设只能有一秒 2000个请求能通过这个组件，那么其他剩余的 3000 请求就会走限流逻辑。
+ 4.开启redis持久化机制，尽快恢复缓存集群
 ## [如何处理redis集群中的hot Key](https://blog.csdn.net/reed1991/article/details/56956765)
 其核心就是需要让请求尽量不要落在同一台机器上，要将其分散。
 1、 产生一个随机值作为key的后缀，由key变成key_suffix。
 2、 为了防止key在同一时间过期，过期时间也加个随机值设置成不一样
 3、 当key失效时，可以data = redis.GET(bakHotKey)，先去hotKey上K拉取,拉取不到再去数据库查
+4. 也可以设置一个互斥锁
 
 redis 4.0添加了hotKey检测的功能。执行redis-cli时加上–hotkeys选项即可
 

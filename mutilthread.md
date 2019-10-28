@@ -455,7 +455,16 @@ lock                                synchronized
 读写锁可以提高多个线程进行读操作的效率
 
 需要收到在finally中unlock
-synchronized底层是悲观锁，LOCK是乐观锁，基于cas            
+synchronized底层是悲观锁，LOCK是乐观锁，基于cas   
+
+## CAS，全称Compare And Swap（比较与交换），解决多线程并行情况下使用锁造成性能损耗的一种机制。
+
+实现思想 CAS（V, A, B），V为内存地址、A为预期原值，B为新值。如果内存地址的值与预期原值相匹配，那么将该位置值更新为新值。否则，说明已经被其他线程更新，处理器不做任何操作；无论哪种情况，它都会在 CAS 指令之前返回该位置的值。而我们可以使用自旋锁，循环CAS，重新读取该变量再尝试再次修改该变量，也可以放弃操作。   
+
+ABA问题：1.加版本号校验，每次修改变量值时，对应增加版本号。
+2.大量线程高并发操作，会造成很多空轮询：LongAdder尝试使用分段CAS以及自动分段迁移的方式来大幅度提升多线程高并发执行CAS操作的性能 [jdk1.8cas优化](https://mp.weixin.qq.com/s?__biz=MzU0OTk3ODQ3Ng==&mid=2247484070&idx=1&sn=c1d49bce3c9da7fcc7e057d858e21d69&chksm=fba6eaa5ccd163b3a935303f10a54a38f15f3c8364c7c1d489f0b1aa1b2ef293a35c565d2fda&mpshare=1&scene=1&srcid=0608QzOXG2l0z2QyfVaCKqRH%23rd)
+
+     
 
 ## Synchronized小结
 
@@ -515,6 +524,24 @@ synchronized 和 synchronized(this）是对象锁
 锁的四个状态
 无锁状态、偏向锁状态、轻量级锁状态、重量级锁
 
+## [微服务注册中心的读写锁优化](https://mp.weixin.qq.com/s?__biz=MzU0OTk3ODQ3Ng==&mid=2247484129&idx=1&sn=d2a95310db5751b152ba070caee4ebae&chksm=fba6eae2ccd163f48aef9d98a4dbb55d578a24af710e1436cc876fe3119b03135532e16d80bc&mpshare=1&scene=1&srcid=06089KYIxoL86LbBEP44hsnV%23rd)
+ ```
+ //服务注册
+ public void register(){
+    writeLock.lock();
+    //将服务实例信息加入
+    writeLock.unLock();
+ 
+ }
+ 
+  //读取服务注册
+ public Map register(){
+    readLock.lock();
+    //读取服务实例信息
+    readLock.unLock();
+ 
+ }
+  ```
 [Java -- 偏向锁、轻量级锁、自旋锁、重量级锁](https://blog.csdn.net/reed1991/article/details/53143734)
 
 # JUC
