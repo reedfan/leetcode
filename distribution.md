@@ -48,7 +48,28 @@
 
 ## [zookeeper](https://blog.csdn.net/reed1991/article/details/53811504)
 
-## [Dubbo](https://blog.csdn.net/reed1991/article/details/86185091)
+
+business也就是service层，是用户编程所涉及的部分。以下的RPC和Remoting都是原理部分。
+
+Config层就是封装配置文件的信息，就是配置文件的内存表示。
+
+Config层下面是Proxy（服务代理层）。它会生成客户端的代理对象，生成服务端的代理对象。代理对象互相调用方法。
+
+Proxy下面是Registry（注册层）。消费者要到注册中心去订阅。服务的发现、服务的注册。
+
+Cluster（路由层），帮我们进行负载均衡。Invoker是调用者，同一个服务有可能在多个机器上，cluster就解决负载均衡的问题。
+
+Monitor（监控层），每一次的调用信息都会被监控层收集。
+
+Protocol（远程调用层），封装整个rpc调用。一次远程调用的3个核心就是：Invoker, Protocol, Exporter.
+
+要远程调用，就要在两台机器间架起通信的管道。Remoting就是解决远程通信的问题。
+
+Exchange（信息交换层），本质就是创建一个客户端，一个服务端，两个架起管道，数据互通。
+
+Transport（传输层），真正传输数据是通过Transporter来封装传输的。Transporter的底层就是Netty框架。
+
+Serialize（序列化层），数据发送前要序列化，数据接收后，反序列化。
 
 
 ## 分布式锁相关
@@ -65,9 +86,19 @@ redis实现分布式锁的性能更好，redis是纯内存服务。
 
 ## [RabbitMQ的五种工作模式](https://blog.csdn.net/reed1991/article/details/53394906)
 
+## [Dubbo](https://blog.csdn.net/reed1991/article/details/86185091)
+## [Dubbo原理](https://blog.csdn.net/reed1991/article/details/53134343)
+## dubbo服务降级
+mock=force:return+null 表示消费方对该服务的方法调用都直接返回 null 值，不发起远程调用。用来屏蔽不重要服务不可用时对调用方的影响。
+还可以改为 mock=fail:return+null 表示消费方对该服务的方法调用在失败后，再返回 null 值，不抛异常。用来容忍不重要服务不稳定时对调用方的影响。
 
-
-
+## 集群容错
+Failover Cluster：失败自动切换，当出现失败，重试其它服务器。通常用于读操作，但重试会带来更长延迟。可通过 retries="2" 来设置重试次数(不含第一次)
+Failfast Cluster：快速失败，只发起一次调用，失败立即报错。通常用于非幂等性的写操作，比如新增记录。
+Failsafe Cluster：失败安全，出现异常时，直接忽略。通常用于写入审计日志等操作。
+Failback Cluster：失败自动恢复，后台记录失败请求，定时重发。通常用于消息通知操作。
+Forking Cluster：并行调用多个服务器，只要一个成功即返回。通常用于实时性要求较高的读操作，但需要浪费更多服务资源。可通过 forks="2" 来设置最大并行数。
+Broadcast Cluster：广播调用所有提供者，逐个调用，任意一台报错则报错。通常用于通知所有提供者更新缓存或日志等本地资源信息。
 ### hystrix 断路器 
  
 Hystrix是一个用于处理分布式系统的延迟和容错的开源库，在分布式系统里，许多依赖不可避免的会调用失败，比如超时、异常等，Hystrix能够保证在一个依赖出问题的情况下，不会导致整体服务失败，避免级联故障，以提高分布式系统的弹性。
