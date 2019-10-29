@@ -41,6 +41,11 @@ jedis.zrangeByScoreWithScores()
 redis的单线程的。keys指令会导致线程阻塞一段时间，线上服务会停顿，直到指令执行完毕，服务才能恢复。这个时候可以使用scan指令，scan指令可以无阻塞的提取出指定模式的key列表，但是会有一定的重复概率，在客户端做一次去重就可以了，但是整体所花费的时间会比直接用keys指令长。
 [Redis中的Scan命令的使用](https://www.cnblogs.com/wy123/p/10955153.html)
 
+## redis的线程模型
+![Image text](https://img-blog.csdnimg.cn/20190925111154217.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3JlZWQxOTkx,size_16,color_FFFFFF,t_70)
+Redis基于Reactor模式开发了文件事件处理器
+文件事件处理器使用I/O多路复用程序来同时监听多个套接字。当一个套接字准备好执行应答、写入、读取、关闭等操作时，就会产生一个事件。尽管多个文件事件可能并发的出现。
+但I/O多路复用程序会将所有产生事件的套接字列入一个队列里。然后通过这个队列，以有序、同步、每次一个套接字的方式向文件事件分派器传送套接字。当上一个事件被处理完成后才会继续向文件事件分派器传送下一个套接字。
 
 ## redis分布式锁
 先拿setnx来争抢锁，抢到之后，再用expire给锁加一个过期时间防止锁忘记了释放。这样万一expire之前进程crash，就会导致锁得不到释放。
@@ -56,6 +61,14 @@ XX：key存在时设置value，成功返回OK，失败返回(nil)
 [Redis的setnx命令如何设置key的失效时间（同时操作setnx和expire）](https://blog.csdn.net/qq_30038111/article/details/90696233)
 
 ## redis事务的实现
+
+## 一致性hash
+传统hash的缺陷：hash(object)%(N)变成hash(object)%(N-1)。假如新加一台机器或者减少一台机器全乱了。
+一致性hash    多个HASH（服务器A的IP地址） %  2^32映射到一个环上。 然后缓存HASH（key） %  2^32，顺时针遇到哪个服务器就落在哪个服务器上。
+优势：某个服务器挂了以后只会有少量的缓存失效。
+
+解决哈希环的倾斜： 虚拟节点
+
 
 
 

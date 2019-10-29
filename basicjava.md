@@ -206,8 +206,11 @@ runtimeExeception 空指针，数组越界
 
 NOClassDefFoundError是运行时报错，是一个错误（Error），
 
-ClassNotFoundException 是一个异常，可捕获       
+ClassNotFoundException 是一个异常，可捕获  
 
+### throw和throws的区别和联系     
+throws关键字一般用于抛出编译时的异常， 用在方法上。
+throw一般是用在抛出一个异常对象，            throw new MyException("龙不吟，虎不啸");然后@ExceptionHandler里面统一捕获返回给前端
 ### NOClassDefFoundError和ClassNotFoundException
 
 NOClassDefFoundError 要查找的类在编译时是存在的，运行时却找不到了，new操作来创建一个新的对象但却找不到该对象的类。
