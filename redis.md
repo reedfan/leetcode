@@ -69,6 +69,8 @@ XX：key存在时设置value，成功返回OK，失败返回(nil)
 
 解决哈希环的倾斜： 虚拟节点
 
+redis cluster：hash slot算法。
+
 
 
 
