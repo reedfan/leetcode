@@ -40,6 +40,20 @@ ArrayList 线程不安全 初始容量为10，1.5倍扩容 扩容后将老数组
 
 在每次添加新的元素时，ArrayList都会检查是否需要进行扩容操作，扩容操作带来数据向新数组的重新拷贝，所以如果我们知道具体业务数据量， 在构造ArrayList时可以给ArrayList指定一个初始容量，这样就会减少扩容时数据的拷贝问题。
 
+
+### 在ArrayList的循环中删除元素，会不会出现问题？
+普通for循环正序删除，删除过程中元素向左移动，不能删除重复的元素
+普通for循环倒序删除，删除过程中元素向左移动，可以删除重复的元素
+
+增强for循环删除，使用ArrayList的remove()方法删除，产生并发修改异常 ConcurrentModificationException
+迭代器，使用ArrayList的remove()方法删除，产生并发修改异常 ConcurrentModificationException
+
+原因：1）在使用For-Each快速遍历时，ArrayList内部创建了一个内部迭代器iterator，使用的是hasNext和next()方法来判断和取下一个元素。
+   2）ArrayList里还保存了一个变量modCount，用来记录List修改的次数，而iterator保存了一个expectedModCount来表示期望的修改次数，在每个操作前都会判断两者值是否一样，不一样则会抛出异常；
+   3）在foreach循环中调用remove()方法后，会走到fastRemove()方法，该方法不是iterator中的方法，而是ArrayList中的方法，在该方法中modCount++; 而iterator中的expectedModCount并没有改变；
+   4）再次遍历时，会先调用内部类iteator中的hasNext(),再调用next(),在调用next()方法时，会对modCount和expectedModCount进行比较，此时两者不一致，就抛出了ConcurrentModificationException异常。
+使用迭代器的remove方法可以正常删除
+
 ### ArrayList和Vector的区别
 1）  Vector的方法都是同步的(Synchronized),是线程安全的(thread-safe)，而ArrayList的方法不是，由于线程的同步必然要影响性能，因此,ArrayList的性能比Vector好。 
 2） 当Vector或ArrayList中的元素超过它的初始大小时,Vector会将它的容量翻倍,而ArrayList只增加50%的大小，这样,ArrayList就有利于节约内存空间
