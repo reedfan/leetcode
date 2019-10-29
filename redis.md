@@ -55,6 +55,10 @@ XX：key存在时设置value，成功返回OK，失败返回(nil)
  set name p7+ ex 100 nx
 [Redis的setnx命令如何设置key的失效时间（同时操作setnx和expire）](https://blog.csdn.net/qq_30038111/article/details/90696233)
 
+## redis事务的实现
+
+
+
 ## redis的过期策略
 定期删除+惰性删除。
 1.定期删除，指的是 redis 默认是每隔 100ms 就随机抽取一些设置了过期时间的 key，检查其是否过期，如果过期就删除。

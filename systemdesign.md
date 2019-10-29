@@ -38,3 +38,5 @@ A--->B，同时B--->A
 对实时性要求不高的功能可以采用消息，削峰时可以采用消息
 
 ## [【Linux】服务器响应变慢的排查步骤](https://blog.csdn.net/reed1991/article/details/54730690)
+
+## [如何避免下重复订单](https://www.jianshu.com/p/e618cc818432)

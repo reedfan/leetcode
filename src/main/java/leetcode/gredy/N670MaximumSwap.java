@@ -29,6 +29,12 @@ public class N670MaximumSwap {
         System.out.println(num);
     }
 
+    /**
+     * 这题我们的想法肯定是，尽量交换前面的大数位，并且和它交换的数还得是在它后面大于它的最大数
+     *
+     *     倒序使用数组存储下来每个位置，在它及它以后的最大数的索引
+     *     然后再正序从一个数开始遍历，如果它及它以后的最大数不是它本身，那么这个数就是我们需要交换的。
+     */
 
     public int maximumSwap(int num) {
         int tmp = num;
@@ -42,15 +48,19 @@ public class N670MaximumSwap {
         }
         int[] arr = new int[cnt];
         int i = cnt - 1;
+        //记录下每一位
         while (i >= 0) {
             arr[i--] = num % 10;
             num /= 10;
         }
         int[] help = new int[cnt];
+        //记录这个位置以及他之后的最大值
         int max = arr[cnt - 1];
+        //记录这个位置以及他之后的最大值的索引
         help[cnt - 1] = cnt - 1;
         for (int j = cnt - 2; j >= 0; j--) {
             if (arr[j] <= max) {
+                //最大值不变，最大值的索引同他后面一个数
                 help[j] = help[j + 1];
             } else {
                 help[j] = j;

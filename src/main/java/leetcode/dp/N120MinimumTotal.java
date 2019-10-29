@@ -13,6 +13,7 @@ import java.util.List;
  *     [3,4],
  *    [6,5,7],
  *   [4,1,8,3]
+ *  [0,0,0,0,0]
  * ]
  *
  * 自顶向下的最小路径和为 11（即，2 + 3 + 5 + 1 = 11）。
@@ -24,6 +25,35 @@ import java.util.List;
  * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
  */
 public class N120MinimumTotal {
+
+    public int minimumTotal1(List<List<Integer>> triangle) {
+        if(triangle == null || triangle.size() == 0){
+            return 0;
+        }
+        int len = triangle.size();
+        //为什么用len+1，其实相当于最后一层全为0
+        /**
+         * [
+         *  *      [2],
+         *  *     [3,4],
+         *  *    [6,5,7],
+         *  *   [4,1,8,3],
+         *  *  [0,0,0,0,0]
+         *  * ]
+         */
+        int[] dp = new int[len+1];
+
+        for (int i = len-1; i >=0 ; i--) {
+            //为什么要用first暂存一下dp[i+1]，因为不暂存dp[i+1]的值会被更新掉
+            int first = dp[i+1];
+            for (int j = i; j >= 0; j--) {
+                int second = dp[j];
+                dp[j] = Math.min(first,second)+triangle.get(i).get(j);
+                first = second;
+            }
+        }
+        return dp[0];
+    }
 
     public static void main(String[] args) {
         List<Integer> list1 = new ArrayList<>();

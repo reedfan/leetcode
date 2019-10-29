@@ -48,6 +48,7 @@ public class N416CanPartition {
         sum = sum / 2;
         boolean[] res = new boolean[sum + 1];
         res[0] = true;
+        //相当于一个01背包问题，用01背包装满sum/2,能不能装满
         for (int num : nums) {
             for (int i = sum; i >= num; i--) {
                 res[i] = res[i] || res[i - num];

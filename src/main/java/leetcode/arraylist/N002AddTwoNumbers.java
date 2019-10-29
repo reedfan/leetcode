@@ -31,9 +31,9 @@ public class N002AddTwoNumbers {
         ListNode tmp = res;
         while (l1 != null && l2 != null) {
             int sum = l1.val + l2.val + jishu;
-            res.next = new ListNode((sum) % 10);
+            res.next = new ListNode(sum % 10);
             res = res.next;
-            jishu = (sum) / 10;
+            jishu = sum / 10;
             l1 = l1.next;
             l2 = l2.next;
 
@@ -42,7 +42,7 @@ public class N002AddTwoNumbers {
             int sum = l1.val + jishu;
             res.next = new ListNode((sum) % 10);
             res = res.next;
-            jishu = (sum) / 10;
+            jishu = sum / 10;
             l1 = l1.next;
 
         }
@@ -50,7 +50,7 @@ public class N002AddTwoNumbers {
             int sum = l2.val + jishu;
             res.next = new ListNode((sum) % 10);
             res = res.next;
-            jishu = (sum) / 10;
+            jishu = sum / 10;
             l2 = l2.next;
 
         }

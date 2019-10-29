@@ -30,10 +30,13 @@ public class N055CanJump {
 
     }
 
+
+    //倒着推，速度比较快
     public boolean canJump(int[] nums) {
         if(nums == null){
             return false;
         }
+        //pos表示需要到达的位置
         int pos = nums.length - 1;
         for (int i = nums.length - 2 ; i >= 0 ; i--) {
             if(nums[i] + i >= pos){
@@ -45,6 +48,7 @@ public class N055CanJump {
 
     }
 
+    //顺着推，速度比较慢
     public boolean canJump1(int[] nums) {
 
         if (nums == null) {

@@ -1,6 +1,14 @@
 package leetcode.dp.jingdianwenti;
 
+import org.junit.Test;
+
 public class LongestSubstring {
+    @Test
+    public void test(){
+        String str1 = "1AB2345CD";
+        String str2 = "12345EF";
+        System.out.println(findLongest(str1,str1.length(),str2,str2.length()));
+    }
     //最长公共子串要求是连续的
     public int findLongest(String A, int n, String B, int m) {
         int max = 0;
@@ -14,7 +22,7 @@ public class LongestSubstring {
                         dp[i][j] = dp[i - 1][j - 1] + 1;
                     }
                     max = dp[i][j] > max ? dp[i][j] : max;
-                }
+                } //else的情况相当于dp[i][j] = 0，不需要处理
             }
         return max;
     }

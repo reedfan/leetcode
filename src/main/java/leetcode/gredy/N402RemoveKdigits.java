@@ -48,7 +48,7 @@ public class N402RemoveKdigits {
 
 
     /**
-     * jianzhioffer 402
+     * leetcode 402
      * 整个过程分为两部分，第一部分，从前往后遍历，删除前面比后面大的数。
      * 第二部假设，k仍然大于0，就后面的数删除
      *

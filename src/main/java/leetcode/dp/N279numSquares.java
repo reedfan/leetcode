@@ -21,9 +21,10 @@ package leetcode.dp;
  */
 public class N279numSquares {
     public static void main(String[] args) {
-        System.out.println(new N279numSquares().numSquares(13));
+        System.out.println(new N279numSquares().numSquares(24));
 
     }
+
     public int numSquares(int n) {
         int[] dp = new int[n + 1];
         for (int i = 1; i <= n; i++) {

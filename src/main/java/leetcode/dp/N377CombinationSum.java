@@ -33,8 +33,9 @@ package leetcode.dp;
 public class N377CombinationSum {
     public static void main(String[] args) {
         int[] nums = {1, 2, 3};
-        System.out.println(new N377CombinationSum().combinationSum4(nums,4));
+        System.out.println(new N377CombinationSum().combinationSum4(nums, 4));
     }
+
     public int combinationSum4(int[] nums, int target) {
         if (nums == null) {
             return 0;
@@ -50,6 +51,8 @@ public class N377CombinationSum {
             }
 
         }
+
+
         return dp[target];
     }
 }

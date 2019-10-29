@@ -47,6 +47,7 @@ public class N152maxProduct {
         int maxValue = nums[0];
         int minValue = nums[0];
 
+        //遍历找出pos以i为结尾的时候的最大值和最小值分别记为maxValue和minValue
         for (int i = 1; i < nums.length; i++) {
             if (nums[i] < 0) {
                 int tmp = maxValue;
@@ -55,6 +56,7 @@ public class N152maxProduct {
             }
             maxValue = maxValue * nums[i] > nums[i] ? maxValue * nums[i] : nums[i];
             minValue = minValue * nums[i] < nums[i] ? minValue * nums[i] : nums[i];
+            System.out.println("max"+maxValue+"   min  "+minValue);
             max = max > maxValue ? max : maxValue;
 
         }

@@ -29,6 +29,7 @@ public class N322CoinChange {
         }
         int[] dp = new int[amount + 1];
         for (int coin : coins) {
+            //因为是完全背包问题，所以是正序
             for (int i = coin; i <= amount; i++) {
                 //如果需要组成的金额正好和某个硬币的面额相等
                 if (coin == i) {

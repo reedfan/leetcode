@@ -24,18 +24,16 @@ public class N021MergeTwoLists {
             }
             tmp = tmp.next;
         }
-
-        while (l1 != null) {
+        if (l1 != null) {
             tmp.next = l1;
-            l1 = l1.next;
-            tmp = tmp.next;
+
         }
 
-        while (l2 != null) {
+        if (l2 != null) {
             tmp.next = l2;
-            l2 = l2.next;
-            tmp = tmp.next;
+
         }
+
         return res.next;
     }
 

@@ -15,9 +15,9 @@ import java.util.Set;
  * <p>
  * 示例 1：
  * <p>
- * 输入: s = "jianzhioffer", wordDict = ["leet", "code"]
+ * 输入: s = "leetcode", wordDict = ["leet", "code"]
  * 输出: true
- * 解释: 返回 true 因为 "jianzhioffer" 可以被拆分成 "leet code"。
+ * 解释: 返回 true 因为 "leetcode" 可以被拆分成 "leet code"。
  * <p>
  * 示例 2：
  * <p>
@@ -37,7 +37,7 @@ import java.util.Set;
  */
 public class N139WordBreak {
     public static void main(String[] args) {
-        String s = "jianzhioffer";
+        String s = "leetcode";
         System.out.println(s.substring(0, 1));
     }
 

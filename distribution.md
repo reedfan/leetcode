@@ -59,6 +59,9 @@ zk实现分布式锁说白了就是看看自己创建的节点序号是否最小
 redis实现分布式锁的性能更好，redis是纯内存服务。
  zk的可靠性更好
  
+## [分布式锁的高并发优化](https://blog.csdn.net/savorTheFlavor/article/details/88841344)
+ 核心是和ConcurrentHashMap原理类似的分段加锁
+ 
 ## [分布式事物的几种解决方案](https://blog.csdn.net/reed1991/article/details/58128053)
 
 ## [缓存与数据库的一致性问题](https://blog.csdn.net/reed1991/article/details/53106078)

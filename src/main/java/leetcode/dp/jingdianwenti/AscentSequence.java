@@ -30,6 +30,7 @@ public class AscentSequence {
             if (tmp[mid] == num) {
                 return mid;
             }
+            //因为是要寻找第一个比他大的位置
             if (tmp[mid] < num) {
                 start = mid + 1;
             } else {
