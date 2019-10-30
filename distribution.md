@@ -1,4 +1,27 @@
+工程宕机过一次。然后看线上的监控信息发现线上的内存使用一路飙高，最后产生了内存泄漏。
+再测试环境进行压测，也测一段时间后用jmap -dump:format=b,file=文件名 [pid] 生成一份dump文件。
+最后用mat进行分析，发现公司封装的连接cassandra的包有问题。。连接cassandra的实例他们用一个map来存储。但是map的key用的
+classname+mappingmannager.hashcode()。导致产生非常多的连接实例。不断的积累导致最后内存泄漏了。
 
+
+我们也提供一些接口给公司内部使用。比如我们会提供已经授权的在微软那边用户的信息给公司其他部门使用。
+我们一个客户的管理员授权以后，就相当于我们可以去微软那边获取这个公司的所有员工在微软那边的信息。
+信息是包含很多的。微软是以一些分散的接口返回给我们。比如我们还要获取他们的manager的信息。一次大概获取100个用户的信息。由于获取manager信息微软接口做了限制，一次只能获取20条。导致一个api响应时间大概需要5S。最后相当于开线程异步执行。响应时间降低到了4S左右，也算是一个提升了。
+
+
+
+比如说在OutLook上预定一个会议。流程是这样的。数据被写进outlook。然后outloook会将meeting的Id传给我们。
+在这里用到了RabbitMQ。通常消息队列的作用是异步、解耦、削峰。但我们这里主要是为了防止在后面的流程出了意外，导致
+Outlook给我们的消息丢了。
+我们再通过id去微软那边拉取数据，存到自己的数据库。
+
+
+OutlookMeeting和GoogleMeeting大致流程都是一样的。 都是参数校验，然后用这些参数去组装成一些对象。最后将这些信息透传下去。
+所以这里使用模板方法来完成的。将固定的放在超类里面。  一些有差别的放在抽象类里。在子类中去实现它。
+
+还有就是不管OutLookMeeting还是GoogleMeeting，都会有两类meeting。分别是普通的meeting和PMRmeeting两大类。
+处理方式有差异。这就导致在逻辑中很多地方需要判断是普通的meeting还是PMRmeeting。为了避免这种判断。将普通的meeting和PMRmeeting作为两类service。分别去继承父类接口meetingHandler。
+这样在调用的地方就可以以一个map的形式将这些接口都加入Map<String, Strategy> map。然后通过map.get("serviceName")就可以去获取到底调哪个接口。      策略模式
 ### [系统架构中为什么要引入消息中间件](https://mp.weixin.qq.com/s?__biz=MzU0OTk3ODQ3Ng==&mid=2247484149&idx=1&sn=98186297335e13ec7222b3fd43cfae5a&chksm=fba6eaf6ccd163e0c2c3086daa725de224a97814d31e7b3f62dd3ec763b4abbb0689cc7565b0&mpshare=1&scene=1&srcid=0608fz8HKZvYxRhzFqyJ4Isq%23rd)
 1.解耦  2.异步  3.削峰
 
