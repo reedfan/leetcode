@@ -63,7 +63,36 @@ TreeSet 大小排序, LinkedHashSet  按照顺序排序
 HashSet是由一个hash表来实现的，因此，它的元素是无序的。add()，remove()，contains()方法的时间复杂度是O(1)。 另一方面，TreeSet是由一个树形的结构来实现的，它里面的元素是有序的。因此，add()，remove()，contains()方法的时间复杂度是O(logn)。
 linked 也是O（1），但是性能逊色一点
 
-HashMap在jdk1.7是头插法，JDK1.8改成了尾插法，解决哈希冲突是用链表
+### hashMap介绍
+存储结构 Node[] table（哈希桶数组）  默认length为16，必须为2的n次方       负载因子为0.75
+
+#### 1、确定hash桶的位置。
+对桶的长度取模的话，运算消耗比较大。 hashmap采用hashcode&（table.length-1),效果等价，运算效率比较高
+jdk 1.8  h = k.hashCode()) ^ (h >>> 16这么做可以在数组table的length比较小的时候，也能保证考虑到高低Bit都参与到Hash的计算中，同时不会有太大的开销。
+
+#### 2、hashMap的put()方法
+1、table是否为null，是的话需要resize（）进行扩容。
+2、根据hashcode&（table.length-1)计算插入的数组索引，如果table[i]为null，直接添加， 判断实际存在键值对数量size是否超过了最大容量threshold，如果超过，进行扩容。
+3、判断key是否存在，如果存在直接覆盖value
+4、如果链表为红黑树，直接插入。如果链表为链表，插入然后看是否要将链表转为红黑树。
+
+
+#### 扩容机制
+使用一个容量更大的数组来代替已有的容量小的数组，transfer()方法将原有Entry数组的元素拷贝到新的Entry数组里。1.7头插，1.8尾插
+jdk1.8的优化：不需要像JDK1.7的实现那样重新计算hash，只需要看看原来的hash值新增的那个bit是1还是0就好了，是0的话索引没变，是1的话索引变成“原索引+oldCap”
+
+
+### hashmap的jdk1.7和jdk1.8的区别
+jdk7 数组+单链表 jdk8 数组+(单链表+红黑树) 
+jdk7 链表头插 jdk8 链表尾插 
+    头插: resize后transfer数据时不需要遍历链表到尾部再插入
+    头插: 最近put的可能等下就被get，头插遍历到链表头就匹配到了
+    头插: resize后链表可能倒序; 并发resize可能产生循环链
+jdk7 先扩容再put jdk8 先put再扩容  (why?有什么区别吗?)
+jdk7 计算hash运算多 jdk8 计算hash运算少(http://www.jasongj.com/java/concurrenthashmap/#寻址方式-1)
+jdk7 受rehash影响 jdk8 调整后是(原位置)or(原位置+旧容量)
+
+
 
 ### hashmap为什么线程不安全?
 因为在多线程情况下。假如快到resize零界点的时候。多个线程同时对这个hashmap进行了put操作。操作后超过临界值。多个线程各自进行resize操作。可能导致链表成环。
@@ -89,11 +118,8 @@ HashMap不是现成安全的，       Hashtable是线程安全的，他的所有
 
 只需要key，可以用keyset。
 
-### hashmap 1.7和1.8
-1.7采用数组+单链表，1.8在单链表超过一定长度后改成红黑树存储
-1.7扩容时需要重新计算哈希值和索引位置，1.8并不重新计算哈希值，巧妙地采用和扩容后容量进行&操作来计算新的索引位置。
-1.7插入元素到单链表中采用头插入法，1.8采用的是尾插入法。
-
+### ConcurrentHashMap
+1.7 segment加锁。   1.8 cas
 ### hash碰撞的解决办法
 1.开放地址法
 2.再hash法
