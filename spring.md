@@ -1,3 +1,24 @@
+# Table of Contents
+
+  * [1.Bean的作用域](#1bean的作用域)
+  * [2.Bean的生命周期](#2bean的生命周期)
+  * [IOC的实现原理](#ioc的实现原理)
+  * [AOP](#aop)
+  * [SpringMVC的执行流程](#springmvc的执行流程)
+  * [@transactional注解在什么情况下会失效，](#transactional注解在什么情况下会失效，)
+  * [Spring 在web 容器中的启动过程](#spring-在web-容器中的启动过程)
+  * [spring 解决循环依赖](#spring-解决循环依赖)
+  * [spring的几种注入方式](#spring的几种注入方式)
+  * [常用的一些注解](#常用的一些注解)
+    * [@Resource和@Autowired](#resource和autowired)
+    * [@Cacheable](#cacheable)
+                * [假如值为jj](#假如值为jj)
+    * [@Transactional(readOnly = true)](#transactionalreadonly--true)
+    * [@Value中冒号的作用](#value中冒号的作用)
+    * [[一些常用的注解](https://blog.csdn.net/reed1991/article/details/53352772)](#[一些常用的注解]httpsblogcsdnnetreed1991articledetails53352772)
+  * [spring boot 与 spring cloud](#spring-boot-与-spring-cloud)
+
+
 ## 1.Bean的作用域
 
 Singleton：单例模式，只会创建该Bean的唯一实例   

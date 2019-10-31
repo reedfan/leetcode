@@ -1,3 +1,23 @@
+# Table of Contents
+
+  * [caffeine](#caffeine)
+  * [假如Redis里面有1亿个key，其中有10w个key是以某个固定的已知的前缀开头的，如果将它们全部找出来？](#假如redis里面有1亿个key，其中有10w个key是以某个固定的已知的前缀开头的，如果将它们全部找出来？)
+  * [redis的线程模型](#redis的线程模型)
+  * [redis分布式锁](#redis分布式锁)
+  * [redis事务的实现](#redis事务的实现)
+  * [一致性hash](#一致性hash)
+  * [redis的过期策略](#redis的过期策略)
+  * [内存数据库优劣势有那些？](#内存数据库优劣势有那些？)
+  * [[redis线程模型](https://blog.csdn.net/reed1991/article/details/101352104)](#[redis线程模型]httpsblogcsdnnetreed1991articledetails101352104)
+  * [redis单线程为何很快](#redis单线程为何很快)
+  * [[redis持久化](https://blog.csdn.net/reed1991/article/details/53123485)](#[redis持久化]httpsblogcsdnnetreed1991articledetails53123485)
+  * [redis集群](#redis集群)
+  * [使用过Redis做异步队列？](#使用过redis做异步队列？)
+  * [[缓存穿透、缓存击穿、缓存雪崩](https://mp.weixin.qq.com/s?__biz=MzU0OTk3ODQ3Ng==&mid=2247484884&idx=1&sn=ceb798b6e8ef0ee608a992385f7d8568&chksm=fba6edd7ccd164c155271811f7948b476955cab41b23f2333847b8c268b31cc9f3332c2e3926&mpshare=1&scene=1&srcid=0608pIX1L8Fja1H99IyorW2X%23rd)](#[缓存穿透、缓存击穿、缓存雪崩]httpsmpweixinqqcoms__bizmzu0otk3odq3ngmid2247484884idx1snceb798b6e8ef0ee608a992385f7d8568chksmfba6edd7ccd164c155271811f7948b476955cab41b23f2333847b8c268b31cc9f3332c2e3926mpshare1scene1srcid0608pix1l8fja1h99iyorw2x23rd)
+  * [[如何处理redis集群中的hot Key](https://blog.csdn.net/reed1991/article/details/56956765)](#[如何处理redis集群中的hot-key]httpsblogcsdnnetreed1991articledetails56956765)
+  * [如何保证数据库与缓存双写的一致性](#如何保证数据库与缓存双写的一致性)
+
+
 
 redis     incr（“reed”）表示reed+1
 incrBy（"reed",5)  表示reed+5

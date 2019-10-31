@@ -1,6 +1,6 @@
 # Table of Contents
 
-    * [Java为什么跨平台](#java为什么跨平台)
+   * [Java为什么跨平台](#java为什么跨平台)
     * [Object类定义的九个方法](#object类定义的九个方法)
     * [String为什么是final类型的](#string为什么是final类型的)
     * [== 和 equals](#-和-equals)
