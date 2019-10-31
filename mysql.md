@@ -1,3 +1,33 @@
+# Table of Contents
+
+  * [Select执行顺序](#select执行顺序)
+  * [四种索引](#四种索引)
+  * [索引的使用](#索引的使用)
+    * [通过修改表结构创建索引](#通过修改表结构创建索引)
+    * [创建表时直接指定索引](#创建表时直接指定索引)
+  * [删除索引](#删除索引)
+  * [什么时候不能使用索引](#什么时候不能使用索引)
+    * [覆盖索引](#覆盖索引)
+  * [数据库优化](#数据库优化)
+  * [数据库的三大范式](#数据库的三大范式)
+  * [数据库ACID](#数据库acid)
+    * [[ACID特性的实现原理](https://blog.csdn.net/reed1991/article/details/53446864)](#[acid特性的实现原理]httpsblogcsdnnetreed1991articledetails53446864)
+  * [数据库隔离级别](#数据库隔离级别)
+    * [[深入理解mysql四种隔离级别及底层实现原理（MVCC和锁）](https://blog.csdn.net/reed1991/article/details/99713045)](#[深入理解mysql四种隔离级别及底层实现原理（mvcc和锁）]httpsblogcsdnnetreed1991articledetails99713045)
+  * [为什么B+树适合做索引](#为什么b树适合做索引)
+      * [[InnoDB一棵B+树可以存放多少行数据？](https://www.cnblogs.com/leefreeman/p/8315844.html)innodb索引一页大小设置](#[innodb一棵b树可以存放多少行数据？]httpswwwcnblogscomleefreemanp8315844htmlinnodb索引一页大小设置)
+  * [innodb为什么索引默认大小为16k](#innodb为什么索引默认大小为16k)
+  * [explain](#explain)
+  * [Mysql主从复制](#mysql主从复制)
+  * [Left join  right join  inner join](#left-join--right-join--inner-join)
+  * [MyIsam和InnerDb](#myisam和innerdb)
+  * [数据库调优思路](#数据库调优思路)
+  * [小表驱动大表](#小表驱动大表)
+  * [exists](#exists)
+  * [[彻底搞清楚分布式数据库](https://blog.csdn.net/reed1991/article/details/101206871)](#[彻底搞清楚分布式数据库]httpsblogcsdnnetreed1991articledetails101206871)
+  * [[数据库分库分表](https://blog.csdn.net/reed1991/article/details/53144000)](#[数据库分库分表]httpsblogcsdnnetreed1991articledetails53144000)
+
+
 ## Select执行顺序
 
 Where，group by，having，order by
