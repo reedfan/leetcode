@@ -335,7 +335,7 @@ newScheduledThreadPool 创建一个定长线程池，支持定时及周期性任
 
 newCachedThreadPool创建一个可缓存线程池，如果线程池长度超过处理需要，可灵活回收空闲线程，若无可回收，则新建线程。适用：执行很多短期异步的小程序或者负载较轻的服务器corePoolSize为0；maximumPoolSize为Integer.MAX_VALUE
 
-newSingleThreadExecutor 创建一个单线程化的线程池，它只会用唯一的工作线程来执行任务，保证所有任务按照指定顺序(FIFO, LIFO, 优先级)执行。corePoolSize为1，maximumPoolSize为1 通俗：创建只有一个线程的线程池，且线程的存活时间是无限的；当该线程正繁忙时，对于新任务会进入阻塞队列中(无界的阻塞队列)
+newSingleThreadExecutor 创建一个单线程化的线程池，它只会用唯一的工作线程来执行任务，保证所有任务按照指定顺序(FIFO, LIFO, 优先级)执行，其作用为保障线程之间的执行顺序。corePoolSize为1，maximumPoolSize为1 通俗：创建只有一个线程的线程池，且线程的存活时间是无限的；当该线程正繁忙时，对于新任务会进入阻塞队列中(无界的阻塞队列)
 
  
 

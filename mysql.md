@@ -50,6 +50,26 @@ Where score >= 60 group by s_name having (s_score)>=70  order by avg(s_score) de
 
 4.聚集索引：在聚集索引中，表中行的物理顺序与键值的逻辑（索引）顺序相同
 
+## 聚集索引和非聚集索引
+主键索引的叶子节点存的是整行数据。在 InnoDB 里，主键索引也被称为聚集索引（clustered index）。
+
+非主键索引的叶子节点内容是主键的值。在 InnoDB 里，非主键索引也被称为二级索引（secondary index）。
+
+
+如果语句是 select * from T where ID=500，即 主键查询方式，则只需要搜索 ID 这棵 B+树 ；
+
+如果语句是 select * from T where k=5，即 普通索引查询方式，则需要先搜索 k 索引树，得到 ID的值为 500，再到 ID 索引树搜索一次。这个过程称为回表 
+## mysql回表
+简单来说就是数据库根据索引（非主键）找到了指定记录所在行后，还需要根据主键再次到数据库里获取数据。
+## 覆盖索引（covering index）
+指一个查询语句的执行只用从索引中就能够取得，不必从数据表中读取。也可以称之为实现了索引覆盖。 
+当一条查询语句符合覆盖索引条件时，MySQL只需要通过索引就可以返回查询所需要的数据，这样避免了查到索引后再返回表操作，
+减少I/O提高效率。 如，表covering_index_sample中有一个普通索引 idx_key1_key2(key1,key2)。
+当我们通过SQL语句：select key2 from covering_index_sample where key1 = ‘keytest’;的时候，
+就可以通过覆盖索引查询，无需回表。
+
+
+
 ## 索引的使用
 创建普通索引CREATE INDEX index_name ON table_name(col_name);
 创建唯一索引CREATE UNIQUE INDEX index_name ON table_name(col_name);
