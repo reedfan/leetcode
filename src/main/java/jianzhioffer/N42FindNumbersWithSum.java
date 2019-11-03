@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
  对应每个测试案例，输出两个数，小的先输出。
  */
-public class Solution22 {
+public class N42FindNumbersWithSum {
     public ArrayList<Integer> FindNumbersWithSum(int [] array, int sum) {
         ArrayList<Integer> list = new ArrayList<Integer>();
         int start = 0;
