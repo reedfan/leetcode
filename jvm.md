@@ -121,6 +121,18 @@ java 1.8 永久代消失了，由元空间取代
 
 
 ### JVM垃圾回收器
+
+Serial收集器           单线程        新生代         复制算法      客户端
+Serial Old            单线程        老年代         标记整理      客户端
+ParNew                多线程        新生代         复制算法      Server端（配合老年代的cms收集器使用）
+parallel scavenge     多线程        新生代         复制算法      追求达到可控的吞吐量。
+parallel old          多线程        老年代         标记整理      吞吐量优先的场合优先考虑Parallel Scavenge收集器+ Parallel Old收集器的组合。
+cms                   多线程        老年代         标记清除      追求响应速度
+
+G1收集器是标记整理算法，不会产生内存空间碎片。
+可预测停顿的时间模型。
+将Java堆分成多个大小相等的独立区域，新生代和老年代不再是物理隔阂了，他们是一部分可以不连续的独立区域的集合。
+
 因为和用户线程一起执行，不能在空间将满时再清理。
  -XX:CMSInitiatingOccupancyFraction设置触发GC的阈值。 设定老年代空间被使用多少后触发。
  如果不幸内存预留空间不足，就会引起concurrent mode failure.
@@ -133,18 +145,23 @@ CMS收集器是老年代收集器，可以配合新生代的Serial和ParNew收�
 
 ## JVM调优
 
--Xms  初始堆大小
+-Xms  初始堆大小 (starting)
 
--Xmx  最大堆大小
+-Xmx  最大堆大小 (max)
 
--Xmn  年轻代大小
+-Xmn  年轻代大小  (new)
 
  
 
 -XX:NewSize  设置年轻代大小
 
+-XX:NewRatio 设置新生代和老年代的比值  设置为4表示新生代:老年代=1:4,即年轻代占堆的5分之一
 
--XX:+PrintGCDetails   打印出GC信息
+-XX:SurvivorRatio 8表示两个Survivor:eden = 2：8，
+
+
+-XX:printGC  打印简要GC日志
+-XX:+PrintGCDetails   打印出GC详细信息
 
 ## [GC调优相关](https://blog.csdn.net/reed1991/article/details/53363354)
 

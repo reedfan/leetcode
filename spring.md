@@ -156,7 +156,15 @@ CGlib必须依赖于CGlib的类库，CGlib的原理是针对目标类生成一�
 
 6.视图负责将结果显示到客户端
 
+## mybatis一级与二级缓存
 
+Mybatis的一级缓存是指Session缓存。一级缓存的作用域默认是一个SqlSession。Mybatis默认开启一级缓存。
+也就是在同一个SqlSession中，执行相同的查询SQL，第一次会去数据库进行查询，并写到缓存中；
+第二次以后是直接去缓存中取。
+当执行SQL查询中间发生了增删改的操作，MyBatis会把SqlSession的缓存清空。
+
+Mybatis的二级缓存是指mapper映射文件。二级缓存的作用域是同一个namespace下的mapper映射文件内容，
+多个SqlSession共享。Mybatis需要手动设置启动二级缓存。将cacheEnabled设为true，然后在需要缓存的mapper中添加cache
 
 
 ## @transactional注解在什么情况下会失效，

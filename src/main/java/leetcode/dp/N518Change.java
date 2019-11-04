@@ -1,5 +1,7 @@
 package leetcode.dp;
 
+import org.junit.Test;
+
 /**
  * 给定不同面额的硬币和一个总金额。写出函数来计算可以凑成总金额的硬币组合数。假设每一种面额的硬币有无限个。
  * <p>
@@ -43,6 +45,47 @@ package leetcode.dp;
  */
 
 public class N518Change {
+
+    @Test
+    public void test() {
+        int[] coins = {1, 2, 5};
+        System.out.println(change1(5, coins));
+    }
+
+    public int change1(int amount, int[] coins) {
+        if (coins == null) {
+            return 0;
+        }
+        int[][] dp = new int[coins.length][amount + 1];
+
+        for (int i = 0; i < coins.length; i++) {
+            //都不拿就拼成0
+            dp[i][0] = 1;
+        }
+
+        for (int i = 1; i * coins[0] <= amount; i++) {
+            //用第0个拼成i
+            dp[0][i] = 1;
+        }
+
+        for (int i = 1; i < coins.length; i++) {
+            for (int j = 1; j <= amount; j++) {
+                int sum = 0;
+                for (int k = 0; k * coins[i] <= j; k++) {
+                    sum += dp[i-1][j-k*coins[i]];
+
+                }
+                dp[i][j] = sum;
+            }
+
+
+        }
+        return dp[coins.length - 1][amount];
+
+
+    }
+
+
     public int change(int amount, int[] coins) {
         if (coins == null) {
             return 0;
