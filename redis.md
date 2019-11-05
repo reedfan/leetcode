@@ -1,5 +1,6 @@
 # Table of Contents
 
+  * [redis五种数据结构的应用场景](#redis五种数据结构的应用场景)
   * [caffeine](#caffeine)
   * [假如Redis里面有1亿个key，其中有10w个key是以某个固定的已知的前缀开头的，如果将它们全部找出来？](#假如redis里面有1亿个key，其中有10w个key是以某个固定的已知的前缀开头的，如果将它们全部找出来？)
   * [redis的线程模型](#redis的线程模型)
@@ -51,7 +52,32 @@ zset  有序的
 排行榜
 jedis.zrange()从低到高排序
 jedis.zrevrange() 从高到低排序
-jedis.zrangeByScoreWithScores() 
+jedis.zrangeByScoreWithScores()
+
+## redis五种数据结构的应用场景
+1、String  KV缓存
+2、hash 这个一般就是可以将结构化的数据，比如一个对象（前提是这个对象没嵌套其他的对象）给缓存在redis里，然后每次读写缓存的时候，可以就操作hash里的某个字段。   redis hash用法
+
+key=150
+
+value={
+
+  “id”: 150,
+
+  “name”: “zhangsan”,
+
+  “age”: 20
+
+}
+
+hget 150：id   将返回150
+
+list：有序集合，比如某个话题被哪些用户关注
+
+set：无序集合，自动去重    比如两个话题的关注者的交集
+
+sorted set：排序的set，可以用在排行榜
+   
 
 ## caffeine
 通常我们喜欢把cache放到redis里，可以把访问速度提升，但是redis也算是远程服务器，会有IO时间的开销，如果我们把缓存放在本地内存，

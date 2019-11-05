@@ -1,3 +1,16 @@
+# Table of Contents
+
+  * [[单例模式](https://blog.csdn.net/reed1991/article/details/87566264)](#[单例模式]httpsblogcsdnnetreed1991articledetails87566264)
+  * [[模版方法模式](https://blog.csdn.net/reed1991/article/details/87561398)](#[模版方法模式]httpsblogcsdnnetreed1991articledetails87561398)
+  * [[策略模式](https://blog.csdn.net/reed1991/article/details/53425500)](#[策略模式]httpsblogcsdnnetreed1991articledetails53425500)
+  * [[观察者模式](https://blog.csdn.net/reed1991/article/details/87564030)](#[观察者模式]httpsblogcsdnnetreed1991articledetails87564030)
+  * [[适配器模式](https://blog.csdn.net/reed1991/article/details/53133169)](#[适配器模式]httpsblogcsdnnetreed1991articledetails53133169)
+  * [[代理模式](https://blog.csdn.net/reed1991/article/details/87562997)](#[代理模式]httpsblogcsdnnetreed1991articledetails87562997)
+  * [[装饰器模式](https://blog.csdn.net/reed1991/article/details/53106130)](#[装饰器模式]httpsblogcsdnnetreed1991articledetails53106130)
+  * [为什么枚举可以实现单例](#为什么枚举可以实现单例)
+  * [哪些设计模式可以增加系统的可扩展性](#哪些设计模式可以增加系统的可扩展性)
+
+
 
 ## [单例模式](https://blog.csdn.net/reed1991/article/details/87566264)
 ```

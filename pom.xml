@@ -14,6 +14,12 @@
             <version>4.12</version>
             <scope>compile</scope>
         </dependency>
+
+        <dependency>
+            <groupId>com.github.houbb</groupId>
+            <artifactId>markdown-toc</artifactId>
+            <version>1.0.2</version>
+        </dependency>
     </dependencies>
 
 

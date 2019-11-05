@@ -1,6 +1,6 @@
 # Table of Contents
 
-   * [Java为什么跨平台](#java为什么跨平台)
+    * [Java为什么跨平台](#java为什么跨平台)
     * [Object类定义的九个方法](#object类定义的九个方法)
     * [String为什么是final类型的](#string为什么是final类型的)
     * [== 和 equals](#-和-equals)
@@ -31,6 +31,7 @@
     * [Java反射的作用：](#java反射的作用：)
     * [class.forName()和ClassLoader.loadClass（className）](#classforname和classloaderloadclass（classname）)
     * [动态代理和静态代理的区别](#动态代理和静态代理的区别)
+  * [动态代理的实现原理](#动态代理的实现原理)
   * [Error类和Exception类都是Throwable类](#error类和exception类都是throwable类)
     * [throw和throws的区别和联系](#throw和throws的区别和联系)
     * [NOClassDefFoundError和ClassNotFoundException](#noclassdeffounderror和classnotfoundexception)

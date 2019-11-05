@@ -1,7 +1,7 @@
 # Table of Contents
 
-   * [[系统架构中为什么要引入消息中间件](https://mp.weixin.qq.com/s?__biz=MzU0OTk3ODQ3Ng==&mid=2247484149&idx=1&sn=98186297335e13ec7222b3fd43cfae5a&chksm=fba6eaf6ccd163e0c2c3086daa725de224a97814d31e7b3f62dd3ec763b4abbb0689cc7565b0&mpshare=1&scene=1&srcid=0608fz8HKZvYxRhzFqyJ4Isq%23rd)](#[系统架构中为什么要引入消息中间件]httpsmpweixinqqcoms__bizmzu0otk3odq3ngmid2247484149idx1sn98186297335e13ec7222b3fd43cfae5achksmfba6eaf6ccd163e0c2c3086daa725de224a97814d31e7b3f62dd3ec763b4abbb0689cc7565b0mpshare1scene1srcid0608fz8hkzvyxrhzfqyj4isq23rd)
-   * [[系统架构引入消息中间件有什么缺点](https://mp.weixin.qq.com/s?__biz=MzU0OTk3ODQ3Ng==&mid=2247484157&idx=1&sn=f4644be2db6b1c230846cb4d62ae5be9&chksm=fba6eafeccd163e817b420d57478829d92251a6a5fd446f81805f0983a0d95cb6853a6735c4b&mpshare=1&scene=1&srcid=06083A6RVW3ZtKQRy6Ttq8tK%23rd)](#[系统架构引入消息中间件有什么缺点]httpsmpweixinqqcoms__bizmzu0otk3odq3ngmid2247484157idx1snf4644be2db6b1c230846cb4d62ae5be9chksmfba6eafeccd163e817b420d57478829d92251a6a5fd446f81805f0983a0d95cb6853a6735c4bmpshare1scene1srcid06083a6rvw3ztkqry6ttq8tk23rd)
+  * [[系统架构中为什么要引入消息中间件](https://mp.weixin.qq.com/s?__biz=MzU0OTk3ODQ3Ng==&mid=2247484149&idx=1&sn=98186297335e13ec7222b3fd43cfae5a&chksm=fba6eaf6ccd163e0c2c3086daa725de224a97814d31e7b3f62dd3ec763b4abbb0689cc7565b0&mpshare=1&scene=1&srcid=0608fz8HKZvYxRhzFqyJ4Isq%23rd)](#[系统架构中为什么要引入消息中间件]httpsmpweixinqqcoms__bizmzu0otk3odq3ngmid2247484149idx1sn98186297335e13ec7222b3fd43cfae5achksmfba6eaf6ccd163e0c2c3086daa725de224a97814d31e7b3f62dd3ec763b4abbb0689cc7565b0mpshare1scene1srcid0608fz8hkzvyxrhzfqyj4isq23rd)
+    * [[系统架构引入消息中间件有什么缺点](https://mp.weixin.qq.com/s?__biz=MzU0OTk3ODQ3Ng==&mid=2247484157&idx=1&sn=f4644be2db6b1c230846cb4d62ae5be9&chksm=fba6eafeccd163e817b420d57478829d92251a6a5fd446f81805f0983a0d95cb6853a6735c4b&mpshare=1&scene=1&srcid=06083A6RVW3ZtKQRy6Ttq8tK%23rd)](#[系统架构引入消息中间件有什么缺点]httpsmpweixinqqcoms__bizmzu0otk3odq3ngmid2247484157idx1snf4644be2db6b1c230846cb4d62ae5be9chksmfba6eafeccd163e817b420d57478829d92251a6a5fd446f81805f0983a0d95cb6853a6735c4bmpshare1scene1srcid06083a6rvw3ztkqry6ttq8tk23rd)
   * [[kafka](https://blog.csdn.net/reed1991/article/details/88729252)](#[kafka]httpsblogcsdnnetreed1991articledetails88729252)
     * [Kafka消息保证生产的信息不丢失](#kafka消息保证生产的信息不丢失)
     * [Kafka消息保证生产的信息不重复消费](#kafka消息保证生产的信息不重复消费)
@@ -26,7 +26,7 @@
   * [eureka和 zookeeper,两个的区別?](#eureka和-zookeeper两个的区別)
 
 
-### [系统架构中为什么要引入消息中间件](https://mp.weixin.qq.com/s?__biz=MzU0OTk3ODQ3Ng==&mid=2247484149&idx=1&sn=98186297335e13ec7222b3fd43cfae5a&chksm=fba6eaf6ccd163e0c2c3086daa725de224a97814d31e7b3f62dd3ec763b4abbb0689cc7565b0&mpshare=1&scene=1&srcid=0608fz8HKZvYxRhzFqyJ4Isq%23rd)
+## [系统架构中为什么要引入消息中间件](https://mp.weixin.qq.com/s?__biz=MzU0OTk3ODQ3Ng==&mid=2247484149&idx=1&sn=98186297335e13ec7222b3fd43cfae5a&chksm=fba6eaf6ccd163e0c2c3086daa725de224a97814d31e7b3f62dd3ec763b4abbb0689cc7565b0&mpshare=1&scene=1&srcid=0608fz8HKZvYxRhzFqyJ4Isq%23rd)
 1.解耦  2.异步  3.削峰
 
 ### [系统架构引入消息中间件有什么缺点](https://mp.weixin.qq.com/s?__biz=MzU0OTk3ODQ3Ng==&mid=2247484157&idx=1&sn=f4644be2db6b1c230846cb4d62ae5be9&chksm=fba6eafeccd163e817b420d57478829d92251a6a5fd446f81805f0983a0d95cb6853a6735c4b&mpshare=1&scene=1&srcid=06083A6RVW3ZtKQRy6Ttq8tK%23rd)

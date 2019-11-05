@@ -21,6 +21,8 @@
   * [为什么不建议使用Excutors来创建线程池](#为什么不建议使用excutors来创建线程池)
 * [线程同步](#线程同步)
   * [线程安全的概念](#线程安全的概念)
+  * [Java内存模型](#java内存模型)
+  * [happen-before](#happen-before)
   * [volatile](#volatile)
   * [线程同步的几种方式](#线程同步的几种方式)
   * [lock和synchronized](#lock和synchronized)
