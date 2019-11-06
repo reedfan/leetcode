@@ -1,9 +1,6 @@
 # Table of Contents
 
-    * [Java为什么跨平台](#java为什么跨平台)
-    * [Object类定义的九个方法](#object类定义的九个方法)
-    * [String为什么是final类型的](#string为什么是final类型的)
-    * [== 和 equals](#-和-equals)
+  * [String为什么是final类型的](#string为什么是final类型的)
     * [java中为什么要单继承，多实现](#java中为什么要单继承，多实现)
   * [Collection](#collection)
     * [ArrayList](#arraylist)
@@ -51,15 +48,8 @@
 
 
 
-### Java为什么跨平台
-因为Java运行在jvm上，和硬件无关
 
-
-### Object类定义的九个方法
-
- getClass()   hashcode()   toString()  wait()  notify()  notifyAll()  wait(long times) equals() wait(long timeout int nanous)
-
-### String为什么是final类型的
+## String为什么是final类型的
 
 1.因为字符串是不可变的，所以是线程安全的
 
@@ -69,9 +59,6 @@
 
 str1 = a ，str2 = ab， str3 = str1，str2+=b，则set中的值为两个ab，显然违背了set的本意
 
-### == 和 equals
-== 比较的是他们在内存中存放的地址
-Object的equals底层调用的就是==   但是绝大部分对象都会重写equals，改为比较具体的值是否相等
  
 ### java中为什么要单继承，多实现
 
