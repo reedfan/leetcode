@@ -93,14 +93,7 @@ ArrayList 线程不安全 初始容量为10，1.5倍扩容 扩容后将老数组
    4）再次遍历时，会先调用内部类iteator中的hasNext(),再调用next(),在调用next()方法时，会对modCount和expectedModCount进行比较，此时两者不一致，就抛出了ConcurrentModificationException异常。
 使用迭代器的remove方法可以正常删除
 
-### ArrayList和Vector的区别
-1）  Vector的方法都是同步的(Synchronized),是线程安全的(thread-safe)，而ArrayList的方法不是，由于线程的同步必然要影响性能，因此,ArrayList的性能比Vector好。 
-2） 当Vector或ArrayList中的元素超过它的初始大小时,Vector会将它的容量翻倍,而ArrayList只增加50%的大小，这样,ArrayList就有利于节约内存空间
 
-### HashSet、 TreeSet、LinkedHashSet
-TreeSet 大小排序, LinkedHashSet  按照顺序排序
-HashSet是由一个hash表来实现的，因此，它的元素是无序的。add()，remove()，contains()方法的时间复杂度是O(1)。 另一方面，TreeSet是由一个树形的结构来实现的，它里面的元素是有序的。因此，add()，remove()，contains()方法的时间复杂度是O(logn)。
-linked 也是O（1），但是性能逊色一点
 
 ### hashMap介绍
 存储结构 Node[] table（哈希桶数组）  默认length为16，必须为2的n次方       负载因子为0.75
@@ -137,13 +130,7 @@ jdk7 受rehash影响 jdk8 调整后是(原位置)or(原位置+旧容量)
 因为在多线程情况下。假如快到resize零界点的时候。多个线程同时对这个hashmap进行了put操作。操作后超过临界值。多个线程各自进行resize操作。可能导致链表成环。
 然后当调用这个hashmap查找一个不存在的key。而这个key的hash结果正好等于成环的那个table的时候，就会形成死循环。 [详细参考](https://blog.csdn.net/dgutliangxuan/article/details/78779448)
 
-### Hashmap和HashTable的区别
 
-hashmap继承自abstractmap， hashtable继承自Dictionary
-
-HashMap可以有一个key为null，value可以为null，     hashtable放入key和value都不能为null
-
-HashMap不是现成安全的，       Hashtable是线程安全的，他的所有的方法都用synchronized加锁了
 
 ### hashmap的负载因子为什么是0.75
 
@@ -151,22 +138,15 @@ HashMap不是现成安全的，       Hashtable是线程安全的，他的所有
 
 从上面的表中可以看到当桶中元素到达8个的时候，概率已经变得非常小，也就是说用0.75作为加载因子，每个碰撞位置的链表长度超过８个是几乎不可能的。
 
-### HashMap的遍历
-
-既需要key，又需要value，用entrySet。因为entryset会多一次查询map。更优雅的方式map.forEach
-
-只需要key，可以用keyset。
 
 ### ConcurrentHashMap
 1.7 segment加锁。   1.8 cas
+
 ### hash碰撞的解决办法
 1.开放地址法
 2.再hash法
 3.拉链法（hashmap采用此方法）
 
-### Collection和Collections
-Collections则是集合类的一个工具类/帮助类，其中提供了一系列静态方法，用于对集合中元素进行排序、搜索以及线程安全等各种操作
-Collection 是一个集合接口
 
 
 ### 多态
@@ -180,10 +160,6 @@ Collection 是一个集合接口
 2.要有重写
 
 3.父类引用指向子类的对象
-
-### 匿名内部类
-比如现在有一个抽象类或者接口Person，要想使用它，需要先继承抽象类或者实现接口才能使用。  我们也可以在类里面直接去new这个接口或者抽象类，然后将其中的抽象方法实现。
-匿名内部类也就是没有名字的内部类。正因为没有名字，所以匿名内部类只能使用一次，通常用来简化代码编写。
 
 
 ### 泛型
@@ -204,23 +180,14 @@ Collection 是一个集合接口
 
 
 
-### 方法覆盖与方法重载
-
-方法覆盖：子类重新定义了父类的方法，有相同的类型、参数列表和返回类型
-
-方法重载：同一个类有两个或者多个方法的方法名相同，但是参数不同
-
 ### 接口、抽象类
 
 类可以实现多个接口，但是只能继承一个抽象类
 
 Java接口中声名的变量默认是final类型的，抽象类可以包含非final类型变量
 
-抽象类可以有默认的方法实现，接口完全抽象的，根本不存在方法的实现
 
 抽象方法可以有public、protected、default这些修饰，接口方法默认修饰是public
-
-AbstractMap是Map接口的实现类之一，也是HashMap、TreeMap、ConcurrentHashMap等的父类， AbstractMap提供了Map的基本实现，使得我们以后要实现一个Map不用从头开始，只需要继承AbstractMap。
 
 
  
