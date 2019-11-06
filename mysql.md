@@ -41,30 +41,9 @@ Where，group by，having，order by
 Select  s_name, avg(score) from student
 
 Where score >= 60 group by s_name having (s_score)>=70  order by avg(s_score) desc
-## 四种索引
 
 
-1.主键索引不允许空值，唯一索引允许空值，一张表中只能有一个主键索引
 
-2.唯一索引允许一个空值，一个表中可以有多个唯一索引。
-
-3.非唯一索引
-
-4.组合索引：多列值组成一个索引，专门用于组合搜索，其效率大于索引合并
-
-4.聚集索引：在聚集索引中，表中行的物理顺序与键值的逻辑（索引）顺序相同
-
-## 聚集索引和非聚集索引
-主键索引的叶子节点存的是整行数据。在 InnoDB 里，主键索引也被称为聚集索引（clustered index）。
-
-非主键索引的叶子节点内容是主键的值。在 InnoDB 里，非主键索引也被称为二级索引（secondary index）。
-
-
-如果语句是 select * from T where ID=500，即 主键查询方式，则只需要搜索 ID 这棵 B+树 ；
-
-如果语句是 select * from T where k=5，即 普通索引查询方式，则需要先搜索 k 索引树，得到 ID的值为 500，再到 ID 索引树搜索一次。这个过程称为回表 
-## mysql回表
-简单来说就是数据库根据索引（非主键）找到了指定记录所在行后，还需要根据主键再次到数据库里获取数据。
 ## 覆盖索引（covering index）
 指一个查询语句的执行只用从索引中就能够取得，不必从数据表中读取。也可以称之为实现了索引覆盖。 
 当一条查询语句符合覆盖索引条件时，MySQL只需要通过索引就可以返回查询所需要的数据，这样避免了查到索引后再返回表操作，
@@ -152,7 +131,8 @@ Limit千万级别的优化
 limit千万级别优化，不直接使用limit，而是首先获取offset的id然后直接使用mysql limit size来获取数据
 
 1）在我们平时使用limit 如 select * from A order by id limit 1,10; 这样在表数据很少的时候，看不出什么性能问题，
-倘若达到千万级，如 select * from A order by ID limit 10000000，10； 虽然都是只查询10记录，但是这个性能让人受不了， 
+倘若达到千万级，如 select * from A order by ID limit 10000000，10； 虽然都是只查询10记录，
+数据库的操作其实是拿到10000010条，然后返回10条。 
 2）可以这么优化，如 select * from A where id>=(select id from a limit 10000000,1)limit 10; 
 其实还可以这么写 Select * from A where id between 10000000 and 10000010
 

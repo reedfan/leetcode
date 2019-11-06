@@ -124,14 +124,6 @@ public class FutureTaskExample {
 ```
 
 
-## run()和start()的区别？多次start一个线程会怎么样？
-
-run()方法依旧只有主线程，start（）方法会启动一个线程来执行。
-
-多次start一个线程会报错 java.lang.IllegalThreadStateException [具体原因](https://blog.csdn.net/reed1991/article/details/58597542)
-
-
-
 
 
 # 线程之间的协作
@@ -254,9 +246,7 @@ public class JoinDemo {
 ```
 ##
 
-## 为什么JAVA要提供 wait/notify 机制？
-是为了避免轮询带来的性能损失
-[深入理解wait/notify/notifyAll的作用](https://blog.csdn.net/reed1991/article/details/53782250)
+
 
 ## Sleep和wait
 
@@ -366,21 +356,13 @@ newSingleThreadExecutor 创建一个单线程化的线程池，它只会用唯�
 
 当设置allowCoreThreadTimeOut(true)时，线程池中corePoolSize线程空闲时间达到keepAliveTime也将关闭
  
-## 核心线程和工作线程的区别
 
-工作线程设置了过期时间，当线程池中线程数大于corepoolsize时，keepalivetime为多余空闲线程等待任务的最长时间，超过这个时间后多余的线程将会被终止。
-
-## 线程池核心线程数如何确定 
-
-如果是CPU密集型任务，就需要尽量压榨CPU，参考值可以设为 NCPU+1
-
-如果是IO密集型任务，参考值可以设置为2*NCPU
 
 ## 线程池的核心参数
 
-corePollsize：核心线程数
+corePollSize：核心线程数
 
-maximunPoolSize:最大线程数
+maximumPoolSize:最大线程数
 
 keepAliveTime:空闲的线程保留时间
 
@@ -634,7 +616,7 @@ state=0 表示可用
 
 release的同步状态相对简单，需要找到头结点的后继结点进行唤醒，若后继结点为空或处于cancel状态，从后向前遍历找寻一个正常结点，唤醒其对应的线程。
 
-AQS 定义两种资源方式 Exlusive（独占，只有一个线程能执行，如ReentrantLock）和share
+AQS 定义两种资源方式 Exclusive（独占，只有一个线程能执行，如ReentrantLock）和share
 （共享，多个线程同时执行，如semaphore/countDownLatch)   
 
 共享式：同一时刻可以有多个线程同时获取到同步状态，这也是"共享的"的意义所在，其待重写的尝试获取同步状态的方法tryAcquireShared返回值为int
@@ -687,7 +669,7 @@ cyclicBarrier更像一个水闸，线程执行就像水流，在水闸处都会�
 
 acquire（）要么通过成功获取信号量（信号量减1),要么一直等待下去，直到有线程释放信号量或超时。release（）释放会将信号量加1
 
-Future接口，表示异步计算的结果
+
 
 ## ThreadLocal
 
