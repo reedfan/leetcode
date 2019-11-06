@@ -262,6 +262,11 @@ getConstructor（） 返回public构造函数
 动态代理类：在程序运行时，运用反射机制动态创建而成。
 
 ## 动态代理的实现原理
+我们常见的动态代理有：JDK动态代理、Cglib等
+1、JDK动态代理是基于Java的反射机制实现的，主要涉及到java.lang.reflect包中的Proxy和InvocationHandler。
+   JDK的反射是基于接口的！也就是你的service一定是有接口的不然是不行的！
+2、CGlib必须依赖于CGlib的类库，CGlib的原理是针对目标类生成一个子类，覆盖其中的所有方法，所以目标类和方法不能声名为final类型。
+
 
 
 ## Error类和Exception类都是Throwable类
