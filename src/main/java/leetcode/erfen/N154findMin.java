@@ -29,11 +29,18 @@ package leetcode.erfen;
  著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
  */
 public class N154findMin {
+
+
+
+
+
+
+
     public static void main(String[] args) {
         int[] nums = {2,2,2,0,1,2};
-        System.out.println(new N154findMin().findMin(nums));
+        System.out.println(new N154findMin().findMin1(nums));
     }
-    public int findMin(int[] nums) {
+    public int findMin1(int[] nums) {
 
         if(nums.length == 1){
             return nums[0];

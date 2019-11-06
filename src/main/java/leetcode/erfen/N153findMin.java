@@ -23,11 +23,30 @@ package leetcode.erfen;
  链接：https://leetcode-cn.com/problems/find-minimum-in-rotated-sorted-array
  著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
  */
+
+
+/**
+ *       0  1   2  3  4  5  6  7
+ *
+ *       7   0  1  2  3  4  5  6
+ *
+ *       1   2  3  4  5  6  7   0   nums[mid]>nums[end]这种情况下。说明最小值在中点的右边
+ *
+ *
+ *
+ */
+
+
 public class N153findMin {
     public static void main(String[] args) {
         int[] nums = {4,5,6,7,0,1,2};
         System.out.println(new N153findMin().findMin(nums));
     }
+
+
+
+
+
     public int findMin(int[] nums) {
 
         if(nums.length == 1){
