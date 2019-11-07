@@ -166,6 +166,8 @@ Mybatis的一级缓存是指Session缓存。一级缓存的作用域默认是一
 Mybatis的二级缓存是指mapper映射文件。二级缓存的作用域是同一个namespace下的mapper映射文件内容，
 多个SqlSession共享。Mybatis需要手动设置启动二级缓存。将cacheEnabled设为true，然后在需要缓存的mapper中添加cache
 
+## mybatis只提供接口，那么在使用时，接口的实现在哪里？
+注册到spring容器的mapper其实是MapperProxy，我们调用mapper接口的时候就会自动装配动态生成的MapperProxy实例实现mapper的功能。
 
 ## @transactional注解在什么情况下会失效，
 

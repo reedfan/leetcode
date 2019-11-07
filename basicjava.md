@@ -97,6 +97,11 @@ ArrayList 线程不安全 初始容量为10，1.5倍扩容 扩容后将老数组
 1）  Vector的方法都是同步的(Synchronized),是线程安全的(thread-safe)，而ArrayList的方法不是，由于线程的同步必然要影响性能，因此,ArrayList的性能比Vector好。 
 2） 当Vector或ArrayList中的元素超过它的初始大小时,Vector会将它的容量翻倍,而ArrayList只增加50%的大小，这样,ArrayList就有利于节约内存空间
 
+### linkedList可以用for循环遍历吗？
+能不用尽量不要用，linkedList底层是链表，它使用for进行遍历，访问每一个元素都是从头开始访问然后直到找到这个元素，
+比如说找第三个节点，需要先找到第一个节点然后找到第二个节点；继续找第4个节点，不是从第三个节点开始找的，
+还是从第一个节点开始，所以非常的慢，不推荐，可以用迭代器进行遍历。
+
 ### HashSet、 TreeSet、LinkedHashSet
 TreeSet 大小排序, LinkedHashSet  按照顺序排序
 HashSet是由一个hash表来实现的，因此，它的元素是无序的。add()，remove()，contains()方法的时间复杂度是O(1)。 另一方面，TreeSet是由一个树形的结构来实现的，它里面的元素是有序的。因此，add()，remove()，contains()方法的时间复杂度是O(logn)。
