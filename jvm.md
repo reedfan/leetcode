@@ -120,6 +120,8 @@ java类加载在方法区。
 
 4.本地方法栈JNI引用的对象
 
+GC管理的主要区域是Java堆，一般情况下只针对堆进行垃圾回收。方法区、栈和本地方法区不被GC所管理,因而选择这些区域内的对象作为GC roots,被GC roots引用的对象不被GC回收。
+
 ### GC的触发条件
 youngGC的eden区满则触发youngGC，将eden区和一个servivor区存活的对象分配到另一个servivor区。
 第一次youngGC是将eden区存活的内存分到其中一个servivor分区

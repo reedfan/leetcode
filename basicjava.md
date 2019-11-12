@@ -367,6 +367,7 @@ Channel（通道）和 buffer（缓冲区）就好像铁路和火车
 3 浮点型：float/32，double/64
 4 布尔类型：boolean
 String不是基本的数据类型，是final修饰的java类
+存储空间的计量单元,1个字节有8个bit.而1024个字节又代表1K
 
 ### switch 
 能否作用在 byte 上，能否作用在 long 上，能 否作用在 String 上?
