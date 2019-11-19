@@ -66,6 +66,19 @@ public class N046Permute {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
     //回溯写法
     /*List<List<Integer>> lists = new ArrayList<>();
     boolean[] visted;
