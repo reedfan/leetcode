@@ -14,7 +14,12 @@ package leetcode.array;
  * 链接：https://leetcode-cn.com/problems/trapping-rain-water
  * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
  */
+
 public class N042Trap {
+    /*对于每一根柱子上最后接的雨水。其结果应该是其左右两边高度的最小值，减去本柱子的高度。
+    举个例子，柱子高度为[2,1,5]。最后高度为1的柱子上盛放的雨水的高度应该为min(5,20)-1=1。
+    因此对于本题，我们只需要将每根柱子左右两边最大值的较小值减去自己，即可得到解。
+     */
     public int trap(int[] height) {
 
         if(height == null || height.length < 3){
