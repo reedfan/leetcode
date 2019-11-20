@@ -32,6 +32,9 @@ public class N046Permute {
     }
 
 
+    /*
+
+     */
     List<List<Integer>> lists = new ArrayList<>();
 
     public List<List<Integer>> permute(int[] nums) {

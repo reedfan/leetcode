@@ -9,31 +9,39 @@ import java.util.List;
 
 /**
  * 给定一个整数 n，返回 n 皇后不同的解决方案的数量。
-
- 示例:  jianzhioffer 52
-
- 输入: 4
- 输出: 2
+ * <p>
+ * 示例:  jianzhioffer 52
+ * <p>
+ * 输入: 4
+ * 输出: 2
  */
 public class N052TotalNQueens {
+
+    /*
+    本题其实就是尝试每一种组合。但是如果穷举所有的组合肯定会超时的。关键在于穷举的时候注意剪枝。
+
+
+     */
 
 
     public static void main(String[] args) {
         new N052TotalNQueens().totalNQueens(4);
     }
+
     int cnt = 0;
 
     public int totalNQueens(int n) {
-        if(n < 1){
+        if (n < 1) {
             return 0;
         }
-        List<Integer>list = new ArrayList<>();
+        List<Integer> list = new ArrayList<>();
 
-         help(0,n,list);
-         return cnt;
+        help(0, n, list);
+        return cnt;
     }
-    private void help(int row, int n, List<Integer> list){
-        if(row == n){
+
+    private void help(int row, int n, List<Integer> list) {
+        if (row == n) {
             cnt++;
             return;
 
@@ -41,14 +49,12 @@ public class N052TotalNQueens {
         //每一列都尝试一下
         for (int col = 0; col < n; col++) {
             //当前列是否合法
-            if (!list.contains(col)) {
-                //左斜与右协是否哈法
-                if(!isDiagonalAttack(list,col)){
-                   list.add(col);
-                   help(row+1,n,list);
-                   //回溯
-                    list.remove(list.size()-1);
-                }
+            if (!list.contains(col) && !isDiagonalAttack(list, col)) {
+                list.add(col);
+                help(row + 1, n, list);
+                //回溯
+                list.remove(list.size() - 1);
+
             }
 
         }

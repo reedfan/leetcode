@@ -59,6 +59,13 @@
 
 str1 = a ，str2 = ab， str3 = str1，str2+=b，则set中的值为两个ab，显然违背了set的本意
 
+## String、StringBulider、StringBuffer适用场景
+适用场景：String:适用于少量字符串操作情况。
+
+StringBulider：适用于单线程在字符串缓存区进行大量操作。
+
+StringBuffer：适用于多线程在字符串缓存区进行大量操作。
+
  
 ### java中为什么要单继承，多实现
 

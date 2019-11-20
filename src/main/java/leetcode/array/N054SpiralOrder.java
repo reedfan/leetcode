@@ -37,6 +37,13 @@ public class N054SpiralOrder {
         int[][] matrix = {{1,2,3,4,5,6,7,8,9,10},{11,12,13,14,15,16,17,18,19,20}};
         new N054SpiralOrder().spiralOrder(matrix);
     }
+
+    /*
+     旋转类题目的关键在于首先需要确定定点。
+     本题可选择左上角和右下角两个定点。然后按照规律进行旋转。
+     旋转一圈以后。左上角横纵坐标都+1。右下角横纵坐标都减1.
+     最后还需要考虑只剩下一行或者一列的情况。
+     */
     public List<Integer> spiralOrder(int[][] matrix) {
         List<Integer> list = new ArrayList<>();
         if (matrix == null || matrix.length == 0) {
