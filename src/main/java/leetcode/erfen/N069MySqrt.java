@@ -24,11 +24,17 @@ package leetcode.erfen;
  * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
  */
 
-public class MySqrt69 {
+public class N069MySqrt {
     public static void main(String[] args) {
-        System.out.println(new MySqrt69().mySqrt(2147395599));
+        System.out.println(new N069MySqrt().mySqrt(2147395599));
     }
 
+    /*
+    本题的解法类似于数学中的夹逼定理。从两边向中间以二分的方式进行夹击。
+    里面还有一些小技巧。为了防止数据越界。比如 a很大。我们要比较a*a和b的大小。因为a*a可能超过Integer.MAX_VALUE。
+    所以可以比较a和b/a的大小。
+
+     */
     public int mySqrt(int x) {
         if (x == 1 || x == 0) {
             return x;

@@ -24,6 +24,10 @@ public class N075SortColors {
         int[] nums = {2, 0, 2, 1, 1, 0};
         new N075SortColors().sortColors(nums);
     }
+    /*
+    因为本题数据样本仅为3种数字。所以我们可以建一个空间为3的数组，表示每种数字出现的次数。
+    最后从小到大。将每种数字赋值的原数组中。
+     */
 
     public void sortColors(int[] nums) {
         if (nums == null || nums.length == 0) {

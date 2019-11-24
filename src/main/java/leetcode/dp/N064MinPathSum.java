@@ -20,6 +20,11 @@ package leetcode.dp;
  * 链接：https://leetcode-cn.com/problems/minimum-path-sum
  * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
  */
+
+/*
+dp[i][j]表示从开始到（i，j)的最小值。如果是第一行或者第一列。将其累加即可。
+如果不是dp[i][j] = grid[i][j] + Math.min(dp[i - 1][j], dp[i][j - 1]);
+ */
 public class N064MinPathSum {
     public int minPathSum(int[][] grid) {
         if (grid == null || grid.length == 0 || grid[0].length == 0) {

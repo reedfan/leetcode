@@ -27,7 +27,7 @@ package leetcode.erfen;
  * 链接：https://leetcode-cn.com/problems/search-in-rotated-sorted-array-ii
  * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
  */
-public class Search81 {
+public class N081Search {
     public boolean search(int[] nums, int target) {
         if (nums == null || nums.length == 0) {
             return false;

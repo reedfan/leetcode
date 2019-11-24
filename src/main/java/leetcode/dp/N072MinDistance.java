@@ -86,6 +86,13 @@ public class N072MinDistance {
 
     }
 
+    /*
+    用一个数组dp[i][j]表示word1的前i个字符转换为word2的前j个字符的距离。
+    则dp[i][j]为dp[i-1][j-1]（word1的第i个字符和word2的第j个字符一样）或者dp[i-1][j-1]+1（word1的第i个字符和word2的第j个字符不一样）
+    和dp[i-1][j]+1（表示删除word1的第i个字符）
+    和dp[i][j-1]+1（表示增加word2的第j个字符）
+    的较小值
+     */
     public int minDistance1(String word1, String word2) {
         if (word1 == null && word2 == null) {
             return 0;

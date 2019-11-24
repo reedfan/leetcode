@@ -29,6 +29,9 @@ package leetcode.dp;
  * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
  */
 public class N070ClimbStairs {
+    /*
+    其实这个可以看做一个斐波那锲数问题。因为每次只能跳一步或者两步。所以a[n]=a[n-1]+a[n-2];
+     */
     public int climbStairs(int n) {
         if (n < 1) {
             return 0;
