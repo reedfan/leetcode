@@ -27,6 +27,7 @@ public class N083DeleteDuplicates {
         System.out.println(new N083DeleteDuplicates().deleteDuplicates(listNode1));
     }
 
+
     public ListNode deleteDuplicates1(ListNode head) {
         if (head == null || head.next == null) {
             return head;

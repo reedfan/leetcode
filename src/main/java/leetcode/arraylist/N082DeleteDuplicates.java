@@ -25,7 +25,7 @@ public class N082DeleteDuplicates {
         listNode1.next.next = new ListNode(3);
         listNode1.next.next.next = new ListNode(3);
         listNode1.next.next.next.next = new ListNode(5);
-        System.out.println(new N082DeleteDuplicates().deleteDuplicates(listNode1));
+        System.out.println(new N082DeleteDuplicates().deleteDuplicates1(listNode1));
     }
 
     //递归写法
@@ -46,6 +46,14 @@ public class N082DeleteDuplicates {
         return head;
     }
     //非递归写法
+    /*
+    新建一个链表res表示最后返回的链表。
+    用一个bool型变量dup表示是否有重复的节点。如果一个节点的值与其next节点的值相等。表示是重复节点，将dup设置为true。往后顺移，直到不相等为止。
+    将当前节点加入最后返回的链表res的时候，需要判断一下dup是否为true。如果为true的话，表示当前节点是重复的。举个例子：
+    2->2->3。 刚开始第一个2和第二个2相等。顺移一位，dup设为true。此时2和3不相等。但是这个2其实不能加到最后的返回结果中。
+    因此，需要判断一下dup是否为true。如果不为true，才能加到最后的返回结果中。
+
+     */
     public ListNode deleteDuplicates1(ListNode head) {
         if (head == null || head.next == null) {
             return head;
