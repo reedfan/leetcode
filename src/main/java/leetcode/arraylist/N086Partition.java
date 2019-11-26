@@ -22,9 +22,14 @@ public class N086Partition {
         listNode1.next.next = new ListNode(3);
         listNode1.next.next.next = new ListNode(2);
         listNode1.next.next.next.next = new ListNode(5);
-        listNode1.next.next.next.next = new ListNode(2);
+        listNode1.next.next.next.next.next = new ListNode(2);
         System.out.println(new N086Partition().partition(listNode1,3));
     }
+    /*
+    申请两个新链表more和less。more用来存储>=界定值的值。less用来存储小于界定值的值。
+    然后将less的next节点指向more的头部。
+
+     */
 
     public ListNode partition(ListNode head, int x) {
         if(head == null || head.next == null){
@@ -45,7 +50,11 @@ public class N086Partition {
             }
             head = head.next;
         }
-        more.next = null;  //这步不要忘记，不然链表就出现环了
+        more.next = null;  //这步不要忘记，不然链表就出现环了。为啥会出现环？
+        //比如1->4->3->2->5->2  以3为界限。最后到5的时候，将5->2加入moreHead 4->3，moreHead变为4->3->5->2。此时more为5->2
+        //如果不将more的next置位null。这个2将连接到less上，形成环。可以打断点验证一下。
+
+
         less.next = moreHead.next;
         return lessHead.next;
 
