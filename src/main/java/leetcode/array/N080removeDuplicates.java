@@ -35,6 +35,14 @@ public class N080removeDuplicates {
 
     }
 
+    /*
+    用一个标识curPos记录当前结尾的位置。
+    如果遍历到的数nums[i]和nums[curPos-1]相等。说明nums[i]==nums[curPos]==nums[curPos-1]。
+    因此已经连续三个数相等了。nums[i]直接忽略即可。
+    如果nums[i]和nums[curPos-1]不相等。则应将其赋值到curPos+1的位置。
+    遍历结束以后。curPos就是需要求的新长度。
+     */
+
 
     public int removeDuplicates(int[] nums) {
         if(nums.length < 3){

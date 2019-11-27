@@ -1,6 +1,6 @@
 package leetcode.erfen;
 
-public class FindMedianSortedArrays4 {
+public class N004FindMedianSortedArrays {
 
     /**
      * 给定两个大小为 m 和 n 的有序数组 nums1 和 nums2。
@@ -31,7 +31,7 @@ public class FindMedianSortedArrays4 {
     public static void main(String[] args) {
         int[] nums1 = {2,3};
         int[] nums2 = {};
-        System.out.println(new FindMedianSortedArrays4().findMedianSortedArrays(nums1,nums2));
+        System.out.println(new N004FindMedianSortedArrays().findMedianSortedArrays(nums1,nums2));
     }
 
     /** 题目要求时间复杂度为O(log(m + n))。基本可以确定本题应该用二分查找，对于数组arr的中位数，如果数组长度为len，

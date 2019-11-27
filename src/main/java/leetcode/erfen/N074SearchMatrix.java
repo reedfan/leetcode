@@ -33,11 +33,11 @@ package leetcode.erfen;
  * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
  */
 
-public class SearchMatrix74 {
+public class N074SearchMatrix {
     public static void main(String[] args) {
         // int[][] matrix =  {{1,   3,  5,  7},{10, 11, 16, 20},{23, 30, 34, 50}};
         int[][] matrix = {{1, 1}};
-        System.out.println(new SearchMatrix74().searchMatrix(matrix, 2));
+        System.out.println(new N074SearchMatrix().searchMatrix(matrix, 2));
 
 
     }
