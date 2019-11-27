@@ -33,7 +33,7 @@ package leetcode.dp;
 public class N062UniquePaths {
 
     public static void main(String[] args) {
-        System.out.println(new N062UniquePaths().uniquePaths(3,2));
+        System.out.println(new N062UniquePaths().uniquePaths1(7,3));
     }
 
     /*
@@ -49,15 +49,15 @@ public class N062UniquePaths {
         if (m <= 0 || n <= 0) {
             return 0;
         }
-        if (m == 1 || n == 1) {
-            return 1;
-        }
+//        if (m == 1 || n == 1) {
+//            return 1;
+//        }
         int[][] dp = new int[m][n];
 
-        for (int i = 0; i < m; i++) {
+        for (int i = 1; i < m; i++) {
             dp[i][0] = 1;
         }
-        for (int i = 0; i < n; i++) {
+        for (int i = 1; i < n; i++) {
             dp[0][i] = 1;
         }
         for (int i = 1; i < m; i++) {
