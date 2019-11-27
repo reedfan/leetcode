@@ -16,7 +16,7 @@ package leetcode.string;
  * 链接：https://leetcode-cn.com/problems/length-of-last-word
  * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
  */
-public class LengthOfLastWord {
+public class N058LengthOfLastWord {
     public int lengthOfLastWord(String s) {
         int count = 0;
         int index = s.length() - 1;

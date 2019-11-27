@@ -31,6 +31,23 @@ public class N091NumDecodings {
     //递归解法存在大量的重复计算从中可以看出，在计算中进行了大量的重复计算，因此。可以想办法将重叠子问题记录下来，避免重复计算。
    // 引入一个数组dp[]，用来记录以某个字符为开始的解码数。动态规划其实就是一个填表的过程。整个过程的目标就是要填好新增的dp[]数组。
 
+    /*
+    从后往前遍历。如果
+    以22067为例，从后往前遍历。
+    首先如果为7。很显然是1种7->G
+    如果为67。很显然还是1种67->FG
+    如果为067。结果为0。
+    如果为2067。 结果为numDecodings（20 67）+ numDecodings（2 067）= numDecodings（20 67）->TFG
+    如果为22067。 结果为numDecodings（2 2067）+ numDecodings（22 067）= numDecodings（2 2067）->BTFG
+
+    从中，我们可以看出规律。
+    如果开始的数为0，结果为0。
+    如果开始的数加上第二个数小于等于26。结果为 numDecodings（start+1）+ numDecodings（start +2）
+     如果开始的数加上第二个数大于26。结果为 numDecodings（start +1）
+
+
+     */
+
     public static void main(String[] args) {
         System.out.println(new N091NumDecodings().numDecodings("2206"));
     }
