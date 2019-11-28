@@ -14,7 +14,7 @@ package leetcode.arraylist;
  * 来源：力扣（LeetCode）
  * 链接：https://leetcode-cn.com/problems/reverse-linked-list-ii
  * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
- * <p>
+ * <p>92. 反转链表 II
  * 1.找到起点切断
  */
 public class N092ReverseBetween {
@@ -27,6 +27,15 @@ public class N092ReverseBetween {
         listNode1.next.next.next.next = new ListNode(5);
         System.out.println(new N092ReverseBetween().reverseBetween(listNode1, 2, 5));
     }
+
+    /*
+    对1->2->3->4->5->NULL, m = 2, n = 4 进行翻转，我们需要做哪些事情？
+    1. 2->3->4反转成 4->3->2
+    2. 将前面一部分的next指向4->3->2
+    3. 将2的next指向后面一部分的开头。
+    因此我们在反转的时候要注意保存前面一段结束的位置，和后面一部分开始的位置。
+
+     */
 
     public ListNode reverseBetween(ListNode head, int m, int n) {
 
