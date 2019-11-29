@@ -19,13 +19,16 @@ public class N094inorderTraversal {
 
         while (!stack.empty() || root != null) {
 
-            while (root.left != null) {
-                stack.add(root);
+            if (root != null) {
+                stack.push(root);
                 root = root.left;
+            } else {
+                root = stack.pop();
+                list.add(root.val);
+                root = root.right;
+
             }
-            root = stack.pop();
-            list.add(root.val);
-            root = root.right;
+
 
         }
         return list;
