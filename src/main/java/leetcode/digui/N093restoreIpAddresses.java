@@ -1,5 +1,7 @@
 package leetcode.digui;
 
+import org.junit.Test;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,8 +34,8 @@ public class N093restoreIpAddresses {
                 break;
             }
             String segment = s.substring(pos, pos + i);
-            // 剪枝条件：不能以0开头，不能大于255
-            if (segment.startsWith("0") && segment.length() > 1 || (i == 3 && Integer.parseInt(segment) > 255)) {
+            // 剪枝条件：不能以0开头(如果只有1为可以以0开头），不能大于255
+            if ((segment.startsWith("0") && segment.length() > 1) || (i == 3 && Integer.parseInt(segment) > 255)) {
                 continue;
             }
             cur.add(segment);

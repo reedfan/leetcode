@@ -49,7 +49,7 @@ public class N091NumDecodings {
      */
 
     public static void main(String[] args) {
-        System.out.println(new N091NumDecodings().numDecodings("2206"));
+        System.out.println(new N091NumDecodings().numDecodingsdigui("2206"));
     }
 
     public int numDecodings(String s) {
@@ -81,31 +81,26 @@ public class N091NumDecodings {
         return res;
     }
 
-    /*public int numDecodings(String s) {
-        if (s == null || s.length() == 0) {
-            return 0;
-        }
-        int len = s.length();
-        int[] dp = new int[len + 1];
-        dp[len] = 1;
-        if (s.charAt(len - 1) == '0') {
-            dp[len - 1] = 0;
-        } else {
-            dp[len - 1] = 1;
-        }
-        for (int i = len - 2; i >= 0; i--) {
-            if (s.charAt(i) == '0') {
-                dp[i] = 0;
-                continue;
-            }
-            if ((s.charAt(i) - '0') * 10 + (s.charAt(i + 1) - '0') <= 26) {
-                dp[i] = dp[i + 1] + dp[i + 2];
-            } else {
-                dp[i] = dp[i + 1];
-            }
-        }
-        return dp[0];
-    }*/
+//    public int numDecodings(String s) {
+//        if (s == null || s.length() == 0) {
+//            return 0;
+//        }
+//        int[] dp = new int[s.length()+1];
+//        dp[s.length()] = 1;
+//        if(s.charAt(s.length()-1) != '0'){
+//            dp[s.length()-1] = 1;
+//        }
+//        for(int i = s.length() -2; i >= 0; i--){
+//            if(s.charAt(i) != '0'){
+//                if((s.charAt(i) - '0')*10+s.charAt(i+1)  - '0' <= 26){
+//                    dp[i] = dp[i+1] + dp[i+2];
+//                } else {
+//                    dp[i] = dp[i+1];
+//                }
+//            }
+//        }
+//        return dp[0];
+//    }
 
     public int numDecodingsdigui(String s) {
         if (s == null || s.length() == 0) {
@@ -118,6 +113,7 @@ public class N091NumDecodings {
     private int digui(String s, int start) {
         //递归的第一步，应该是加终止条件，避免死循环。
         if (s.length() == start) {
+            //表明已经到末尾了，这是一种解码方法
             return 1;
         }
         //以0位开始的数是不存在的

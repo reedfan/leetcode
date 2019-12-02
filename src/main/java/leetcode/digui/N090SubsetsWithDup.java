@@ -44,13 +44,14 @@ public class N090SubsetsWithDup {
 
 
     private void process(List<Integer> list, int[] nums, int start) {
+
         lists.add(new ArrayList<>(list));
         for (int i = start; i < nums.length; i++) {
             if (i > start && nums[i] == nums[i - 1]) {
                 continue;
             }
             list.add(nums[i]);
-            process(list, nums, +1);
+            process(list, nums, i+1);
 
             list.remove(list.size() - 1);
 
