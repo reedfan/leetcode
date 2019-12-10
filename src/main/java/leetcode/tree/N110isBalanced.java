@@ -38,6 +38,9 @@ package leetcode.tree;
  * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
  */
 public class N110isBalanced {
+    /*
+    以前序遍历的方式递归的检查每一个节点是否满足平衡二叉树的定义
+     */
     public boolean isBalanced(TreeNode root) {
         if(root == null){
             return true;

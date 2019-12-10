@@ -31,6 +31,12 @@ public class N105BuildTree {
         new N105BuildTree().buildTree(preorder, inorder);
 
     }
+    /*
+    因为前序遍历为根左右。 中序遍历为左右根。
+    所以前序遍历的第一个元素为重建的二叉树的根节点的值。
+    遍历中序遍历，直到找到和根节点值相同的位置。则此元素左边的都是根节点的左子树的元素，右边的都是根节点右子树的元素。
+    通过递归很容易求出解。
+     */
 
     public TreeNode buildTree(int[] preorder, int[] inorder) {
         if (preorder == null || preorder.length == 0 || inorder == null || inorder.length == 0 || preorder.length != inorder.length) {

@@ -26,7 +26,7 @@ public class N022GenerateParenthesis {
 
 
     public static void main(String[] args) {
-        new N022GenerateParenthesis().generateParenthesis(3);
+        System.out.println(new N022GenerateParenthesis().generateParenthesis(3));
     }
 
 
