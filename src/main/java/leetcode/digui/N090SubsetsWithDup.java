@@ -47,6 +47,7 @@ public class N090SubsetsWithDup {
 
         lists.add(new ArrayList<>(list));
         for (int i = start; i < nums.length; i++) {
+            //因为这个数和上个数相同，所以从这个数开始的所有情况，在上个数里面都考虑过了，需要跳过
             if (i > start && nums[i] == nums[i - 1]) {
                 continue;
             }
