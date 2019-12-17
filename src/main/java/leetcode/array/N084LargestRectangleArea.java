@@ -4,10 +4,69 @@ import java.util.Stack;
 
 public class N084LargestRectangleArea {
     public static void main(String[] args) {
-        int[] nums = {2,1,5,6,2,3};
+        int[] nums = {2, 1, 5, 6, 2, 3};
         int res = new N084LargestRectangleArea().largestRectangleArea(nums);
         System.out.println(res);
     }
+
+    public int largestRectangleArea1(int[] heights) {
+        if (heights == null || heights.length == 0) {
+            return 0;
+        }
+        int maxValue = 0;
+        Stack<Integer> stack = new Stack<>();
+        for (int i = 0; i < heights.length; i++) {
+            if (stack.isEmpty() || heights[stack.peek()] <= heights[i]) {
+                stack.push(i);
+            } else {
+                while (!stack.empty() && heights[stack.peek()] >= heights[i]) {
+                    int high = heights[stack.pop()];
+                    int width;
+                    if (stack.empty()) {
+                        width = i;
+                    } else {
+                        width = i - stack.peek() - 1;
+                    }
+                    maxValue = maxValue > high * width ? maxValue : high * width;
+                }
+            }
+
+        }
+
+        while (!stack.empty()) {
+            int high = heights[stack.pop()];
+            int width;
+            if (stack.empty()) {
+                width = heights.length;
+            } else {
+                width = heights.length - stack.peek() - 1;
+            }
+            maxValue = maxValue > high * width ? maxValue : high * width;
+        }
+
+        return maxValue;
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     /*
     本题其实可以这么算。对于nums = {2,1,5,6,2,3};
@@ -26,7 +85,7 @@ public class N084LargestRectangleArea {
      */
 
     public int largestRectangleArea(int[] heights) {
-        if(heights == null || heights.length == 0){
+        if (heights == null || heights.length == 0) {
             return 0;
         }
         //保证stack中对应的位置在height中递增。
@@ -36,33 +95,33 @@ public class N084LargestRectangleArea {
         int top;
         for (int i = 0; i < heights.length; i++) {
             //因为stack是递增的，因此比栈顶大的话可以直接入栈
-            if(stack.isEmpty() || heights[stack.peek()] <= heights[i]){
+            if (stack.isEmpty() || heights[stack.peek()] <= heights[i]) {
                 stack.push(i);
-            }else {
+            } else {
                 //不然的话就出栈，算出以当前值为结尾的情况下的面积
-                while (!stack.isEmpty() && heights[stack.peek()] >= heights[i]){
+                while (!stack.isEmpty() && heights[stack.peek()] >= heights[i]) {
                     top = stack.pop();
-                    if(stack.empty()){
+                    if (stack.empty()) {
                         width = i;
-                    }else {
-                        width = i-stack.peek()-1;   //i是右边能到达的位置，stack.peek()是左边的位置，因此宽度为i-stack.peek()-1
+                    } else {
+                        width = i - stack.peek() - 1;   //i是右边能到达的位置，stack.peek()是左边的位置，因此宽度为i-stack.peek()-1
                     }
 
 
-                    maxValue = Math.max(maxValue,(width)*heights[top]);
+                    maxValue = Math.max(maxValue, (width) * heights[top]);
                 }
                 stack.push(i);
             }
 
         }
-        while (!stack.isEmpty()){
+        while (!stack.isEmpty()) {
             top = stack.pop();
-            if(stack.empty()){
+            if (stack.empty()) {
                 width = heights.length;
-            }else {
-                width = heights.length-stack.peek()-1;
+            } else {
+                width = heights.length - stack.peek() - 1;
             }
-            maxValue = Math.max(maxValue,width*heights[top]);
+            maxValue = Math.max(maxValue, width * heights[top]);
         }
         return maxValue;
     }

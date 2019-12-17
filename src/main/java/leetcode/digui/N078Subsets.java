@@ -56,32 +56,27 @@ public class N078Subsets {
         generate(start + 1, nums, list);
     }
 
-    // 求解C(n,k), 当前已经找到的组合存储在c中, 需要从start开始搜索新的元素
-    private void generateCombinations(int[] nums, int n, int k, int start, List<Integer> list) {
-        if (list.size() == k) {
-            res.add(new ArrayList<>(list));
-            return;
+    List<List<Integer>> lists = new ArrayList<>();
+    public List<List<Integer>> subsets1(int[] nums) {
+        if(nums == null || nums.length ==0){
+            return lists;
         }
-        //减枝  i <= n-(k-list.size())+1
-        for (int i = start; i < n - (k - list.size()) + 1; i++) {
-            list.add(nums[i]);
-            generateCombinations(nums, n, k, i + 1, list);
-            list.remove(list.size() - 1);
 
-        }
+        List<Integer> list = new ArrayList<>();
+        process(list, nums, 0);
+        return lists;
+
     }
 
-    public List<List<Integer>> subsets1(int[] nums) {
-        res = new ArrayList<>();
-        if (nums == null || nums.length == 0) {
-            return res;
+    private void process(List<Integer>list, int[] nums, int start){
+
+        lists.add(new ArrayList(list));
+        for(int i = start; i < nums.length; i++){
+
+            list.add(nums[i]);
+            process(list, nums, i+1);
+            list.remove(list.size()-1);
         }
-        List<Integer> list = new ArrayList<>();
-        int len = nums.length;
-        for (int i = 0; i <= len; i++) {
-            generateCombinations(nums, len, i, 0, list);
-        }
-        return res;
     }
 
 

@@ -7,7 +7,7 @@ import leetcode.arraylist.ListNode;
  */
 
 public class N15ReverseList {
-    public ListNode ReverseList(ListNode head) {
+    public ListNode ReverseList1(ListNode head) {
         ListNode pre = null;
         ListNode next = null;
         while (head != null) {
@@ -20,5 +20,16 @@ public class N15ReverseList {
         }
         return pre;
 
+    }
+
+
+    public ListNode ReverseList(ListNode head) {
+        if(head == null || head.next == null){
+            return head;
+        }
+        ListNode next = ReverseList(head.next);
+        head.next.next = head;
+        head.next = null;
+        return next;
     }
 }

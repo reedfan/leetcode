@@ -45,8 +45,12 @@ public class N033Search {
      * 著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
      */
 
+    public static void main(String[] args) {
+        int[] nums = {3,1};
+        System.out.println(search(nums,1));
 
-    public int search(int[] nums, int target) {
+    }
+    public static int search(int[] nums, int target) {
         if (nums == null || nums.length == 0) {
             return -1;
         }

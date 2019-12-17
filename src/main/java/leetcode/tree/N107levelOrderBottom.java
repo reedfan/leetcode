@@ -1,6 +1,7 @@
 package leetcode.tree;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class N107levelOrderBottom {
@@ -35,5 +36,35 @@ public class N107levelOrderBottom {
 
         DFS(root.left, level + 1, ans);
         DFS(root.right, level + 1, ans);
+    }
+
+
+    List<List<Integer>> lists = new ArrayList<>();
+    public List<List<Integer>> levelOrderBottom1(TreeNode root) {
+        if(root == null){
+            return lists;
+        }
+        LinkedList<TreeNode>list = new LinkedList<>();
+        list.add(root);
+        List<Integer> res = new ArrayList<>();
+        while(!list.isEmpty()){
+            int cnt = list.size();
+            while(cnt > 0){
+                TreeNode first = list.removeFirst();
+                res.add(first.val);
+                if(first.left != null){
+                    list.add(first.left);
+                }
+                if(first.right != null){
+                    list.add(first.right);
+                }
+                cnt--;
+            }
+            lists.add(0,new ArrayList<>(res));
+            res.clear();
+        }
+        return lists;
+
+
     }
 }
