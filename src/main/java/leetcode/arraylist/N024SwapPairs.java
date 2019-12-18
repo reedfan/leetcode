@@ -24,6 +24,13 @@ public class N024SwapPairs {
         new N024SwapPairs().swapPairs(listNode);
 
     }
+    /*
+    1.建一个新的链表res
+    2.res.next = head.next;
+    3.head.next = head.next.next;
+    4.res.next.next = head;
+    5.res = res.next.next;head = head.next;
+     */
 
     public ListNode swapPairs(ListNode head) {
         while (head == null || head.next == null) {
