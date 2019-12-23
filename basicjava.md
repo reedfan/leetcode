@@ -252,7 +252,8 @@ getDeclaredConstructor（） 返回所有的构造器
 
 getConstructor（） 返回public构造函数
 
- 
+### 反射的原理
+反射首先是能够获取到Java中的反射类的字节码，然后将字节码中的方法，变量，构造函数等映射成 相应的 Method、Filed、Constructor 等类
 
 ### Java反射的作用：
 
