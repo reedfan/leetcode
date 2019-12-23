@@ -22,6 +22,16 @@ package leetcode.arraylist;
  */
 
 public class N025ReverseKGroup {
+
+    public static void main(String[] args) {
+        ListNode listNode1 = new ListNode(1);
+        listNode1.next = new ListNode(2);
+        listNode1.next.next = new ListNode(3);
+        listNode1.next.next.next = new ListNode(4);
+        listNode1.next.next.next.next = new ListNode(5);
+        System.out.println(new N025ReverseKGroup().reverseKGroup(listNode1,2));
+    }
+
     public ListNode reverseKGroup(ListNode head, int k) {
         if (head == null || head.next == null) {
             return head;

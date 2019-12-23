@@ -581,6 +581,10 @@ new RenentrantLock(boolean fair)；将fair设为true就是公平锁。
 static synchronized   和synchronized(xxx.class）是全局锁
 synchronized 和 synchronized(this）是对象锁
  
+ 
+## 如果一个对象有多个方法加了synchronized，那么该对象有几把锁 
+对象锁是在一个类的对象上加的的锁，只有一把，不管有几个方法进行了同步。
+这些同步方法都共有一把锁，只要一个线程获得了这个对象锁，其他的线程就不能访问该对象的任何一个同步方法。
 
 ##  锁优化的思路
 1.减少锁持有时间  只在线程安全要求的代码块上加锁
