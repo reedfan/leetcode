@@ -2,6 +2,8 @@ package leetcode.huadongchuangkou;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * 给定一个字符串，请你找出其中不含有重复字符的 最长子串 的长度。
@@ -34,6 +36,7 @@ public class N003LengthOfLongestSubstring {
 
     public static void main(String[] args) {
         System.out.println(new N003LengthOfLongestSubstring().lengthOfLongestSubstring("abcabcbb"));
+        Lock lock = new ReentrantLock(true);
     }
 
     public int lengthOfLongestSubstring(String s) {
@@ -59,6 +62,9 @@ public class N003LengthOfLongestSubstring {
         return maxLen;
 
     }
+    /*
+    l表示最左端的位置，
+     */
 
     public int lengthOfLongestSubstring1(String s) {
         if (s == null || s.length() == 0) {
@@ -66,14 +72,14 @@ public class N003LengthOfLongestSubstring {
         }
         int maxLen = 0;
         int l = 0;
-        Map< Character,Integer> map = new HashMap<>();
+        Map<Character, Integer> map = new HashMap<>();
         for (int i = 0; i < s.length(); i++) {
             Character c = s.charAt(i);
-            if(map.containsKey(c)){
-                l = map.get(c)+1;
+            if (map.containsKey(c)) {
+                l = map.get(c) + 1;
             }
-            map.put(c,i);
-            maxLen = maxLen > (i-l+1)? maxLen : (i-l+1);
+            map.put(c, i);
+            maxLen = maxLen > (i - l + 1) ? maxLen : (i - l + 1);
         }
         return maxLen;
 
