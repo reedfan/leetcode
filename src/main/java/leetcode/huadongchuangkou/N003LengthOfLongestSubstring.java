@@ -1,5 +1,8 @@
 package leetcode.huadongchuangkou;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * 给定一个字符串，请你找出其中不含有重复字符的 最长子串 的长度。
  * <p>
@@ -38,7 +41,7 @@ public class N003LengthOfLongestSubstring {
             return 0;
         }
         int[] tmp = new int[256];
-        int maxlen = 0;
+        int maxLen = 0;
         int l = 0;
         int r = 0;
 
@@ -46,14 +49,33 @@ public class N003LengthOfLongestSubstring {
             if (r < s.length() && tmp[s.charAt(r)] == 0) {
                 tmp[s.charAt(r++)] = 1;
             } else {
-                maxlen = maxlen > (r - l) ? maxlen : (r - l);
+                maxLen = maxLen > (r - l) ? maxLen : (r - l);
 
                 tmp[s.charAt(l++)] = 0;
 
             }
         }
 
-        return maxlen;
+        return maxLen;
+
+    }
+
+    public int lengthOfLongestSubstring1(String s) {
+        if (s == null || s.length() == 0) {
+            return 0;
+        }
+        int maxLen = 0;
+        int l = 0;
+        Map< Character,Integer> map = new HashMap<>();
+        for (int i = 0; i < s.length(); i++) {
+            Character c = s.charAt(i);
+            if(map.containsKey(c)){
+                l = map.get(c)+1;
+            }
+            map.put(c,i);
+            maxLen = maxLen > (i-l+1)? maxLen : (i-l+1);
+        }
+        return maxLen;
 
     }
 }
