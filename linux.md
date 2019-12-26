@@ -67,6 +67,13 @@ rpm -qa|grep XX
 查看linux下是否安装XX
 删除   rpm -e rpm的包名 
 
+## 在/home目录下查找以.txt结尾的文件名
+
+find /home -name "*.txt"
+
+同上，但忽略大小写
+
+find /home -iname "*.txt"
 
 vim模式下
 /reed       就是去查找reed   
