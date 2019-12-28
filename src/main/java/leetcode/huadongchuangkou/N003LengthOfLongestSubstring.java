@@ -54,7 +54,8 @@ public class N003LengthOfLongestSubstring {
 
     如果用map怎么做？可以用Map<Character, Integer> map来存储窗口中的值，key表示存储的字符，value表示存储的字符在已经遍历到的最右边的位置。
     用l表示滑动窗口的左端。
-    当map里包含要处理的字符的时候，此时窗口的最左边应该是l和map.get(c) + 1的较大者。
+    当map里包含要处理的字符的时候，此时窗口的最左边应该是l和map.get(c) + 1的较大者。当map里不包含要处理的字符的时候，此时窗口的最左边任然为l。
+    最后将待处理字符加入map并计算窗口大小。
 
      */
     public int lengthOfLongestSubstring(String s) {
@@ -71,20 +72,13 @@ public class N003LengthOfLongestSubstring {
                 tmp[s.charAt(r++)] = 1;
             } else {
                 maxLen = maxLen > (r - l) ? maxLen : (r - l);
-
                 tmp[s.charAt(l++)] = 0;
-
             }
         }
-
         return maxLen;
-
     }
-    /*
-    l表示最左端的位置，
-     */
 
-    public int lengthOfLongestSubstring1(String s) {
+    public int lengthOfLongestSubstring2(String s) {
         if (s == null || s.length() == 0) {
             return 0;
         }
@@ -100,6 +94,5 @@ public class N003LengthOfLongestSubstring {
             maxLen = maxLen > (i - l + 1) ? maxLen : (i - l + 1);
         }
         return maxLen;
-
     }
 }
