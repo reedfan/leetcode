@@ -5,6 +5,7 @@ public class N005LongestPalindrome {
         System.out.println(new N005LongestPalindrome().longestPalindrome("ac"));
     }
 
+
     //动态规划法
     public String longestPalindrome(String s) {
         if (s == null || s.length() < 2) {
@@ -36,6 +37,14 @@ public class N005LongestPalindrome {
 
     }
 
+    /*
+
+本题最容易想到的一中方法应该就是中心扩散法。
+中心扩散法怎么去找回文串？从每一个位置出发，向两边扩散即可。遇到不是回文的时候结束。
+举个例子，str = "acdbbdaa"。我们需要寻找从第一个b（位置为3）出发最长回文串为多少。怎么寻找？
+首先往左和往右寻找与当期位置相同的字符，
+
+     */
 
     //中心扩散法
     public String longestPalindrome1(String s) {

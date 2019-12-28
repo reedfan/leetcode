@@ -47,6 +47,19 @@
 
 # 使用线程
 
+## 线程的生命周期包含5个阶段，包括：新建、就绪、运行、阻塞、销毁。
+
+    新建：就是刚使用new方法，new出来的线程；
+
+    就绪：就是调用的线程的start()方法后，这时候线程处于等待CPU分配资源阶段，谁先抢的CPU资源，谁开始执行;
+
+    运行：当就绪的线程被调度并获得CPU资源时，便进入运行状态，run方法定义了线程的操作和功能;
+
+    阻塞：在运行状态的时候，可能因为某些原因导致运行状态的线程变成了阻塞状态，比如sleep()、wait()之后线程就处于了阻塞状态，这个时候需要其他机制将处于阻塞状态的线程唤醒，比如调用notify或者notifyAll()方法。唤醒的线程不会立刻执行run方法，它们要再次等待CPU分配资源进入运行状态;
+
+    销毁：如果线程正常执行完毕后或线程被提前强制性的终止或出现异常导致结束，那么线程就要被销毁，释放资源;
+
+
 ## 创建线程的三种方式
 
 1.extends Thread   (Thread其实也继承了Runnable，并做了一定的封装)    
@@ -670,6 +683,59 @@ AQS是JUC中很多同步组件的构建基础，简单来讲，它内部实现�
  
 
 ## CountDownLatch和cyclicBarrier
+```
+public class TestCountDownLatch {
+    /**
+    CountDownLatch ：闭锁，在完成某些运算是，只有其他所有线程的运算全部完成，当前运算才继续执行
+    用例：主线程等其他线程执行完之后再继续执行，比如计算运算时间
+     */
+
+    public static void main(String[] args) {
+        final CountDownLatch latch = new CountDownLatch(50);
+        LatchDemo ld = new LatchDemo(latch);
+        long start = System.currentTimeMillis();
+
+        for (int i = 0; i < 50; i++) {
+            new Thread(ld).start();
+        }
+        try {
+            latch.await();
+        } catch (InterruptedException e) {
+        }
+
+        long end = System.currentTimeMillis();
+
+        System.out.println("耗费时间为：" + (end - start));
+    }
+
+    
+
+
+}
+
+class LatchDemo implements Runnable{
+    private CountDownLatch latch;
+
+    public LatchDemo(CountDownLatch latch) {
+        this.latch = latch;
+    }
+
+
+    public void run() {
+        try {
+            for (int i = 0; i < 5000; i++) {
+                if (i % 2 == 0) {
+                    System.out.println(i);
+                }
+            }
+        } finally {
+            latch.countDown();
+        }
+    }
+}
+```
+
+CyclicBarrier可以用于多线程计算数据，最后合并计算结果的应用场景。比如我们用一个Excel保存了用户所有银行流水，每个Sheet保存一个帐户近一年的每笔银行流水，现在需要统计用户的日均银行流水，先用多线程处理每个sheet里的银行流水，都执行完之后，得到每个sheet的日均银行流水，最后，再用barrierAction用这些线程的计算结果，计算出整个Excel的日均银行流水。
 
 CountDownLatch:一个线程（或者多个），等待另外N个线程完成某个事情之后才能执行
 
@@ -691,7 +757,40 @@ cyclicBarrier更像一个水闸，线程执行就像水流，在水闸处都会�
 
 acquire（）要么通过成功获取信号量（信号量减1),要么一直等待下去，直到有线程释放信号量或超时。release（）释放会将信号量加1
 
-Future接口，表示异步计算的结果
+
+```
+/**
+ * created by reedfan on 2019/4/21 0021
+ * Semaphore维护了一个许可集合，在创建Semaphore的时候，设置上许可数，
+ * 每条线程在只有在获得一个许可的时候才可以继续往下执行逻辑
+ * （申请一个许可，则Semaphore的许可池中减少一个许可），没有获得许可的线程会进入阻塞状态。
+ *
+ * Semaphore可以用于做流量控制，特别公用资源有限的应用场景，
+ * 比如能保证同时执行的线程最多200个，模拟出稳定的并发量。
+ */
+public class SemaphoreTest {
+    public static void main(String[] args) {
+        //创建一个Semaphore 有2条许可
+        final Semaphore semaphore = new Semaphore(2);
+        for (int i = 0; i < 10 ; i++) {
+            final int finalI = i;
+            new Thread(new Runnable() {
+                public void run() {
+                    try {
+                        semaphore.acquire();
+                        System.out.println(finalI);
+                        Thread.sleep(1000);
+                        semaphore.release();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+            }).start();
+        }
+    }
+}
+```
 
 ## ThreadLocal
 
