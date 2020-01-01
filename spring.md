@@ -248,3 +248,12 @@ private String hello;
 存在依赖关系  cloud   离不开boot 
 
 
+### Spring Cloud Gateway VS Zuul 比较，怎么选择？
+
+Zuul 1.x，使用的是阻塞式的 API。
+Spring Cloud Gateway构建于 Spring 5+，基于 Spring Boot 2.x 响应式的、非阻塞式的 API。同时，它支持 websockets，
+和 Spring 框架紧密集成，开发体验相对来说十分不错。
+
+
+这个没什么好比的，要比就和 Zuul 2.x 比，Zuul 2.x 在底层上有了很大的改变，使用了异步无阻塞式的 API，性能改善明显，
+不过现在 Spring Cloud 也没集成 Zuul 2.x，所以就没什么好比的。
