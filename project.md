@@ -63,6 +63,8 @@ Outlook给我们的消息丢了。
 OutlookMeeting和GoogleMeeting大致流程都是一样的。 都是参数校验，然后用这些参数去组装成一些对象。最后将这些信息透传下去。
 所以这里使用模板方法来完成的。将固定的放在超类里面。  一些有差别的放在抽象类里。在子类中去实现它。
 
+比如邀请的人有拒绝了，谷歌那边会直接将其过滤，微软那边则是将其状态置位declined。
+
 还有就是不管OutLookMeeting还是GoogleMeeting，都会有两类meeting。分别是普通的meeting和PMRmeeting两大类。
 处理方式有差异。这就导致在逻辑中很多地方需要判断是普通的meeting还是PMRmeeting。为了避免这种判断。将普通的meeting和PMRmeeting作为两类service。分别去继承父类接口meetingHandler。
 这样在调用的地方就可以以一个map的形式将这些接口都加入Map<String, Strategy> map。然后通过map.get("serviceName")就可以去获取到底调哪个接口。      策略模式

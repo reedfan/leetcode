@@ -52,6 +52,14 @@ public class N019RemoveNthFromEnd {
     }
 
 
+    /*
+    本题是一个经典的双指针问题。解题思路如下。
+    1、新建一个新链表res，并让res的next指针指向head。并新建fast和slow，他们均指向res。
+    2、将fast往后移n个距离。
+    3、同时移动fast和slow，直到fast.next == null为止。
+    4、此时slow为倒数第n个节点的前一个节点。slow.next = slow.next.next就可以将倒数第n个节点移除。
+
+     */
 
 
     public ListNode removeNthFromEnd(ListNode head, int n) {
@@ -68,7 +76,7 @@ public class N019RemoveNthFromEnd {
             fast = fast.next;
             slow = slow.next;
         }
-        //此时head为倒数第n个节点的前一个节点。
+        //此时slow为倒数第n个节点的前一个节点。
         slow.next = slow.next.next;
         return res.next;
 
