@@ -29,6 +29,11 @@
 ## [系统架构中为什么要引入消息中间件](https://mp.weixin.qq.com/s?__biz=MzU0OTk3ODQ3Ng==&mid=2247484149&idx=1&sn=98186297335e13ec7222b3fd43cfae5a&chksm=fba6eaf6ccd163e0c2c3086daa725de224a97814d31e7b3f62dd3ec763b4abbb0689cc7565b0&mpshare=1&scene=1&srcid=0608fz8HKZvYxRhzFqyJ4Isq%23rd)
 1.解耦  2.异步  3.削峰
 
+### 如何选择消息队列
+1、如果消息队列并不是将要构建系统的主角之一，对消息队列功能和性能都没有很高的要求，只需一个开箱即用易维护的产品，建议使用RabbitMQ。(有良好的运维界面，仅仅只是使用消息队列功能，用于异步和业务模块解耦，对性能要求不是很高。rabbitMQ能满足现阶段需求)
+2、如果系统使用消息队列的场景是处理在线业务(在线业务指的是那种服务于web页面或者APP的服务，这种服务都需要很低的延迟，否则APP就会很卡，体验不好)，比如在交易系统中用消息队列传递订单，那RocketMQ的低延迟和金融级的稳定性是你需要的。
+3、如果需要处理海量的消息，想收集日志、监控信息或是前端埋点这类数据，或应用场景大量使用了大数据、流计算(做事后的统计分析)相关的开源产品，那kafka是最适合的。
+
 ### [系统架构引入消息中间件有什么缺点](https://mp.weixin.qq.com/s?__biz=MzU0OTk3ODQ3Ng==&mid=2247484157&idx=1&sn=f4644be2db6b1c230846cb4d62ae5be9&chksm=fba6eafeccd163e817b420d57478829d92251a6a5fd446f81805f0983a0d95cb6853a6735c4b&mpshare=1&scene=1&srcid=06083A6RVW3ZtKQRy6Ttq8tK%23rd)
 1.消息中间件可能会挂掉，导致系统可用性降低
 2.可能会丢消息，导致系统稳定性下降
