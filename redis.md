@@ -83,6 +83,8 @@ sorted set：排序的set，可以用在排行榜
 通常我们喜欢把cache放到redis里，可以把访问速度提升，但是redis也算是远程服务器，会有IO时间的开销，如果我们把缓存放在本地内存，
 性能能进一步提升，这也就带出了二级缓存概念。有人说为什么不把cache直接放到本地，如果是单机没问题，但是集群环境下还是需要两级缓存的配合。
 
+
+用了缓存之后会有什么不良后果？
 ## 假如Redis里面有1亿个key，其中有10w个key是以某个固定的已知的前缀开头的，如果将它们全部找出来？
 redis的单线程的。keys指令会导致线程阻塞一段时间，线上服务会停顿，直到指令执行完毕，服务才能恢复。这个时候可以使用scan指令，scan指令可以无阻塞的提取出指定模式的key列表，但是会有一定的重复概率，在客户端做一次去重就可以了，但是整体所花费的时间会比直接用keys指令长。
 [Redis中的Scan命令的使用](https://www.cnblogs.com/wy123/p/10955153.html)
@@ -195,6 +197,9 @@ Redis Cluster着眼于扩展性，在单个redis内存不足时，使用Cluster�
 
 如果对方追问redis如何实现延时队列？使用sortedset，拿时间戳作为score，消息内容作为key调用zadd来生产消息，
 消费者用zrangebyscore指令获取N秒之前的数据轮询进行处理。
+
+### 用了缓存之后会有什么不良后果？
+
 
 ## [缓存穿透、缓存击穿、缓存雪崩](https://mp.weixin.qq.com/s?__biz=MzU0OTk3ODQ3Ng==&mid=2247484884&idx=1&sn=ceb798b6e8ef0ee608a992385f7d8568&chksm=fba6edd7ccd164c155271811f7948b476955cab41b23f2333847b8c268b31cc9f3332c2e3926&mpshare=1&scene=1&srcid=0608pIX1L8Fja1H99IyorW2X%23rd)
 缓存穿透：查一条根本不存在的数据：
