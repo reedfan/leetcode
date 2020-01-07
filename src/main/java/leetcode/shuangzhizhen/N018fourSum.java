@@ -55,7 +55,7 @@ public class N018fourSum {
                 if (max2 < target) {
                     continue;
                 }
-                /*开始third指针和h指针的表演，计算当前和，如果等于目标值，third++并去重，fourth--并去重，当当前和大于目标值时fourth--，当当前和小于目标值时third++*/
+                /*开始third指针和fourth指针的表演，计算当前和，如果等于目标值，third++并去重，fourth--并去重，当当前和大于目标值时fourth--，当当前和小于目标值时third++*/
                 while (third < fourth) {
                     int curr = nums[first] + nums[second] + nums[third] + nums[fourth];
                     if (curr == target) {
