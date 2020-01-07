@@ -35,43 +35,45 @@ public class N018fourSum {
             if (max1 < target) {
                 continue;
             }
-            /*第二层循环i，初始值指向first+1*/
-            for (int i = first + 1; i < length - 2; i++) {
-                /*当i的值与前面的值相等时忽略*/
-                if (i > first + 1 && nums[i] == nums[i - 1]) {
+            /*第二层循环second，初始值指向first+1*/
+            for (int second = first + 1; second < length - 2; second++) {
+                /*当second的值与前面的值相等时忽略*/
+                if (second > first + 1 && nums[second] == nums[second - 1]) {
                     continue;
                 }
-                /*定义指针j指向i+1*/
-                int j = i + 1;
-                /*定义指针h指向数组末尾*/
-                int h = length - 1;
-                /*获取当前最小值，如果最小值比目标值大，说明后面越来越大的值根本没戏，忽略*/
-                int min = nums[first] + nums[i] + nums[j] + nums[j + 1];
-                if (min > target) {
+                /*定义指针third指向second+1*/
+                int third = second + 1;
+                /*定义指针fourth指向数组末尾*/
+                int fourth = length - 1;
+                /*获取当前最小值，如果最小值比目标值大，说明后面越来越大的值根本没戏，剪枝操作*/
+                int min2 = nums[first] + nums[second] + nums[third] + nums[third + 1];
+                if (min2 > target) {
                     continue;
                 }
-                /*获取当前最大值，如果最大值比目标值小，说明后面越来越小的值根本没戏，忽略*/
-                int max = nums[first] + nums[i] + nums[h] + nums[h - 1];
-                if (max < target) {
+                /*获取当前最大值，如果最大值比目标值小，说明后面越来越小的值根本没戏，剪枝操作*/
+                int max2 = nums[first] + nums[second] + nums[fourth] + nums[fourth - 1];
+                if (max2 < target) {
                     continue;
                 }
-                /*开始j指针和h指针的表演，计算当前和，如果等于目标值，j++并去重，h--并去重，当当前和大于目标值时h--，当当前和小于目标值时j++*/
-                while (j < h) {
-                    int curr = nums[first] + nums[i] + nums[j] + nums[h];
+                /*开始third指针和h指针的表演，计算当前和，如果等于目标值，third++并去重，fourth--并去重，当当前和大于目标值时fourth--，当当前和小于目标值时third++*/
+                while (third < fourth) {
+                    int curr = nums[first] + nums[second] + nums[third] + nums[fourth];
                     if (curr == target) {
-                        result.add(Arrays.asList(nums[first], nums[i], nums[j], nums[h]));
-                        j++;
-                        while (j < h && nums[j] == nums[j - 1]) {
-                            j++;
+                        result.add(Arrays.asList(nums[first], nums[second], nums[third], nums[fourth]));
+                        third++;
+                        while (third < fourth && nums[third] == nums[third - 1]) {
+                            third++;
                         }
-                        h--;
-                        while (j < h && i < h && nums[h] == nums[h + 1]) {
-                            h--;
+                        fourth--;
+                        while (third < fourth && nums[fourth] == nums[fourth + 1]) {
+                            fourth--;
                         }
-                    } else if (curr > target) {
-                        h--;
+                        continue;
+                    }
+                    if (curr > target) {
+                        fourth--;
                     } else {
-                        j++;
+                        third++;
                     }
                 }
             }
