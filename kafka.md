@@ -1,5 +1,6 @@
 ## [系统架构中为什么要引入消息中间件](https://mp.weixin.qq.com/s?__biz=MzU0OTk3ODQ3Ng==&mid=2247484149&idx=1&sn=98186297335e13ec7222b3fd43cfae5a&chksm=fba6eaf6ccd163e0c2c3086daa725de224a97814d31e7b3f62dd3ec763b4abbb0689cc7565b0&mpshare=1&scene=1&srcid=0608fz8HKZvYxRhzFqyJ4Isq%23rd)
 1.解耦  2.异步  3.削峰
+健壮性：消息队列可以堆积请求，所以消费端业务即使短时间死掉，也不会影响主要业务的正常进行。
 
 ### 如何选择消息队列
 1、如果消息队列并不是将要构建系统的主角之一，对消息队列功能和性能都没有很高的要求，只需一个开箱即用易维护的产品，建议使用RabbitMQ。(有良好的运维界面，仅仅只是使用消息队列功能，用于异步和业务模块解耦，对性能要求不是很高。rabbitMQ能满足现阶段需求)
@@ -103,6 +104,48 @@ Kafka的复制机制既不是完全的同步复制，也不是单纯的异步复
 kafka使用ISR的方式很好的均衡了确保数据不丢失以及吞吐率。Follower可以批量的从Leader复制数据，
 而且Leader充分利用磁盘顺序读以及send file(zero copy)机制，这样极大的提高复制性能，内部批量写磁盘，
 大幅减少了Follower与Leader的消息量差。
+
+### 什么情况下一个 broker 会从 isr中踢出去
+leader会维护一个与其基本保持同步的Replica列表，该列表称为ISR(in-sync Replica)，每个Partition都会有一个ISR，
+而且是由leader动态维护 ，如果一个follower比一个leader落后太多，或者超过一定时间未发起数据复制请求，
+则leader将其重ISR中移除 。
+
+### kafka 为什么那么快
+Cache Filesystem Cache PageCache缓存
+顺序写 由于现代的操作系统提供了预读和写技术，磁盘的顺序写大多数情况下比随机写内存还要快。
+Zero-copy 零拷技术减少拷贝次数
+Batching of Messages 批量量处理。合并小的请求，然后以流的方式进行交互，直顶网络上限。
+Pull 拉模式 使用拉模式进行消息的获取消费，与消费端处理能力相符。
+
+### kafka producer 打数据，ack  为 0， 1， -1 的时候代表啥， 设置 -1 的时候，什么情况下，leader 会认为一条消息 commit了
+1（默认）  数据发送到Kafka后，经过leader成功接收消息的的确认，就算是发送成功了。在这种情况下，如果leader宕机了，则会丢失数据。
+0 生产者将数据发送出去就不管了，不去等待任何返回。这种情况下数据传输效率最高，但是数据可靠性确是最低的。
+-1 producer需要等待ISR中的所有follower都确认接收到数据后才算一次发送完成，可靠性最高。当ISR中所有Replica都向Leader发送ACK时，leader才commit，这时候producer才能认为一个请求中的消息都commit了。
+
+### 如果leader crash时，ISR为空怎么办
+kafka在Broker端提供了一个配置参数：unclean.leader.election,这个参数有两个值：
+true（默认）：允许不同步副本成为leader，由于不同步副本的消息较为滞后，此时成为leader，可能会出现消息不一致的情况。
+false：不允许不同步副本成为leader，此时如果发生ISR列表为空，会一直等待旧leader恢复，降低了可用性。
+
+### kafka  unclean 配置代表啥，会对 spark streaming 消费有什么影响
+unclean.leader.election.enable 为true的话，意味着非ISR集合的broker 也可以参与选举，这样有可能就会丢数据，
+spark streaming在消费过程中拿到的 end offset 会突然变小，导致 spark streaming job挂掉。
+如果unclean.leader.election.enable参数设置为true，就有可能发生数据丢失和数据不一致的情况，
+Kafka的可靠性就会降低；而如果unclean.leader.election.enable参数设置为false，Kafka的可用性就会降低。
+
+### kafka中consumer group 是什么概念
+同样是逻辑上的概念，是Kafka实现单播和广播两种消息模型的手段。同一个topic的数据，会广播给不同的group；
+同一个group中的worker，只有一个worker能拿到这个数据。换句话说，对于同一个topic，每个group都可以拿到同样的所有数据，
+但是数据进入group后只能被其中的一个worker消费。group内的worker可以使用多线程或多进程来实现，
+也可以将进程分散在多台机器上，worker的数量通常不超过partition的数量，且二者最好保持整数倍关系，
+因为Kafka在设计时假定了一个partition只能被一个worker消费（同一group内）。
+
+### 为什么Kafka不支持读写分离？
+在 Kafka 中，生产者写入消息、消费者读取消息的操作都是与 leader 副本进行交互的，从 而实现的是一种主写主读的生产消费模型。
+Kafka 并不支持主写从读，因为主写从读有 2 个很明 显的缺点:
+(1)数据一致性问题。数据从主节点转到从节点必然会有一个延时的时间窗口，这个时间 窗口会导致主从节点之间的数据不一致。某一时刻，在主节点和从节点中 A 数据的值都为 X， 之后将主节点中 A 的值修改为 Y，那么在这个变更通知到从节点之前，应用读取从节点中的 A 数据的值并不为最新的 Y，由此便产生了数据不一致的问题。
+(2)延时问题。类似 Redis 这种组件，数据从写入主节点到同步至从节点中的过程需要经 历网络→主节点内存→网络→从节点内存这几个阶段，整个过程会耗费一定的时间。而在 Kafka 中，主从同步会比 Redis 更加耗时，它需要经历网络→主节点内存→主节点磁盘→网络→从节 点内存→从节点磁盘这几个阶段。对延时敏感的应用而言，主写从读的功能并不太适用。
+
 
 ### rabbitmq事务
 ![](https://img-blog.csdnimg.cn/20190526221909572.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3poYW5nY29uZ3lpNDIw,size_16,color_FFFFFF,t_70)

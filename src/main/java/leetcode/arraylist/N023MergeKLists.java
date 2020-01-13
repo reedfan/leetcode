@@ -73,4 +73,26 @@ public class N023MergeKLists {
         }
         return head.next;
     }
+
+
+    public ListNode mergeKLists1(ListNode[] lists) {
+
+
+    }
+
+    private ListNode merge(ListNode[] lists, int left, int right){
+        if(left == right){
+            return lists[left];
+        }
+        int mid = left + (right - left)/2;
+
+
+
+    }
+
+
+
+
+
+
 }
