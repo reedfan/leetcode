@@ -28,19 +28,18 @@ import java.util.List;
 public class N057Insert {
     @Test
     public void test() {
-        int[][] intervals = {{1, 5}};
-        int[] newInterval = {2, 3};
+        int[][] intervals = {{1, 2},{3, 5},{6, 7},{8, 10},{12, 16}};
+        int[] newInterval = {-1, 0};
         insert(intervals, newInterval);
 
 
     }
 
+
     //如果
     public int[][] insert(int[][] intervals, int[] newInterval) {
         if (intervals.length == 0) {
-            int[][] res = new int[1][2];
-            res[0][0] = newInterval[0];
-            res[0][1] = newInterval[1];
+            int[][] res = {{newInterval[0], newInterval[1]}};
             return res;
         }
 
@@ -48,6 +47,10 @@ public class N057Insert {
         boolean add = false;
 
         for (int i = 0; i < intervals.length; i++) {
+            if(add){
+                resList.add(intervals[i]);
+                continue;
+            }
 
             if (intervals[i][0] > newInterval[0]) {
                 //  intervals[i][0] = newInterval[0];
@@ -63,9 +66,14 @@ public class N057Insert {
             } else {
                 if (intervals[i][1] < newInterval[0]) {
                     resList.add(intervals[i]);
-                    add = true;
+             //       add = true;
                 } else {
-                    newInterval[0] = intervals[i][0] > newInterval[0] ? intervals[i][0] : newInterval[0];
+                    newInterval[0] = intervals[i][0];
+                    if (intervals[i][1] > newInterval[1]) {
+
+                        newInterval[1] = intervals[i][1];
+                    }
+
                 }
             }
 
