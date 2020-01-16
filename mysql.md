@@ -52,7 +52,31 @@ Where score >= 60 group by s_name having (s_score)>=70  order by avg(s_score) de
 
 4.组合索引：多列值组成一个索引，专门用于组合搜索，其效率大于索引合并
 
-4.聚集索引：在聚集索引中，表中行的物理顺序与键值的逻辑（索引）顺序相同
+ps.聚集索引：在聚集索引中，表中行的物理顺序与键值的逻辑（索引）顺序相同
+   前缀索引：有时候需要索引很长的字符(例如BLOB,TEXT,或者很长的VARCHAR)，这样会使得索引又大又慢。
+   改良方法：使用字符串的前几个字符作为索引(即前缀索引)
+ 前缀索引的缺点：MySQL中无法使用前缀索引进行ORDER BY和GROUP BY，也无法用来进行覆盖扫描
+ 
+聚集索引和非聚集索引的根本区别是表记录的排列顺序和与索引的排列顺序是否一致。
+
+## myIsam与Innodb
+1、InnoDB支持事务，MyISAM不支持
+2、InnoDB是聚集索引， MyISAM是非聚集索引
+3、InnoDB支持表、行(默认)级锁，而MyISAM支持表级锁
+4、InnoDB表必须有主键（用户没有指定的话会自己找或生产一个主键），而Myisam可以没有
+5、Innodb存储文件有frm、ibd，而Myisam是frm、MYD、MYI
+
+## 如何选择
+1. 是否要支持事务，如果要请选择innodb，如果不需要可以考虑MyISAM；
+2. 如果表中绝大多数都只是读查询，可以考虑MyISAM，如果既有读也有写，请使用InnoDB。
+3. 系统奔溃后，MyISAM恢复起来更困难，能否接受；
+4. MySQL5.5版本开始Innodb已经成为Mysql的默认引擎(之前是MyISAM)，说明其优势是有目共睹的，如果你不知道用什么，那就用InnoDB，至少不会差。
+
+### 为什么myisam的select比innodb要快？
+1）数据块，INNODB要缓存，MYISAM只缓存索引块，这中间还有换进换出的减少；
+2）innodb寻址要映射到块，再到行，MYISAM记录的直接是文件的OFFSET，定位比INNODB要快
+3）INNODB还需要维护MVCC一致；虽然你的场景没有，但他还是需要去检查和维护
+
 
 ## 聚集索引和非聚集索引
 主键索引的叶子节点存的是整行数据。在 InnoDB 里，主键索引也被称为聚集索引（clustered index）。
