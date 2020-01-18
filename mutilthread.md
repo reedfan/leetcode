@@ -425,6 +425,19 @@ newCachedThreadPool 只会重用空闲并且可用的线程，所以上述代码
     
 Executors创建的线程池存在OOM的风险。[具体原因](https://www.hollischuang.com/archives/2888)
 
+
+### 线程池原理
+```
+            Runnable r = timed ?
+                    workQueue.poll(keepAliveTime, TimeUnit.NANOSECONDS) :
+                    workQueue.take();
+                        if (r != null)
+                    return r;
+```
+从阻塞任务队列中取任务，如果设置了allowCoreThreadTimeOut(true) 或者当前运行的任务数大于设置的核心线程数，那么timed =true 。此时将使用workQueue.poll(keepAliveTime, TimeUnit.NANOSECONDS)从任务队列中取任务，而如果没有设置，那么使用workQueue.take();取任务，对于阻塞队列，poll(long timeout, TimeUnit unit) 将会在规定的时间内去任务，如果没取到就返回null。take()会一直阻塞，等待任务的添加。
+到此 相信我们都能够理解为什么我们的线程池能够一直等待任务的执行而不被销毁了，其实也就是进入了阻塞状态而已。
+
+
 # 线程同步
 
 ## 线程安全的概念
@@ -804,6 +817,11 @@ ThreadLocal类中有一个map，用于存储每一个线程的变量副本，map
 
 所有如果需要进行多个线程之间通信，用同步机制，如果要隔离多个线程之间的共享冲突，采用ThreadLocal
 
+### ThreadLocal的应用
+SimpleDateFormat不是线程安全的，我们如果每次用的时候都去new一个没问题，
+但是如果想做成工具类，就存在线程安全问题。这时候可以用SimpleDateFormat对其包装一下。用synchronizd修饰也可以，但是没有SimpleDateFormat性能好
+
+
 ### ThreadLocal内存泄漏问题
 每个thread中都存在一个map, map的类型是ThreadLocal.ThreadLocalMap. Map中的key为一个threadlocal实例. 这个Map的确使用了弱引用,不过弱引用只是针对key. 每个key都弱引用指向threadlocal. 当把threadlocal实例置为null以后,没有任何强引用指向threadlocal实例,所以threadlocal将会被gc回收. 但是,我们的value却不能回收,因为存在一条从current thread连接过来的强引用. 只有当前thread结束以后, current thread就不会存在栈中,强引用断开, Current Thread, Map, value将全部被GC回收.
 所以得出一个结论就是只要这个线程对象被gc回收，就不会出现内存泄露，但在threadLocal设为null和线程结束这段时间不会被回收的，就发生了我们认为的内存泄露。其实这是一个对概念理解的不一致，也没什么好争论的。最要命的是线程对象不被回收的情况，这就发生了真正意义上的内存泄露。比如使用线程池的时候，线程结束是不会销毁的，会再次使用的。就可能出现内存泄露。
@@ -821,3 +839,17 @@ Synchronized用于线程间的数据共享，而ThreadLocal则用于线程间的
 当然ThreadLocal并不能替代synchronized,它们处理不同的问题域。Synchronized用于实现同步机制，比ThreadLocal更加复杂。
 
 ## [守护线程和用户线程的区别](https://blog.csdn.net/reed1991/article/details/53427243)
+
+### BlockingQueue定义的常用方法
+ 1)add(anObject):把anObject加到BlockingQueue里,即如果BlockingQueue可以容纳,则返回true,否则异常
+
+ 2)offer(anObject):表示如果可能的话,将anObject加到BlockingQueue里,即如果BlockingQueue可以容纳,则返回true,否则返回false.
+
+ 3)put(anObject):把anObject加到BlockingQueue里,如果BlockQueue没有空间,则调用此方法的线程被阻断直到BlockingQueue里面有空间再继续.
+
+ 4)poll(time):取走BlockingQueue里排在首位的对象,若不能立即取出,则可以等time参数规定的时间,取不到时返回null
+
+ 5)take():取走BlockingQueue里排在首位的对象,若BlockingQueue为空,阻断进入等待状态直到Blocking有新的对象被加入为止
+
+其中：BlockingQueue 不接受null 元素。试图add、put 或offer 一个null 元素时，某些实现会抛出NullPointerException。null 被用作指示poll 操作失败的警戒值。 
+

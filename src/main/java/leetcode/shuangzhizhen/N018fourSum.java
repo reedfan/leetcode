@@ -9,7 +9,7 @@ import java.util.List;
  */
 public class N018fourSum {
     /*
-    本题最容易想到的方法应该就是暴力破解，但是靠暴力破解的话时间复杂度会到 O(n^4)，面试中显然不能让面试官满意。
+本题最容易想到的方法应该就是暴力破解，但是靠暴力破解的话时间复杂度会到 O(n^4)，面试中显然不能让面试官满意。
 采取如下方式可以将时间复杂度优化为 O(n^3)。
 首先对数组进行排序，排序的时间复杂度 O(nlogn)。
 在数组 nums 中，进行遍历，每遍历一个值取其下标first，形成一个固定值 nums[first]。first的取值范围应该是[0,second < length - 3)
@@ -23,21 +23,18 @@ public class N018fourSum {
 
 此外，还存在一些可优化的空间和一些需要注意的地方。
 如果nums[i] > 0，因为数组有序，则后面的数肯定也都大于0，因此不可能找到三个数的何为0，可以直接结束循环了。
-还要注意去重。本题是求三数之和。对于第一个数，如果nums[i] == nums[i - 1]，这种算是重复计算了。
-同理对于第二个数，nums[left] == nums[left - 1]，对于第三个数nums[right] == nums[right + 1]也是重复计算。
+还要注意去重。本题是求四数之和。对于第一个数，如果nums[first] == nums[first - 1]，这种算是重复计算了。同理注意后面三个数也要考虑这种情况。
+可以优化的点在于nums[first] + nums[first + 1] + nums[first + 2] + nums[first + 3]其实表示最小的和，如果其结果>target,
+其他的结果肯定也大于target，可以提前结束循环，可以理解为剪枝。具体细节见代码。
      */
     public List<List<Integer>> fourSum(int[] nums, int target) {
-        /*定义一个返回值*/
         List<List<Integer>> result = new ArrayList<>();
-        /*当数组为null或元素小于4个时，直接返回*/
         if (nums == null || nums.length < 4) {
             return result;
         }
-        /*对数组进行从小到大排序*/
         Arrays.sort(nums);
-        /*数组长度*/
         int length = nums.length;
-        /*定义4个指针k，i，j，h  k从0开始遍历，i从k+1开始遍历，留下j和h，j指向i+1，h指向数组最大值*/
+        /*定义4个指针first，second，third，fourth  first从0开始遍历，second从first+1开始遍历，third指向second+1，fourth指向数组最后一个数*/
         for (int first = 0; first < length - 3; first++) {
             /*当first的值与前面的值相等时忽略*/
             if (first > 0 && nums[first] == nums[first - 1]) {
