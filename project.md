@@ -53,7 +53,7 @@ classname+mappingmannager.hashcode()。导致产生非常多的连接实例。�
 
 
 比如说在OutLook上预定一个会议。流程是这样的。数据被写进outlook。然后outloook会将meeting的Id传给我们。
-在这里用到了RabbitMQ。通常消息队列的作用是异步、解耦、削峰。但我们这里主要是为了防止在后面的流程出了意外，导致
+在这里用到了kafka。通常消息队列的作用是异步、解耦、削峰。但我们这里主要是为了防止在后面的流程出了意外，导致
 Outlook给我们的消息丢了。
 我们再通过id去微软那边拉取数据，存到自己的数据库。
 
@@ -62,6 +62,10 @@ OutlookMeeting和GoogleMeeting大致流程都是一样的。 都是参数校验�
 所以这里使用模板方法来完成的。将固定的放在超类里面。  一些有差别的放在抽象类里。在子类中去实现它。
 
 比如邀请的人有拒绝了，谷歌那边会直接将其过滤，微软那边则是将其状态置位declined。
+
+会议模板信息：比如能不能在会议开始之前加会议。
+site信息：toB的业务，每一个客户可能在不同的site
+seriesMeeting 系列会议。有个标识
 
 还有就是不管OutLookMeeting还是GoogleMeeting，都会有两类meeting。分别是普通的meeting和PMRmeeting两大类。
 处理方式有差异。这就导致在逻辑中很多地方需要判断是普通的meeting还是PMRmeeting。为了避免这种判断。将普通的meeting和PMRmeeting作为两类service。分别去继承父类接口meetingHandler。
