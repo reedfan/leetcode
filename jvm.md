@@ -196,10 +196,10 @@ CMS收集器是老年代收集器，可以配合新生代的Serial和ParNew收�
 ### 线上CPU100%排查
 1.jps查看进程号
 jps(Java Virtual Machine Process Status Tool)
-jps主要用来输出JVM中运行的进程状态信息。
+jps主要用来输出JVM中运行的进程状态信息。 假设为8591
 2.top -Hp pid可以查看某个进程的线程信息
 -H 显示线程信息，-p指定pid
-printf "%x\n" 8600 
+printf "%x\n" 8600    2198
 jstack 8591|grep 2198
 
 排查内存溢出

@@ -39,14 +39,18 @@ public class N023MergeKLists {
     }
 
     public ListNode mergeKLists(ListNode[] lists) {
+
         ListNode res = new ListNode(-1);
         if (lists == null || lists.length == 0) {
             return res.next;
         }
+        //表示此链表是否已经全加上去
         boolean[] tmp = new boolean[lists.length];
         int min = Integer.MAX_VALUE;
         int minPos = -1;
+        //已经遍历完成的链表的数量
         int cntTmp = 0;
+
         ListNode head = res;
 
         while (cntTmp < lists.length) {

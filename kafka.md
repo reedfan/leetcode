@@ -93,7 +93,45 @@ kafka用java NIO的byteBuffer保存消息   1.节省空间， 2.不用担心GC
 ISR:In-Sync Replicas 副本同步队列
 AR:Assigned Replicas 所有副本
 ISR是由leader维护，follower从leader同步数据有一些延迟（包括延迟时间replica.lag.time.max.ms和延迟条数replica.lag.max.messages两个维度, 当前最新的版本0.10.x中只支持replica.lag.time.max.ms这个维度），任意一个超过阈值都会把follower剔除出ISR, 存入OSR（Outof-Sync Replicas）列表，新加入的follower也会先存放在OSR中。AR=ISR+OSR。
+OSR （Out-of-Sync Replied）leader副本同步滞后过多的副本
+AR = ISR + OSR。正常情况下，所有的follower副本都应该与leader 副本保持 一定程度的同步，即AR=ISR，OSR集合为空。
+ISR的伸缩：
+leader副本负责维护和跟踪 ISR 集合中所有follower副本的滞后状态，当follower副本落后太多或失效时，leader副本会把它从 ISR 集合中剔除。
+如果 OSR 集合中所有follower副本“追上”了leader副本，那么leader副本会把它从 OSR 集合转移至 ISR 集合。默认情况下，
+当leader副本发生故障时，只有在 ISR 集合中的follower副本才有资格被选举为新的leader，而在 OSR 集合中的副本则没有任何机会
 
+###  Kafka中的HW、LEO、LSO、LW等分别代表什么
+
+![](https://img2018.cnblogs.com/blog/1024146/201909/1024146-20190908144603190-691225277.png)
+LEO （Log End Offset），标识当前日志文件中下一条待写入的消息的offset。上图中offset为9的位置即为当前日志文件的 LEO，LEO 的大小相当于当前日志分区中最后一条消息的offset值加1.
+分区 ISR 集合中的每个副本都会维护自身的 LEO ，而 ISR 集合中最小的 LEO 即为分区的 HW，对消费者而言只能消费 HW 之前的消息。
+HW （High Watermark）俗称高水位，它标识了一个特定的消息偏移量（offset），消费者只能拉取到这个offset之前的消息。
+
+### Kafka中的分区器、序列化器、拦截器是否了解？它们之间的处理顺序是什么？
+
+序列化器：生产者需要用序列化器（Serializer）把对象转换成字节数组才能通过网络发送给 Kafka。而在对侧，消费者需要用反序列化器（Deserializer）把从 Kafka 中收到的字节数组转换成相应的对象。
+分区器：分区器的作用就是为消息分配分区。如果消息 ProducerRecord 中没有指定 partition 字段，那么就需要依赖分区器，根据 key 这个字段来计算 partition 的值。
+Kafka 一共有两种拦截器：生产者拦截器和消费者拦截器。
+  生产者拦截器既可以用来在消息发送前做一些准备工作，比如按照某个规则过滤不符合要求的消息、修改消息的内容等，也可以用来在发送回调逻辑前做一些定制化的需求，比如统计类工作。
+  消费者拦截器主要在消费到消息或在提交消费位移时进行一些定制化的操作。
+消息在通过 send() 方法发往 broker 的过程中，有可能需要经过拦截器（Interceptor）、序列化器（Serializer）和分区器（Partitioner）的一系列作用之后才能被真正地发往 broker。拦截器（下一章会详细介绍）一般不是必需的，而序列化器是必需的。消息经过序列化之后就需要确定它发往的分区，如果消息 ProducerRecord 中指定了 partition 字段，那么就不需要分区器的作用，因为 partition 代表的就是所要发往的分区号。
+
+处理顺序 ：拦截器->序列化器->分区器
+KafkaProducer 在将消息序列化和计算分区之前会调用生产者拦截器的 onSend() 方法来对消息进行相应的定制化操作。
+然后生产者需要用序列化器（Serializer）把对象转换成字节数组才能通过网络发送给 Kafka。
+最后可能会被发往分区器为消息分配分区。
+
+### topic的分区数可不可以增加？如果可以怎么增加？如果不可以，那又是为什么？
+
+可以增加，使用 kafka-topics 脚本，结合 --alter 参数来增加某个主题的分区数，命令如下：
+bin/kafka-topics.sh --bootstrap-server broker_host:port --alter --topic <topic_name> --partitions <新分区数>
+当分区数增加时，就会触发订阅该主题的所有 Group 开启 Rebalance。
+首先，Rebalance 过程对 Consumer Group 消费过程有极大的影响。在 Rebalance 过程中，所有 Consumer 实例都会停止消费，等待 Rebalance 完成。这是 Rebalance 为人诟病的一个方面。
+其次，目前 Rebalance 的设计是所有 Consumer 实例共同参与，全部重新分配所有分区。其实更高效的做法是尽量减少分配方案的变动。
+最后，Rebalance 实在是太慢了。
+### topic的分区数可不可以减少？如果可以怎么减少？如果不可以，那又是为什么？#
+
+不支持，因为删除的分区中的消息不好处理。如果直接存储到现有分区的尾部，消息的时间戳就不会递增，如此对于 Spark、Flink 这类需要消息时间戳（事件时间）的组件将会受到影响；如果分散插入现有的分区，那么在消息量很大的时候，内部的数据复制会占用很大的资源，而且在复制期间，此主题的可用性又如何得到保障？与此同时，顺序性问题、事务性问题，以及分区和副本的状态机切换问题都是不得不面对的。
 ### kafka中的broker 是干什么的
 broker 是消息的代理，Producers往Brokers里面的指定Topic中写消息，Consumers从Brokers里面拉取指定Topic的消息，然后进行业务处理，broker在中间起到一个代理保存消息的中转站。
 
@@ -110,10 +148,33 @@ leader会维护一个与其基本保持同步的Replica列表，该列表称为I
 而且是由leader动态维护 ，如果一个follower比一个leader落后太多，或者超过一定时间未发起数据复制请求，
 则leader将其重ISR中移除 。
 
+### 有哪些情况可造成重复消费
+
+   1、Rebalance
+    一个consumer正在消费一个分区的一条消息，还没有消费完，发生了rebalance(加入了一个consumer)，从而导致这条消息没有消费成功，rebalance后，另一个consumer又把这条消息消费一遍。
+   2、消费者端手动提交
+    如果先消费消息，再更新offset位置，导致消息重复消费。
+   3、 消费者端自动提交
+    设置offset为自动提交，关闭kafka时，如果在close之前，调用 consumer.unsubscribe() 则有可能部分offset没提交，下次重启会重复消费。
+   4、 生产者端
+    生产者因为业务问题导致的宕机，在重启之后可能数据会重发
+
+### 那些情景下会造成消息漏消费？
+
+    1、自动提交
+    设置offset为自动定时提交，当offset被自动定时提交时，数据还在内存中未处理，此时刚好把线程kill掉，那么offset已经提交，但是数据未处理，导致这部分内存中的数据丢失。
+    2、生产者发送消息
+    发送消息设置的是fire-and-forget（发后即忘），它只管往 Kafka 中发送消息而并不关心消息是否正确到达。不过在某些时候（比如发生不可重试异常时）会造成消息的丢失。这种发送方式的性能最高，可靠性也最差。
+    3、消费者端
+    先提交位移，但是消息还没消费完就宕机了，造成了消息没有被消费。自动位移提交同理
+    4、acks没有设置为all
+    如果在broker还没把消息同步到其他broker的时候宕机了，那么消息将会丢失
+
+
 ### kafka 为什么那么快
 Cache Filesystem Cache PageCache缓存
 顺序写 由于现代的操作系统提供了预读和写技术，磁盘的顺序写大多数情况下比随机写内存还要快。
-Zero-copy 零拷技术减少拷贝次数
+Zero-copy 零拷技术减少拷贝次数  （所谓的零拷贝是指将数据直接从磁盘文件复制到网卡设备中，而不需要经由应用程序之 手 。）
 Batching of Messages 批量量处理。合并小的请求，然后以流的方式进行交互，直顶网络上限。
 Pull 拉模式 使用拉模式进行消息的获取消费，与消费端处理能力相符。
 
@@ -146,6 +207,13 @@ Kafka 并不支持主写从读，因为主写从读有 2 个很明 显的缺点:
 (1)数据一致性问题。数据从主节点转到从节点必然会有一个延时的时间窗口，这个时间 窗口会导致主从节点之间的数据不一致。某一时刻，在主节点和从节点中 A 数据的值都为 X， 之后将主节点中 A 的值修改为 Y，那么在这个变更通知到从节点之前，应用读取从节点中的 A 数据的值并不为最新的 Y，由此便产生了数据不一致的问题。
 (2)延时问题。类似 Redis 这种组件，数据从写入主节点到同步至从节点中的过程需要经 历网络→主节点内存→网络→从节点内存这几个阶段，整个过程会耗费一定的时间。而在 Kafka 中，主从同步会比 Redis 更加耗时，它需要经历网络→主节点内存→主节点磁盘→网络→从节 点内存→从节点磁盘这几个阶段。对延时敏感的应用而言，主写从读的功能并不太适用。
 
+### 创建topic时如何选择合适的分区数？
 
+根据集群的机器数量和需要的吞吐量来决定适合的分区数。可以先做实验动态调整
 ### rabbitmq事务
 ![](https://img-blog.csdnimg.cn/20190526221909572.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3poYW5nY29uZ3lpNDIw,size_16,color_FFFFFF,t_70)
+
+
+每一个分区只能被一个消费组中的一 个消费者所消费 。
+
+KafkaConsumer怎么样实现多线程消费?

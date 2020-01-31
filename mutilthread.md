@@ -819,7 +819,8 @@ ThreadLocal类中有一个map，用于存储每一个线程的变量副本，map
 
 ### ThreadLocal的应用
 SimpleDateFormat不是线程安全的，我们如果每次用的时候都去new一个没问题，
-但是如果想做成工具类，就存在线程安全问题。这时候可以用SimpleDateFormat对其包装一下。用synchronizd修饰也可以，但是没有SimpleDateFormat性能好
+但是如果想做成工具类，就存在线程安全问题。这时候可以用SimpleDateFormat对其包装一下。用synchronizd修饰也可以，
+但是没有SimpleDateFormat性能好
 
 
 ### ThreadLocal内存泄漏问题

@@ -36,52 +36,53 @@ public class N057Insert {
     }
 
 
-    //如果
+    /*
+    插入分为两类。第一类，有交叉。第二类，无交叉。
+    无交叉分为两种。 第一种。比如interval = {1,2},  newInterval = {3,4}。 即interval[1] < newInterval[0],直接将interval加入结果即可。
+    第二种 比如interval = {5,6},  newInterval = {3,4}。 即interval[0] > newInterval[1].将newInterval和interval加入结果。
+    newInterval加入结果以后，interval后面的序列直接加入即可。
+    有交叉时，将此次结果合并到newInterval。
+
+
+     */
     public int[][] insert(int[][] intervals, int[] newInterval) {
         if (intervals.length == 0) {
             int[][] res = {{newInterval[0], newInterval[1]}};
             return res;
         }
 
-        List<int[]> resList = new ArrayList<>();
-        boolean add = false;
+        List<int[]> lists = new ArrayList<>();
+        boolean added = false;
 
-        for (int i = 0; i < intervals.length; i++) {
-            if(add){
-                resList.add(intervals[i]);
-                continue;
-            }
-
-            if (intervals[i][0] > newInterval[0]) {
-                //  intervals[i][0] = newInterval[0];
-                if (intervals[i][0] > newInterval[1]) {
-                    resList.add(newInterval);
-                    resList.add(intervals[i]);
-                    add = true;
-                } else {
-                    if (intervals[i][1] > newInterval[1]) {
+        for(int i = 0;i < intervals.length; i++){
+            if(added || intervals[i][1] < newInterval[0]){
+                lists.add(new int[]{intervals[i][0],intervals[i][1]});
+            }else{
+                if(intervals[i][0] > newInterval[1]){
+                    lists.add(new int[]{newInterval[0],newInterval[1]});
+                    lists.add(new int[]{intervals[i][0],intervals[i][1]});
+                    added = true;
+                }else{
+                    if(intervals[i][0] <= newInterval[0] ){
+                        newInterval[0] = intervals[i][0];
+                    }
+                    if(intervals[i][1] >= newInterval[1]){
                         newInterval[1] = intervals[i][1];
-                    }  //else 不需要做
-                }
-            } else {
-                if (intervals[i][1] < newInterval[0]) {
-                    resList.add(intervals[i]);
-             //       add = true;
-                } else {
-                    newInterval[0] = intervals[i][0];
-                    if (intervals[i][1] > newInterval[1]) {
 
-                        newInterval[1] = intervals[i][1];
                     }
 
                 }
-            }
 
+
+            }
         }
-        if (!add) {
-            resList.add(newInterval);
+        if(!added){
+            lists.add(new int[]{newInterval[0],newInterval[1]});
         }
-        return resList.toArray(new int[resList.size()][2]);
+
+        return lists.toArray(new int[lists.size()][2]);
+
+
 
     }
 }
