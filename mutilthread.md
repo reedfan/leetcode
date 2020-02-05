@@ -425,6 +425,9 @@ newCachedThreadPool 只会重用空闲并且可用的线程，所以上述代码
     
 Executors创建的线程池存在OOM的风险。[具体原因](https://www.hollischuang.com/archives/2888)
 
+可以用下面的方式创建线程池
+ExecutorService executorService = new ThreadPoolExecutor(5,10,10, TimeUnit.SECONDS,new ArrayBlockingQueue<>(10));
+        
 
 ### 线程池原理
 ```

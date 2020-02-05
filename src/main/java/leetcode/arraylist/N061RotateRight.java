@@ -31,13 +31,43 @@ public class N061RotateRight {
     public static void main(String[] args) {
         ListNode listNode1 = new ListNode(1);
         listNode1.next = new ListNode(2);
-        listNode1.next.next = new ListNode(3);
-        listNode1.next.next.next = new ListNode(4);
-        listNode1.next.next.next.next = new ListNode(5);
-        new N061RotateRight().rotateRight(listNode1, 2);
+      //  listNode1.next.next = new ListNode(3);
+     //   listNode1.next.next.next = new ListNode(4);
+     //   listNode1.next.next.next.next = new ListNode(5);
+        new N061RotateRight().rotateRight1(listNode1, 2);
     }
 
+
     public ListNode rotateRight(ListNode head, int k) {
+        if(head == null || head.next == null){
+            return head;
+        }
+        int len = 0;
+        ListNode tmp = head;
+        while(tmp != null){
+            len++;
+            tmp = tmp.next;
+        }
+        k = k % len;
+        ListNode fast = head;
+        ListNode slow = head;
+
+        while(k-- > 0){
+            fast = fast.next;
+        }
+        while(fast.next != null){
+            fast = fast.next;
+            slow = slow.next;
+        }
+        ListNode res = slow.next;
+        fast.next = head;
+        slow.next = null;
+        return res;
+
+
+    }
+
+    public ListNode rotateRight1(ListNode head, int k) {
 
         if (head == null || k == 0) {
             return head;
