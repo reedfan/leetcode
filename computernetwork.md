@@ -11,6 +11,7 @@
     * [四层负载均衡和七层负载均衡](#四层负载均衡和七层负载均衡)
     * [[HTTP与TCP的区别和联系](https://blog.csdn.net/reed1991/article/details/53121009)](#[http与tcp的区别和联系]httpsblogcsdnnetreed1991articledetails53121009)
     * [HTTP1.0 HTTP 1.1 HTTP 2.0主要区别](#http10-http-11-http-20主要区别)
+  * [Get和Post的区别](#get和post的区别)
 
 
 ## http状态码

@@ -1,6 +1,7 @@
 # Table of Contents
 
 * [使用线程](#使用线程)
+  * [线程的生命周期包含5个阶段，包括：新建、就绪、运行、阻塞、销毁。](#线程的生命周期包含5个阶段，包括：新建、就绪、运行、阻塞、销毁。)
   * [创建线程的三种方式](#创建线程的三种方式)
   * [run()和start()的区别？多次start一个线程会怎么样？](#run和start的区别？多次start一个线程会怎么样？)
 * [线程之间的协作](#线程之间的协作)
@@ -19,6 +20,7 @@
     * [SychronousQueue](#sychronousqueue)
     * [为什么单线程池和固定线程池使用的任务阻塞队列是LinkedBlockingQueue()，而缓存线程池使用的是SynchronousQueue()呢？](#为什么单线程池和固定线程池使用的任务阻塞队列是linkedblockingqueue，而缓存线程池使用的是synchronousqueue呢？)
   * [为什么不建议使用Excutors来创建线程池](#为什么不建议使用excutors来创建线程池)
+    * [线程池原理](#线程池原理)
 * [线程同步](#线程同步)
   * [线程安全的概念](#线程安全的概念)
   * [Java内存模型](#java内存模型)
@@ -30,6 +32,7 @@
   * [Synchronized小结](#synchronized小结)
   * [synchronized 的底层怎么实现](#synchronized-的底层怎么实现)
   * [synchronized 对象锁和全局锁](#synchronized-对象锁和全局锁)
+  * [如果一个对象有多个方法加了synchronized，那么该对象有几把锁](#如果一个对象有多个方法加了synchronized，那么该对象有几把锁)
   * [锁优化的思路](#锁优化的思路)
   * [[微服务注册中心的读写锁优化](https://mp.weixin.qq.com/s?__biz=MzU0OTk3ODQ3Ng==&mid=2247484129&idx=1&sn=d2a95310db5751b152ba070caee4ebae&chksm=fba6eae2ccd163f48aef9d98a4dbb55d578a24af710e1436cc876fe3119b03135532e16d80bc&mpshare=1&scene=1&srcid=06089KYIxoL86LbBEP44hsnV%23rd)](#[微服务注册中心的读写锁优化]httpsmpweixinqqcoms__bizmzu0otk3odq3ngmid2247484129idx1snd2a95310db5751b152ba070caee4ebaechksmfba6eae2ccd163f48aef9d98a4dbb55d578a24af710e1436cc876fe3119b03135532e16d80bcmpshare1scene1srcid06089kyixol86lbbep44hsnv23rd)
 * [JUC](#juc)
@@ -39,9 +42,11 @@
   * [CountDownLatch和cyclicBarrier](#countdownlatch和cyclicbarrier)
   * [Semaphore 信号量](#semaphore-信号量)
   * [ThreadLocal](#threadlocal)
+    * [ThreadLocal的应用](#threadlocal的应用)
     * [ThreadLocal内存泄漏问题](#threadlocal内存泄漏问题)
     * [ThreadLocal和synchronized](#threadlocal和synchronized)
   * [[守护线程和用户线程的区别](https://blog.csdn.net/reed1991/article/details/53427243)](#[守护线程和用户线程的区别]httpsblogcsdnnetreed1991articledetails53427243)
+    * [BlockingQueue定义的常用方法](#blockingqueue定义的常用方法)
 
 
 

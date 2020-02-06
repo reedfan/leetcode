@@ -1,29 +1,17 @@
 # Table of Contents
 
-  * [[系统架构中为什么要引入消息中间件](https://mp.weixin.qq.com/s?__biz=MzU0OTk3ODQ3Ng==&mid=2247484149&idx=1&sn=98186297335e13ec7222b3fd43cfae5a&chksm=fba6eaf6ccd163e0c2c3086daa725de224a97814d31e7b3f62dd3ec763b4abbb0689cc7565b0&mpshare=1&scene=1&srcid=0608fz8HKZvYxRhzFqyJ4Isq%23rd)](#[系统架构中为什么要引入消息中间件]httpsmpweixinqqcoms__bizmzu0otk3odq3ngmid2247484149idx1sn98186297335e13ec7222b3fd43cfae5achksmfba6eaf6ccd163e0c2c3086daa725de224a97814d31e7b3f62dd3ec763b4abbb0689cc7565b0mpshare1scene1srcid0608fz8hkzvyxrhzfqyj4isq23rd)
-    * [[系统架构引入消息中间件有什么缺点](https://mp.weixin.qq.com/s?__biz=MzU0OTk3ODQ3Ng==&mid=2247484157&idx=1&sn=f4644be2db6b1c230846cb4d62ae5be9&chksm=fba6eafeccd163e817b420d57478829d92251a6a5fd446f81805f0983a0d95cb6853a6735c4b&mpshare=1&scene=1&srcid=06083A6RVW3ZtKQRy6Ttq8tK%23rd)](#[系统架构引入消息中间件有什么缺点]httpsmpweixinqqcoms__bizmzu0otk3odq3ngmid2247484157idx1snf4644be2db6b1c230846cb4d62ae5be9chksmfba6eafeccd163e817b420d57478829d92251a6a5fd446f81805f0983a0d95cb6853a6735c4bmpshare1scene1srcid06083a6rvw3ztkqry6ttq8tk23rd)
-  * [[kafka](https://blog.csdn.net/reed1991/article/details/88729252)](#[kafka]httpsblogcsdnnetreed1991articledetails88729252)
-    * [Kafka消息保证生产的信息不丢失](#kafka消息保证生产的信息不丢失)
-    * [Kafka消息保证生产的信息不重复消费](#kafka消息保证生产的信息不重复消费)
-  * [rabbitMQ](#rabbitmq)
-    * [rabbitMQ消费者还没来得及消费消息就宕机了怎么办](#rabbitmq消费者还没来得及消费消息就宕机了怎么办)
-    * [RabbitMQ暂时放在了自己的内存中，还没来得及投递给消费者，此时RabbitMQ突然宕机了，会怎么样？](#rabbitmq暂时放在了自己的内存中，还没来得及投递给消费者，此时rabbitmq突然宕机了，会怎么样？)
-  * [生产者弄丢了数据](#生产者弄丢了数据)
-  * [[如何保证消息不被重复消费](https://github.com/reedfan/Java-Interview-Advanced/blob/master/docs/high-concurrency/how-to-ensure-that-messages-are-not-repeatedly-consumed.md)](#[如何保证消息不被重复消费]httpsgithubcomreedfanjava-interview-advancedblobmasterdocshigh-concurrencyhow-to-ensure-that-messages-are-not-repeatedly-consumedmd)
   * [[zookeeper](https://blog.csdn.net/reed1991/article/details/53811504)](#[zookeeper]httpsblogcsdnnetreed1991articledetails53811504)
   * [分布式锁相关](#分布式锁相关)
   * [[分布式锁的高并发优化](https://blog.csdn.net/savorTheFlavor/article/details/88841344)](#[分布式锁的高并发优化]httpsblogcsdnnetsavortheflavorarticledetails88841344)
   * [[分布式事物的几种解决方案](https://blog.csdn.net/reed1991/article/details/58128053)](#[分布式事物的几种解决方案]httpsblogcsdnnetreed1991articledetails58128053)
   * [[缓存与数据库的一致性问题](https://blog.csdn.net/reed1991/article/details/53106078)](#[缓存与数据库的一致性问题]httpsblogcsdnnetreed1991articledetails53106078)
   * [[RabbitMQ的五种工作模式](https://blog.csdn.net/reed1991/article/details/53394906)](#[rabbitmq的五种工作模式]httpsblogcsdnnetreed1991articledetails53394906)
-  * [[Dubbo](https://blog.csdn.net/reed1991/article/details/86185091)](#[dubbo]httpsblogcsdnnetreed1991articledetails86185091)
-  * [[Dubbo原理](https://blog.csdn.net/reed1991/article/details/53134343)](#[dubbo原理]httpsblogcsdnnetreed1991articledetails53134343)
-  * [dubbo服务降级](#dubbo服务降级)
-  * [集群容错](#集群容错)
     * [hystrix 断路器](#hystrix-断路器)
     * [服务熔断](#服务熔断)
     * [服务降级](#服务降级)
   * [eureka和 zookeeper,两个的区別?](#eureka和-zookeeper两个的区別)
+    * [BASE 理论](#base-理论)
+    * [CAP](#cap)
 
 
 

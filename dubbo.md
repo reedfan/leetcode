@@ -1,3 +1,17 @@
+# Table of Contents
+
+  * [dubbo负载均衡策略](#dubbo负载均衡策略)
+  * [dubbo高可用：服务降级](#dubbo高可用：服务降级)
+  * [[Dubbo](https://blog.csdn.net/reed1991/article/details/86185091)](#[dubbo]httpsblogcsdnnetreed1991articledetails86185091)
+  * [dubbo工作原理](#dubbo工作原理)
+  * [Dubbo的几个重要角色：](#dubbo的几个重要角色：)
+  * [[Dubbo原理](https://blog.csdn.net/reed1991/article/details/53134343)](#[dubbo原理]httpsblogcsdnnetreed1991articledetails53134343)
+    * [注册中心挂了可以继续通信吗？](#注册中心挂了可以继续通信吗？)
+  * [dubbo高可用：集群容错](#dubbo高可用：集群容错)
+  * [dubbo支持不同的通信协议](#dubbo支持不同的通信协议)
+  * [dubbo支持的序列化协议](#dubbo支持的序列化协议)
+
+
 ## dubbo负载均衡策略
 1、Random LoadBalance   随机，按权重设置随机概率。 比如 权重 1 2 3，按照1/6 1/3 1/2的随机概率分配。
 2、RoundRobin LoadBalance 按照权重轮询

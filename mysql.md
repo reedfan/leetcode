@@ -2,6 +2,9 @@
 
   * [Select执行顺序](#select执行顺序)
   * [四种索引](#四种索引)
+  * [myIsam与Innodb](#myisam与innodb)
+  * [如何选择](#如何选择)
+    * [为什么myisam的select比innodb要快？](#为什么myisam的select比innodb要快？)
   * [聚集索引和非聚集索引](#聚集索引和非聚集索引)
   * [mysql回表](#mysql回表)
   * [覆盖索引（covering index）](#覆盖索引（covering-index）)

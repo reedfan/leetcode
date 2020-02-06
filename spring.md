@@ -76,6 +76,17 @@ DispatcherServlet上下文在初始化的时候会建立自己的IoC上下文，
 这个servlet自己持有的上下文默认实现类也是 mlWebApplicationContext。初始化完毕后，spring以与servlet的名字相关(此处不是简单的以servlet名为 Key，而是通过一些转换，具体可自行查看源码)的属性为属性Key，
 也将其存到ServletContext中，以便后续使用。这样每个servlet 就持有自己的上下文，即拥有自己独立的bean空间，同时各个servlet共享相同的bean，即根上下文(第2步中初始化的上下文)定义的那些 bean。
 
+## SpringMVC运行原理
+
+1. 客户端请求提交到DispatcherServlet
+2. 由DispatcherServlet控制器查询一个或多个HandlerMapping，找到处理请求的Controller
+3. DispatcherServlet将请求提交到Controller
+4. Controller调用业务逻辑处理后，返回ModelAndView
+5. DispatcherServlet查询一个或多个ViewResoler视图解析器，找到ModelAndView指定的视图
+6. 视图负责将结果显示到客户端
+
+
+
 ## springboot容器启动
 这里核心关注2个东西：
 

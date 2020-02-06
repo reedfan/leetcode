@@ -14,6 +14,10 @@ public class MdTest {
         String path7 ="/Users/qufan/Downloads/code/personal/jianzhioffer/os.md";
         String path8 ="/Users/qufan/Downloads/code/personal/jianzhioffer/designpattern.md";
         String path9 ="/Users/qufan/Downloads/code/personal/jianzhioffer/computernetwork.md";
+        String path10 ="/Users/qufan/Downloads/code/personal/jianzhioffer/dubbo.md";
+        String path11 ="/Users/qufan/Downloads/code/personal/jianzhioffer/kafka.md";
+        String path12 ="/Users/qufan/Downloads/code/personal/jianzhioffer/jvm.md";
+        String path13 ="/Users/qufan/Downloads/code/personal/jianzhioffer/designpattern.md";
         AtxMarkdownToc.newInstance().genTocFile(path1);
         AtxMarkdownToc.newInstance().genTocFile(path2);
         AtxMarkdownToc.newInstance().genTocFile(path3);
@@ -23,6 +27,10 @@ public class MdTest {
         AtxMarkdownToc.newInstance().genTocFile(path7);
         AtxMarkdownToc.newInstance().genTocFile(path8);
         AtxMarkdownToc.newInstance().genTocFile(path9);
+        AtxMarkdownToc.newInstance().genTocFile(path10);
+        AtxMarkdownToc.newInstance().genTocFile(path11);
+        AtxMarkdownToc.newInstance().genTocFile(path12);
+        AtxMarkdownToc.newInstance().genTocFile(path13);
 
 
 

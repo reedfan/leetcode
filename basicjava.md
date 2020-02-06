@@ -1,11 +1,13 @@
 # Table of Contents
 
   * [String为什么是final类型的](#string为什么是final类型的)
+  * [String、StringBulider、StringBuffer适用场景](#string、stringbulider、stringbuffer适用场景)
     * [java中为什么要单继承，多实现](#java中为什么要单继承，多实现)
   * [Collection](#collection)
     * [ArrayList](#arraylist)
     * [在ArrayList的循环中删除元素，会不会出现问题？](#在arraylist的循环中删除元素，会不会出现问题？)
     * [ArrayList和Vector的区别](#arraylist和vector的区别)
+    * [linkedList可以用for循环遍历吗？](#linkedlist可以用for循环遍历吗？)
     * [HashSet、 TreeSet、LinkedHashSet](#hashset、-treeset、linkedhashset)
     * [hashMap介绍](#hashmap介绍)
       * [1、确定hash桶的位置。](#1、确定hash桶的位置。)
@@ -25,6 +27,7 @@
     * [方法覆盖与方法重载](#方法覆盖与方法重载)
     * [接口、抽象类](#接口、抽象类)
     * [Java反射机制](#java反射机制)
+    * [反射的原理](#反射的原理)
     * [Java反射的作用：](#java反射的作用：)
     * [class.forName()和ClassLoader.loadClass（className）](#classforname和classloaderloadclass（classname）)
     * [动态代理和静态代理的区别](#动态代理和静态代理的区别)

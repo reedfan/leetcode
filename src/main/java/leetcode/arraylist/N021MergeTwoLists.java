@@ -3,6 +3,13 @@ package leetcode.arraylist;
 /**
  * 合并两个链表
  */
+
+/*
+新建一个链表res用来存储最后的结果
+本题的思路还是很清晰的，因为l1和l2都是有序的。
+因此每次比较l1和l2的头节点的大小。将较小的加入res。
+
+ */
 public class N021MergeTwoLists {
     public ListNode mergeTwoLists1(ListNode l1, ListNode l2) {
         if (l1 == null) {
