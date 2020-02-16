@@ -1,5 +1,8 @@
 package leetcode.array;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 /**
  * 编写一个函数来查找字符串数组中的最长公共前缀。
  * <p>
@@ -37,6 +40,7 @@ public class N014LongestCommonPrefix {
 
      */
     public String longestCommonPrefix(String[] strs) {
+
         if (strs.length == 0) {
             return "";
         }

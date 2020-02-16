@@ -1,6 +1,8 @@
 package file;
 
 import java.io.*;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Author 范群松.
@@ -10,8 +12,12 @@ import java.io.*;
 
 public class File1 {
     public static void main(String[] args) {
-        String fileName = "D:/data/kafkalogs/test.txt";
-        readFileByLines(fileName);
+
+        Map<String,String> hashMap = new HashMap<>();
+        hashMap.put("key1","value1");
+        System.out.println(hashMap);
+       /* String fileName = "D:/data/kafkalogs/test.txt";
+        readFileByLines(fileName);*/
     }
 
 

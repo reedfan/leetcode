@@ -660,36 +660,26 @@ CopyOnWrite容器即写时复制的容器。通俗的理解是当我们往一个
 
 ## AQS AbstractQueuedSynchronized 抽象的队列同步器
 
-AQS的实现依赖内部同步队列（FIFO双向队列），如果当前线程获取同步状态失败，AQS会将该线程以及其等待状态信息构造成一个Node，将其加入同步队列器的尾部，同时阻塞当前线程，当同步状态释放时，唤醒队列的头结点。
+private volatile int state;  state=0 表示可用
+FIFO线程等待队列
 
-private transient volatile Node head;
-
-tail;
-
-private volatile int state;
-
-state=0 表示可用
-
-release的同步状态相对简单，需要找到头结点的后继结点进行唤醒，若后继结点为空或处于cancel状态，从后向前遍历找寻一个正常结点，唤醒其对应的线程。
-
-AQS 定义两种资源方式 Exlusive（独占，只有一个线程能执行，如ReentrantLock）和share
-（共享，多个线程同时执行，如semaphore/countDownLatch)   
-
-共享式：同一时刻可以有多个线程同时获取到同步状态，这也是"共享的"的意义所在，其待重写的尝试获取同步状态的方法tryAcquireShared返回值为int
-
-1.当返回值大于0时，表示获取同步状态成功，同时还有剩余同步状态可供其他线程获取
-
-2.当返回值等于0时，表示获取同步状态成功，但没有可用的同步状态了。
-
-3.当返回值小于0时 ，表示同步获取失败。
+核心方法
+isHeldExclusively()：该线程是否正在独占资源。只有用到condition才需要去实现它。
+tryAcquire(int)：独占方式。尝试获取资源，成功则返回true，失败则返回false。
+tryRelease(int)：独占方式。尝试释放资源，成功则返回true，失败则返回false。
+tryAcquireShared(int)：共享方式。尝试获取资源。负数表示失败；0表示成功，但没有剩余可用资源；正数表示成功，且有剩余资源。
+tryReleaseShared(int)：共享方式。尝试释放资源，成功则返回true，失败则返回false。
 
 
-释放同步锁-- releaseShared
+以ReentrantLock为例，state初始化为0，表示未锁定状态。A线程lock()时，会调用tryAcquire()独占该锁并将state+1。此后，其他线程再tryAcquire()时就会失败，
+直到A线程unlock()到state=0（即释放锁）为止，其它线程才有机会获取该锁。
+当然，释放锁之前，A线程自己是可以重复获取此锁的（state会累加），这就是可重入的概念。
 
+再以CountDownLatch以例，任务分为N个子线程去执行，state也初始化为N（注意N要与线程个数一致）。这N个子线程是并行执行的，每个子线程执行完后countDown()一次，
+state会CAS(Compare and Swap)减1。等到所有子线程都执行完后(即state=0)，会unpark()主调用线程，然后主调用线程就会从await()函数返回，继续后余动作。
+一般来说，自定义同步器要么是独占方法，要么是共享方式，他们也只需实现tryAcquire-tryRelease、tryAcquireShared-tryReleaseShared中的一种即可
+。但AQS也支持自定义同步器同时实现独占和共享两种方式，如ReentrantReadWriteLock。
 
-AQS是JUC中很多同步组件的构建基础，简单来讲，它内部实现主要是状态变量state和一个FIFO队列来完成，同步队列的头结点是当前获取到同步状态的结点，获取同步状态state失败的线程，会被构造成一个结点（或共享式或独占式）加入到同步队列尾部（采用自旋CAS来保证此操作的线程安全），随后线程会阻塞；释放时唤醒头结点的后继结点，使其加入对同步状态的争夺中。
-
-　　AQS为我们定义好了顶层的处理实现逻辑，我们在使用AQS构建符合我们需求的同步组件时，只需重写tryAcquire，tryAcquireShared，tryRelease，tryReleaseShared几个方法，来决定同步状态的释放和获取即可，至于背后复杂的线程排队，线程阻塞/唤醒，如何保证线程安全，都由AQS为我们完成了，这也是非常典型的模板方法的应用。AQS定义好顶级逻辑的骨架，并提取出公用的线程入队列/出队列，阻塞/唤醒等一系列复杂逻辑的实现，将部分简单的可由使用者决定的操作逻辑延迟到子类中去实现。
 
 [具体参考](https://blog.csdn.net/reed1991/article/details/90447676)
 

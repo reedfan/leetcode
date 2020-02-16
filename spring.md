@@ -200,6 +200,51 @@ Mybatis的二级缓存是指mapper映射文件。二级缓存的作用域是同�
 
 
 ## spring 解决循环依赖
+
+在容器再次发现 beanB 依赖于 beanA 时，容器会获取 beanA 对象的一个早期的引用（early reference），并把这个早期引用注入到 beanB 中，
+让 beanB 先完成实例化。beanB 完成实例化，beanA 就可以获取到 beanB 的引用，beanA 随之完成实例化。
+在IOC容器中定义了这样一组map
+```
+/** 用于存放完全初始化好的 bean，从该缓存中取出的 bean 可以直接使用 */
+private final Map<String, Object> singletonObjects = new ConcurrentHashMap<String, Object>(256);
+
+/** 存放原始的 bean 对象（尚未填充属性），用于解决循环依赖 */
+private final Map<String, ObjectFactory<?>> singletonFactories = new HashMap<String, ObjectFactory<?>>(16);
+
+/** 存放 bean 工厂对象，用于解决循环依赖 */
+private final Map<String, Object> earlySingletonObjects = new HashMap<String, Object>(16);
+
+protected Object getSingleton(String beanName, boolean allowEarlyReference) {
+    // 从 singletonObjects 获取实例，singletonObjects 中的实例都是准备好的 bean 实例，可以直接使用
+    Object singletonObject = this.singletonObjects.get(beanName);
+    // 判断 beanName 对应的 bean 是否正在创建中
+    if (singletonObject == null && isSingletonCurrentlyInCreation(beanName)) {
+        synchronized (this.singletonObjects) {
+            // 从 earlySingletonObjects 中获取提前曝光的 bean
+            singletonObject = this.earlySingletonObjects.get(beanName);
+            if (singletonObject == null && allowEarlyReference) {
+                // 获取相应的 bean 工厂
+                ObjectFactory<?> singletonFactory = this.singletonFactories.get(beanName);
+                if (singletonFactory != null) {
+                    // 提前曝光 bean 实例（raw bean），用于解决循环依赖
+                    singletonObject = singletonFactory.getObject();
+                    
+                    // 将 singletonObject 放入缓存中，并将 singletonFactory 从缓存中移除
+                    this.earlySingletonObjects.put(beanName, singletonObject);
+                    this.singletonFactories.remove(beanName);
+                }
+            }
+        }
+    }
+    return (singletonObject != NULL_OBJECT ? singletonObject : null);
+}
+
+```
+该方法逻辑比较简单，首先从 singletonObjects 缓存中获取 bean 实例。若未命中，再去 earlySingletonObjects 缓存中获取原始 bean 实例。如果仍未命中，
+则从 singletonFactory 缓存中获取 ObjectFactory 对象，然后再调用 getObject 方法获取原始 bean 实例的应用，
+也就是早期引用。获取成功后，将该实例放入 earlySingletonObjects 缓存中，并将 ObjectFactory 对象从 singletonFactories 移除。
+
+
 1.重新设计结构消除循环依赖。
 2.使用注解 @lazy
 3.使用setter注入
