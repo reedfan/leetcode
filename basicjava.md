@@ -149,6 +149,8 @@ jdk7 受rehash影响 jdk8 调整后是(原位置)or(原位置+旧容量)
 
 
 ### hashmap为什么线程不安全?
+1.在JDK1.7中，当并发执行扩容操作时会造成环形链和数据丢失的情况。
+2.在JDK1.8中，在并发执行put操作时会发生数据覆盖的情况。
 因为在多线程情况下。假如快到resize零界点的时候。多个线程同时对这个hashmap进行了put操作。操作后超过临界值。多个线程各自进行resize操作。可能导致链表成环。
 然后当调用这个hashmap查找一个不存在的key。而这个key的hash结果正好等于成环的那个table的时候，就会形成死循环。 [详细参考](https://blog.csdn.net/dgutliangxuan/article/details/78779448)
 
