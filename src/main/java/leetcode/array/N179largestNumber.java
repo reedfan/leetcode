@@ -1,8 +1,6 @@
 package leetcode.array;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
+import java.util.*;
 
 /**
  * 给定一组非负整数，重新排列它们的顺序使之组成一个最大的整数。
@@ -25,31 +23,56 @@ import java.util.Comparator;
 
 public class N179largestNumber {
 
+    public static void main(String[] args) {
 
-    public String largestNumber(int[] nums) {
+        int[] nums = {3,30,34,5,9};
+        System.out.println(largestNumber(nums));
+
+    }
 
 
+    public static String largestNumber(int[] nums) {
 
-        /*Collections.sort(nums,new Comparator<Integer>(){
-            @Override
-            public int compare(int o1, int o2) {
+        if (nums == null || nums.length == 0) {
+            return "";
+        }
+        if (nums.length == 1) {
+            return String.valueOf(nums[0]);
+        }
+
+
+        //自带的比较器不能使用 int 类型，所以我们把它转为 Integer 类型
+        Integer[] newNums = new Integer[nums.length];
+        for (int i = 0; i < nums.length; i++) {
+            newNums[i] = nums[i];
+        }
+
+
+        Arrays.sort(newNums, new Comparator<Integer>() {
+
+            public int compare(Integer o1, Integer o2) {
                 int x1 = o1;
                 int x2 = o2;
+                int y1 = o1;
+                int y2 = o2;
                 while (x1 / 10 != 0) {
                     x1 /= 10;
                     x2 *= 10;
                 }
-                while (o2 / 10 != 0) {
-                    o2 /= 10;
-                    o1 *= 10;
+                while (y1 / 10 != 0) {
+                    y1 /= 10;
+                    y2 *= 10;
                 }
-                return (o1 + o2) - (x2 + x1);
+                return (o1 + x2) - (y1 + o2);
             }
-        });*/
+        });
 
 
-        return "";
-
+        StringBuffer sb = new StringBuffer();
+        for (Integer num : newNums) {
+            sb.append(num);
+        }
+        return sb.toString();
 
 
     }
