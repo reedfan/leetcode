@@ -25,7 +25,7 @@ public class N179largestNumber {
 
     public static void main(String[] args) {
 
-        int[] nums = {3,30,34,5,9};
+        int[] nums = {0,3,30,34,5,9};
         System.out.println(largestNumber(nums));
 
     }
@@ -51,22 +51,28 @@ public class N179largestNumber {
         Arrays.sort(newNums, new Comparator<Integer>() {
 
             public int compare(Integer o1, Integer o2) {
+                if(o2 == 0){
+                    return -1;
+                }
                 int x1 = o1;
                 int x2 = o2;
                 int y1 = o1;
                 int y2 = o2;
-                while (x1 / 10 != 0) {
+                while (x1  != 0) {
                     x1 /= 10;
                     x2 *= 10;
                 }
-                while (y1 / 10 != 0) {
-                    y1 /= 10;
-                    y2 *= 10;
+                while (y2  != 0) {
+                    y2 /= 10;
+                    y1 *= 10;
                 }
-                return (o1 + x2) - (y1 + o2);
+                return   (o1 + x2) - (y1 + o2)  ;
             }
         });
 
+        if(newNums[0] == 0){
+            return "0";
+        }
 
         StringBuffer sb = new StringBuffer();
         for (Integer num : newNums) {
