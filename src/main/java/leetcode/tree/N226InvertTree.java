@@ -1,6 +1,6 @@
 package leetcode.tree;
 
-public class InvertTree {
+public class N226InvertTree {
     public TreeNode invertTree(TreeNode root) {
         if(root == null){
             return root;

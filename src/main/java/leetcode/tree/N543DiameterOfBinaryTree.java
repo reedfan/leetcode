@@ -44,6 +44,9 @@ public class N543DiameterOfBinaryTree {
         return Math.max(depth(root.left), depth(root.right)) + 1;
     }*/
 
+   /*
+   直径肯定为某个节点为根节点的左右子树之和
+    */
 
     public int diameterOfBinaryTree(TreeNode root) {
         depth(root);

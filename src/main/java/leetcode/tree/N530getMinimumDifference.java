@@ -39,6 +39,10 @@ public class N530getMinimumDifference {
         return res;
     }
 
+    /*
+    思路：前序遍历，找差值
+     */
+
     private void help(TreeNode root) {
         if (root.left != null) {
             help(root.left);
