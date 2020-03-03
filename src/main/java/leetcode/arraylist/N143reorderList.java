@@ -34,7 +34,7 @@ public class N143reorderList {
         slow.next = null;
 
         while (fast != null) {
-            ListNode node = new ListNode(fast.val);
+            ListNode node = fast;
             fast = fast.next;
             node.next = head.next;
             head.next = node;

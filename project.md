@@ -57,7 +57,8 @@ classname+mappingmannager.hashcode()。导致产生非常多的连接实例。�
 更多的是一些业务逻辑的东西。比如你可以预定一个会议，或者一个连续的会议。
 
 
-认证采用的oauth2认证
+认证采用的oauth2认证，使用的是授权码模式，大部分工作还是认证服务器，也就是谷歌或者微软那边做掉了，我们这边主要是获取accesstoken以及怎么用refreshtoken获取accesstoken
+
 
 
 参会人员信息，这个最好用redis的set类型。但是可能存在LRU过期，而且事务不好控制。并且参会人员一般数据量不会太大，直接写数据库了
