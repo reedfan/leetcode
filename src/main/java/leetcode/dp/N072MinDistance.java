@@ -128,7 +128,6 @@ public class N072MinDistance {
                 dp[i][j] = Math.min(dp[i - 1][j] + 1, dp[i][j]);
                 //增加
                 dp[i][j] = Math.min(dp[i][j - 1] + 1, dp[i][j]);
-
             }
 
         }

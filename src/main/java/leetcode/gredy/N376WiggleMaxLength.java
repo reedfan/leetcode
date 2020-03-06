@@ -48,7 +48,6 @@ public class N376WiggleMaxLength {
 
     /**
      *
-     * jianzhioffer 376
      */
 
     public int wiggleMaxLength(int[] nums){

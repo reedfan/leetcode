@@ -34,6 +34,9 @@ package leetcode.gredy;
  */
 public class N122maxProfit {
 
+    /*
+    只要后面的数比前面的一个数大，就可以将其加入结果。
+     */
     public int maxProfit(int[] prices) {
         if(prices == null || prices.length < 2){
             return 0;
