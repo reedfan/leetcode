@@ -414,6 +414,10 @@ AbortPolicy 丢弃任务并抛出异常
 
 DiscardPolicy 丢弃任务，不抛出异常
 
+DiscardOldestPolicy：丢弃队列最前面的任务，然后重新提交被拒绝的任务。
+
+ThreadPoolExecutor.CallerRunsPolicy：由调用线程处理该任务
+
 ### SychronousQueue
  1：插入操作必须等待另一个线程的的删除，删除操作必须等待另一个线程的插入操作
  如put插入然后等待另一个线程的take或poll  take 移除元素等待等待另一个线程put或add操作，等到对应操作后实现transfer，传给相应的消费者
