@@ -10,6 +10,10 @@ public class ListNode {
     public int val;
     public ListNode next = null;
 
+    /*
+    1->2->5
+     */
+
     public ListNode(int val) {
         this.val = val;
     }

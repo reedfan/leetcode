@@ -2,6 +2,12 @@ package leetcode.arraylist;
 
 /**
  * 合并两个链表
+ *
+ * 4  null
+ * 1->2->3->4
+ *
+ *
+ * -1->1->2->3->4   (tmp在4）
  */
 
 /*
@@ -19,7 +25,7 @@ public class N021MergeTwoLists {
         if (l2 == null) {
             return l1;
         }
-        ListNode tmp = new ListNode(0);
+        ListNode tmp = new ListNode(-1);
         ListNode res = tmp;
         while (l1 != null && l2 != null) {
             if (l1.val < l2.val) {
@@ -34,9 +40,7 @@ public class N021MergeTwoLists {
         }
         if (l1 != null) {
             tmp.next = l1;
-
         }
-
         if (l2 != null) {
             tmp.next = l2;
 
