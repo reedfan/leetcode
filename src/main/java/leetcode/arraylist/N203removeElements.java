@@ -4,12 +4,24 @@ public class N203removeElements {
     /*
     删除链表中等于给定值 val 的所有节点。
 
-示例:
+    示例:
+    输入: 1->2->6->3->4->5->6, val = 6
+    输出: 1->2->3->4->5
 
-输入: 1->2->6->3->4->5->6, val = 6
-输出: 1->2->3->4->5
+        head
+       1->2->6->3->4->5->6
 
+      res
+   -1->1->2->6->3->4->5->6
 
+   1->2->6->3->4->5->6, val = 1
+
+   2->6->3->4->5->6
+
+  head
+   1->2->6->3->4->5->6, val = 6
+
+  head.next =
      */
 
 
@@ -17,6 +29,7 @@ public class N203removeElements {
     递归写法
      */
     public ListNode removeElements(ListNode head, int val) {
+
         if(head == null){
             return head;
         }

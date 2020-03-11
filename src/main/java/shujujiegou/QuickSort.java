@@ -14,9 +14,7 @@ public class QuickSort {
         sort(arr, 0, arr.length - 1);
         System.out.println(Arrays.toString(arr));
 
-
     }
-
 
     public static void sort(int[] a, int low, int high) {
         if (low >= high) {
@@ -25,13 +23,17 @@ public class QuickSort {
         int start = low;
         int end = high;
         int key = a[low];
+
         while (start < end) {
+
             while (end > start && a[end] > key) {
                 end--;
             }
+
             while (end > start && a[start] <= key) {
                 start++;
             }
+
             if (start < end) {
                 int tmp = a[start];
                 a[start] = a[end];
@@ -46,6 +48,5 @@ public class QuickSort {
         //对右边进行排序
         sort(a, start + 1, high);
     }
-
 
 }
