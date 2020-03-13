@@ -47,7 +47,7 @@ public class N376WiggleMaxLength {
     }
 
     /**
-     * 正负交换，
+     *
      */
 
     public int wiggleMaxLength(int[] nums) {
