@@ -1,5 +1,8 @@
 package leetcode.array;
 
+import org.junit.Test;
+
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -28,12 +31,36 @@ public class N217containsDuplicate {
 来源：力扣（LeetCode）
 链接：https://leetcode-cn.com/problems/contains-duplicate
 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+
      */
-    public boolean containsDuplicate(int[] nums) {
+
+    @Test
+    public void test() {
+        int[] nums = {1, 2, 3, 1};
+        //int[] nums = new int[4];
+        // nums[0] = 1;
+        System.out.println(containsDuplicate(nums));
+    }
+
+    public static void main(String[] args) {
+        int[] nums = {1, 2, 3, 1};
+        /*N217containsDuplicate n217containsDuplicate = new N217containsDuplicate();
+
+        n217containsDuplicate.containsDuplicate(nums);*/
+
+        System.out.println(containsDuplicate(nums));
+
+    }
+
+
+    public static boolean containsDuplicate(int[] nums) {
         if (nums == null || nums.length < 2) {
             return false;
         }
+
         Set<Integer> set = new HashSet<>();
+
+
 
         for (int num : nums) {
             if (set.contains(num)) {
@@ -42,6 +69,10 @@ public class N217containsDuplicate {
             set.add(num);
         }
 
+
         return false;
     }
+
+
+
 }
