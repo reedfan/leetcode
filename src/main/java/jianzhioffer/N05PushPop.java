@@ -10,7 +10,9 @@ import java.util.Stack;
  */
 
 public class N05PushPop {
+    //存储
     Stack<Integer> stack1 = new Stack<Integer>();
+    //往外弹
     Stack<Integer> stack2 = new Stack<Integer>();
 
     public void push(int node) {
@@ -22,6 +24,7 @@ public class N05PushPop {
             throw new RuntimeException("Queue is empty!");
         }
 
+        //一次性全部倒完
         if (stack2.empty()) {
             while (!stack1.empty()) {
                 stack2.push(stack1.pop());

@@ -14,10 +14,12 @@ public class N01Find {
         if(array == null || array.length == 0){
             return false;
         }
+
         int row = array.length;
         int col = array[0].length;
         int posX = 0;
         int posY = col - 1;
+
         //从右上角往左下角找
         while (posX < row && posY >= 0) {
             if (array[posX][posY] == target) {

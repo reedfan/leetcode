@@ -16,6 +16,11 @@ package leetcode.tree;
  *     /  \
  *    15   7
  *
+ *    maxDepth(TreeNode root)表示这棵树的最大深度。
+ *    maxDepth(TreeNode root.left)表示这棵树的左子树的最大深度。
+ *    maxDepth(TreeNode root.right)表示这棵树的右子树的最大深度。
+ *    maxDepth(TreeNode root) = Math.max( maxDepth(TreeNode root.left),maxDepth(TreeNode root.right))+1
+ *
  * 返回它的最大深度 3 。
  *
  * 来源：力扣（LeetCode）
