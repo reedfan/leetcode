@@ -19,6 +19,27 @@ public class N19printMatrix {
         System.out.println(list);
     }
 
+
+
+    /*
+
+
+
+        1  2  3
+
+
+        5  6  7
+        9 10  11
+
+        13 14 15
+
+
+
+
+
+
+     */
+
     public ArrayList<Integer> printMatrix(int [][] matrix) {
         ArrayList<Integer> list = new ArrayList<>();
         if (matrix == null || matrix.length == 0) {

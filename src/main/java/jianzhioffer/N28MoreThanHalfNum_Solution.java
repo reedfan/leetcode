@@ -15,7 +15,14 @@ import java.util.Map;
  * 超过数组长度的一半，因此输出2。如果不存在则输出0。
  */
 
+
+
+
+
 public class N28MoreThanHalfNum_Solution {
+
+
+
     public int MoreThanHalfNum_Solution(int[] nums) {
         int a = nums[0];
         int cnta = 0;

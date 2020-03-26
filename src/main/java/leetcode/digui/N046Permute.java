@@ -33,6 +33,19 @@ public class N046Permute {
 
 
     /*
+    对一个数全排列可以看成如下的过程
+
+    比如[1,2,3]的全排列可以按如下过程分解。
+    首先确定第一个数1，然后再对[2,3]做全排列得到[1, 2, 3]和[1, 3, 2]。
+    首先确定第一个数1，然后再对[1,3]做全排列得到[2, 1, 3]和[2, 3, 1]。
+    首先确定第一个数3，然后再对[1,2]做全排列得到[3, 1, 2]和[3, 2, 1]。
+    可清晰的可以得出如下结论permute({1,2,3}) = {1 + permute({2,3})} + {2 + permute({1,3})} + {3 + permute({1,2})}
+    很明显这是一个递归的过程。将第一个位置的数字进行固定，然后对后面的数字进行递归。那么，如何写代码呢？
+    我们可以在递归的过程中，可以将每个位置的数都和第一个数调换一下位置。此轮递归结束以后再进行一次回溯，也就是将数据换回来。
+    举个例子，假如要枚举[1, 2, 3]以2开始的所有的排列。首先将2和1调换变为[2, 1, 3]。第一个数定位2.
+    然后permute({1,3})。首先得到第一个解2，1，3.然后将1和3进行调换。得到第二个解2,3,1.求出两个解以后需要进行回溯，也就是将数据换回来。
+    将1和3的位置换一下变为[2, 1, 3]，将1和2的位置换一下变为[1, 2, 3]。至此，以2开头的这轮过程结束。
+
 
      */
     List<List<Integer>> lists = new ArrayList<>();
@@ -42,6 +55,7 @@ public class N046Permute {
         return lists;
     }
 
+    //变量start表示到达了某一层。
     private void process(int[] nums, int start) {
         //如果起始位置已经到达了末尾，那么这就是一组解。
         if(start == nums.length){
@@ -75,6 +89,31 @@ public class N046Permute {
 
 
 
+    /*
+    方法二
+    题目要求返回List<List<Integer>>。那么我们就新建一个 List<List<Integer>> 作为全局变量，最后将其返回。
+    对于每一个位置的数，都有选和不选两种选择。加入我们用一个list来存储一次递归过程中加入的数字。
+
+    因此在递归过程中我们大概需要有这样一段代码。
+
+            for (int i = 0; i < nums.length ; i++){
+                //加入
+                list.add(nums[i]);
+                process(list,nums);
+                //回退
+                list.remove(list.size()-1);
+
+            }
+
+
+
+
+
+    https://mp.weixin.qq.com/s/J9crLghcPwRjkLZBAI4Z7Q
+
+
+
+     */
 
 
 
@@ -105,8 +144,10 @@ public class N046Permute {
         for (int i = 0; i < nums.length ; i++) {
             if(!visted[i]){
                 visted[i] = true;
+                //加入
                 list.add(nums[i]);
                 process(list,nums);
+                //回退
                 list.remove(list.size()-1);
                 visted[i] = false;
 

@@ -7,7 +7,9 @@ import java.util.Stack;
  */
 
 public class N20GetMin {
+    //用来存储数的
     Stack<Integer> stack = new Stack<Integer>();
+    //用来存储最小数
     Stack<Integer> minStack = new Stack<Integer>();
 
     public void push(int node) {

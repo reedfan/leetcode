@@ -14,6 +14,10 @@ public class N23VerifySquenceOfBST {
         System.out.println(new N23VerifySquenceOfBST().VerifySquenceOfBST(array));
     }
 
+    /*
+    后续遍历   左右根
+           左子树小于根    右子树大于根
+     */
     public boolean VerifySquenceOfBST(int[] sequence) {
         if (sequence.length == 0) {
             return false;
@@ -21,10 +25,13 @@ public class N23VerifySquenceOfBST {
         return isBST(sequence, 0, sequence.length - 1);
     }
 
+
     private boolean isBST(int[] arr, int start, int end) {
+        //1.终止条件
         if (start >= end) {
             return true;
         }
+
 
         int i = start;
         for (; i < end; i++) {

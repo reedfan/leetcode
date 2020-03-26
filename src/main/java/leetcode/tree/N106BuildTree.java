@@ -37,6 +37,9 @@ public class N106BuildTree {
     所以后序遍历的最后一个元素为重建的二叉树的根节点的值。
     遍历中序遍历，直到找到和根节点值相同的位置。则此元素左边的都是根节点的左子树的元素，右边的都是根节点右子树的元素。
     通过递归很容易求出解。
+    postorder = {9,15,7,20,3}, inorder = {9, 3, 15, 20, 7}为例。
+
+    则新建二叉树的根节点为3，然后根的左孩子为9，postorder = {15, 7}, inorder = {15, 20, 7}新建,如下图所示。
      */
 
     public TreeNode buildTree(int[] inorder, int[] postorder) {

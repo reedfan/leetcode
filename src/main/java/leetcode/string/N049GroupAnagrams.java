@@ -31,6 +31,10 @@ public class N049GroupAnagrams {
         new N049GroupAnagrams().groupAnagrams(strs);
     }
 
+    /*
+    本题有两种解法，第一种
+     */
+
     public List<List<String>> groupAnagrams(String[] strs) {
         if (strs == null || strs.length == 0) {
             return new ArrayList<>();

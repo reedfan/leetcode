@@ -12,6 +12,15 @@ import java.util.PriorityQueue;
  * 输入n个整数，找出其中最小的K个数。例如输入4,5,1,6,2,7,3,8这8个数字，则最小的4个数字是1,2,3,4,。
  */
 
+
+/*
+
+    4堆
+
+
+ */
+
+
 public class N29GetLeastNumbers_Solution {
     public static void main(String[] args) {
         int k = 4;
@@ -26,11 +35,19 @@ public class N29GetLeastNumbers_Solution {
         if(k > length || k==0){
             return result;
         }
+        //默认建的小根堆
+
         PriorityQueue<Integer> maxHeap = new PriorityQueue<Integer>(k, new Comparator<Integer>() {
+            @Override
+            public int compare(Integer o1, Integer o2) {
+                return o1.compareTo(o2);
+            }
+        });
+        /*PriorityQueue<Integer> maxHeap = new PriorityQueue<Integer>(k, new Comparator<Integer>() {
             public int compare(Integer o1, Integer o2) {
                 return o2.compareTo(o1);
             }
-        });
+        });*/
         for (int i = 0; i < length; i++) {
             if(maxHeap.size() != k){
                 maxHeap.add(input[i]);

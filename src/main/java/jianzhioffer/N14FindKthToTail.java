@@ -6,6 +6,12 @@ import leetcode.arraylist.ListNode;
  * 输入一个链表，输出该链表中倒数第k个结点。
  */
 
+/*
+     1-2-3-4-5
+
+     fast  前进k
+     slow
+ */
 public class N14FindKthToTail {
     public ListNode FindKthToTail(ListNode head, int k) {
         int count = 0;
@@ -17,6 +23,8 @@ public class N14FindKthToTail {
         if(count < k){
             return null;
         }
+
+
         ListNode p1 = head;
         ListNode p2 = head;
         for (int i = 0; i < k; i++) {

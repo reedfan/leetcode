@@ -5,6 +5,21 @@ package jianzhioffer;
  * 输入一个非递减排序的数组的一个旋转，输出旋转数组的最小元素。
  * 例如数组{3,4,5,1,2}为{1,2,3,4,5}的一个旋转，该数组的最小值为1。
  * NOTE：给出的所有元素都大于0，若数组大小为0，请返回0。
+ *
+ */
+
+/*
+   1 2 3 4 5
+
+   5 1 2 3 4    mid  2  <   end 4
+   2 3 4 5 1    mid  4  >    end 1
+
+
+   1 1 1 1 1 2
+
+   2 1 1 1 1 1 mid 1    end 1
+
+
  */
 public class N06MinNumberInRotateArray {
     public static void main(String[] args) {
@@ -21,6 +36,7 @@ public class N06MinNumberInRotateArray {
         int mid = 0;
         while (start <= end) {
             mid = start + (end - start) / 2;
+            //第一种情况。
             if(array[mid] == array[end]){
                 end --;
                 continue;

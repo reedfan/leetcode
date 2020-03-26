@@ -41,6 +41,13 @@ public class N047PermuteUnique {
 
     }
 
+    /*
+
+
+
+
+     */
+
     private void process(int[] nums, int start) {
         if (start == nums.length) {
             List<Integer> list = new ArrayList<Integer>();
