@@ -20,7 +20,37 @@ public class N076MinWindow {
 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
      */
 
-    public String minWindow(String s, String t) {
+
+
+
+
+    /*
+      "ADOBECODEBANC"      "ABC"
+
+
+      A   DOBEC
+
+      //新建一个needs[128] 用来统计t中每个字符出现次数，新建一个 window[128]用来统计滑动窗口中每个字符出现次数。
+      首先统计出T中每个字母出现的次数。
+      新建两个变量left和right分别用来表示滑动窗口的左边和右边。新建一个变量count来表示目前窗口中已经找到了多少个字符。
+      然后按照如图所示的规律滑动窗口，即可得出最小子串的长度为4，最小子串为"BANC"。
+
+
+
+
+
+
+
+     */
+
+    public static void main(String[] args) {
+        String s = "ADOBECODEBANC";
+        String t = "ABC";
+        System.out.println(minWindow(s,t));
+    }
+
+
+    public static String minWindow(String s, String t) {
         if (s == null || s == "" || t == null || t == "" || s.length() < t.length()) {
             return "";
         }
