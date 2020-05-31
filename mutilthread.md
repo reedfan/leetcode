@@ -647,7 +647,8 @@ CopyOnWrite容器即写时复制的容器。通俗的理解是当我们往一个
 2.数据一致性问题：CopyOnWrite容器只能保证数据的最终一致性，不能保证数据的实时一致性。所以如果你希望写入的的数据，马上能读到，请不要使用CopyOnWrite容器。
 
 ## AQS AbstractQueuedSynchronized 抽象的队列同步器
-
+[具体参考](https://mp.weixin.qq.com/s?__biz=MzU0OTk3ODQ3Ng==&mid=2247484094&idx=1&sn=b337161f934b1c27ff1f059350ef5e65&chksm=fba6eabdccd163abc8978b65e155d79a133f20ee8a5bff79a33ed20a050c2bd576581db69fe6&mpshare=1&scene=1&srcid=0608yIcfsyrDG1NIBSsF58jq%23rd
+)
 private volatile int state;  state=0 表示可用
 FIFO线程等待队列
 
@@ -661,7 +662,7 @@ tryReleaseShared(int)：共享方式。尝试释放资源，成功则返回true�
 
 以ReentrantLock为例，state初始化为0，表示未锁定状态。A线程lock()时，会调用tryAcquire()独占该锁并将state+1。此后，其他线程再tryAcquire()时就会失败，
 直到A线程unlock()到state=0（即释放锁）为止，其它线程才有机会获取该锁。
-当然，释放锁之前，A线程自己是可以重复获取此锁的（state会累加），这就是可重入的概念。
+当然，AQS内部还有一个关键变量，用来记录当前加锁的是哪个线程，初始化状态下，这个变量是null，释放锁之前，A线程自己是可以重复获取此锁的（state会累加），这就是可重入的概念。
 
 再以CountDownLatch以例，任务分为N个子线程去执行，state也初始化为N（注意N要与线程个数一致）。这N个子线程是并行执行的，每个子线程执行完后countDown()一次，
 state会CAS(Compare and Swap)减1。等到所有子线程都执行完后(即state=0)，会unpark()主调用线程，然后主调用线程就会从await()函数返回，继续后余动作。

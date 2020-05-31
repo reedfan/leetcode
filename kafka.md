@@ -251,7 +251,7 @@ Kafka 并不支持主写从读，因为主写从读有 2 个很明 显的缺点:
 ### rabbitmq事务
 ![](https://img-blog.csdnimg.cn/20190526221909572.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3poYW5nY29uZ3lpNDIw,size_16,color_FFFFFF,t_70)
 
-
+https://mp.weixin.qq.com/s/cSX0eXc5s2YSwnWE_DQsJA
 每一个分区只能被一个消费组中的一 个消费者所消费 。
 
 KafkaConsumer怎么样实现多线程消费?
