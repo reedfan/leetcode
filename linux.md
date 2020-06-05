@@ -67,6 +67,9 @@ rpm -qa|grep XX
 查看linux下是否安装XX
 删除   rpm -e rpm的包名 
 
+使用netstat命令查询端口占用
+netstat -nap | grep [pid]
+
 ## 在/home目录下查找以.txt结尾的文件名
 
 find /home -name "*.txt"
