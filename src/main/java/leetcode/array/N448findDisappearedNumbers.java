@@ -29,7 +29,7 @@ public class N448findDisappearedNumbers {
         new N448findDisappearedNumbers().findDisappearedNumbers(nums);
     }
     public List<Integer> findDisappearedNumbers(int[] nums) {
-        List<Integer> list = new ArrayList<>();
+        List<Integer> list = new ArrayList<Integer>();
         for (int i = 0; i < nums.length ; i++) {
             while (nums[i] != nums[nums[i]-1]){
                 swap(nums,i,nums[i]-1);

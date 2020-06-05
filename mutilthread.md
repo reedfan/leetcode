@@ -464,7 +464,17 @@ JMM决定一个线程对共享变量的写入何时对另一个线程可见，JM
 本地内存保存了被该线程使用到的主内存的副本拷贝，线程对变量的所有操作都必须在工作内存中进行，而不能直接读写主内存中的变量。
 
 ## happen-before 
-编译器或运行时环境为了优化程序性能而采取的对指令进行重排执行顺序的一种手段。
+八大原则：
+
+单线程happen-before原则：在同一个线程中，书写在前面的操作happen-before后面的操作。
+锁的happen-before原则：同一个锁的unlock操作happen-before此锁的lock操作。
+volatile的happen-before原则：对一个volatile变量的写操作happen-before对此变量的任意操作(当然也包括写操作了)。
+happen-before的传递性原则：如果A操作 happen-before B操作，B操作happen-before C操作，那么A操作happen-before C操作。
+线程启动的happen-before原则：同一个线程的start方法happen-before此线程的其它方法。
+线程中断的happen-before原则：对线程interrupt方法的调用happen-before被中断线程的检测到中断发送的代码。
+线程终结的happen-before原则：线程中的所有操作都happen-before线程的终止检测。
+对象创建的happen-before原则：一个对象的初始化完成先于他的finalize方法调用。
+
 
 ## volatile
 
